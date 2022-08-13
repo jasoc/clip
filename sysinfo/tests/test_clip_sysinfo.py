@@ -1,5 +1,5 @@
-from clip_sysinfo import Server
+from clip_sysinfo import createCurrentServer
 
 def test_server_object():
-    srv = Server.Detect()
+    srv = createCurrentServer()
     print(srv)
