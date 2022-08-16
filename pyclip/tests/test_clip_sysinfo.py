@@ -17,7 +17,8 @@ def test_server_object():
 
     CPU.maxFreq:      {cpu.maxFreq}
 
-    CPU.allCoresFreq: {cpu.allCoresFreq()}
+    CPU.allCoresFreq: {[round(c, 2) for c in cpu.allCoresFreq()[0:int(cpu.cores / 2)]]}
+                      {[round(c, 2) for c in cpu.allCoresFreq()[int(cpu.cores / 2):cpu.cores]]}
 
     CPU.currCpuFreq:  {cpu.currCpuFreq()}
 

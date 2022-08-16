@@ -33,7 +33,7 @@ class CPU:
     CPU() object can be created. """
 
     modelName: str = None
-    cores: float = 0
+    cores: int = 0
     threads: float = 0
     minFreq: float = 0
     maxFreq: float = 0
