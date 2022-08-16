@@ -1,4 +1,8 @@
-from .hardware import *
+from .cpu import *
+from .gpu import *
+from .disk import *
+from .network import *
+from .server import *
 from .detect import *
 
 def createCurrentServer():
@@ -7,5 +11,6 @@ def createCurrentServer():
         ip='1',
         cpu=detectCPU(),
         gpu=detectGPU(),
-        disk=detectDisks()
+        disks=detectDisks(),
+        networks=detectNetworks()
     )
