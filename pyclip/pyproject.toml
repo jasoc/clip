@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "clip-sysinfo"
+name = "pyclip"
 version = "0.1.0"
 description = ""
 authors = ["jasoc <paridegiunta@gmail.com>"]
