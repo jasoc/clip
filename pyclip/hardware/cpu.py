@@ -7,12 +7,10 @@ from dataclasses import dataclass
 
 @dataclass
 class Frequency:
-    """
-      It rapresents a frequency of a single core
-      or of the whole CPU. The getter @percentage is
-      calculated but it ignores the boost frequencie
-      and it stops at 100%.
-    """
+    """ It rapresents a frequency of a single core
+    or of the whole CPU. The getter @percentage is
+    calculated but it ignores the boost frequencie
+    and it stops at 100%. """
 
     current: float = 0
     min: float = 0
@@ -28,13 +26,11 @@ class Frequency:
 
 @dataclass
 class CPU:
-    """
-      This object summarize the CPU informations
-      providing methods such currCpuPerc that calculate
-      the current CPU usage. The method detect() aquire
-      the system's CPU informations, otherwise a plain
-      CPU() object can be created.
-    """
+    """ This object summarize the CPU informations
+    providing methods such currCpuPerc that calculate
+    the current CPU usage. The method detect() aquire
+    the system's CPU informations, otherwise a plain
+    CPU() object can be created. """
 
     modelName: str = None
     cores: float = 0
