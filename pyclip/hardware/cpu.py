@@ -66,18 +66,18 @@ class CPU:
 
 
 class CpuDetector:
-    """ A static class that provides methods to detect
+    """ A static class that provides methods for detect
       the system's CPU informations for various OS's. """
 
     def modelName() -> str:
         """ This method returns the model name of the CPU,
-        trying to get it from multiple sources. Usually should
+        trying to get it from multiple sources. Usually it should
         return platform.processor(), but if blank, in Linux
-        look into /proc/cpuinfo. Ultimately, it can return None. 
+        it look into /proc/cpuinfo for the Model Name.
+        Ultimately, if nothing is found, it can return None.
         
         TODO: Add support for Windows.
         """
-
         pproc =  platform.processor()
         if pproc != '':
             return pproc
@@ -86,17 +86,15 @@ class CpuDetector:
         for line in all_info.split('\n'):
             return re.sub(".*model name.*: ", "", line, 1)
         return None
-    
+
     def cores(logical: bool = False) -> int:
         """ Returns the phisical cores of the system,
         if logical is True returns the logical cores. """
-
         return psutil.cpu_count(logical)
     
     def coresFreq() -> list[Frequency]:
         """ Returns a list of Frequency objects
         for each core of the system. """
-
         return [Frequency(c.current, c.min, c.max)
                for c in psutil.cpu_freq(percpu=True)]
 
@@ -104,6 +102,5 @@ class CpuDetector:
         """ Returns a Frequency object that can be
         iterated as (current: float, min: float, max: float).
         Each value is in MHz. """
-
         x = psutil.cpu_freq(percpu=False)
         return Frequency(x.current, x.min, x.max)
