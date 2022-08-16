@@ -5,6 +5,9 @@ class Network:
     subnet: str = None
     broadcast: str = None
 
+    def scan():
+        pass
+
     def __init__(self, interface: str, mac: str, ip: str, subnet: str, broadcast: str):
         self.interface = interface
         self.mac = mac

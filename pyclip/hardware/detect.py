@@ -3,7 +3,7 @@ import re
 import platform
 import psutil
 
-from . import CPU, GPU, Disk, Core, Network
+from . import CPU, GPU, Disk, Frequency, Network
 
 def detectCPU() -> CPU:
 
@@ -23,7 +23,7 @@ def detectCPU() -> CPU:
     ret.logicalCores = psutil.cpu_count(logical=True)
 
     for i, core in enumerate(psutil.cpu_freq(percpu=True)):
-        ret.cores.append(Core(i, core.min, core.max))
+        ret.cores.append(Frequency(i, core.min, core.max))
 
     return ret
 

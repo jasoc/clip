@@ -1,4 +1,3 @@
-from .definitions import *
 from .cpu import *
 from .gpu import *
 from .disk import *

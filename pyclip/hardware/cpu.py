@@ -3,21 +3,37 @@ import os
 import re
 import platform
 
-from .definitions import core
+from dataclasses import dataclass
 
 
-class Core:
-    num: int = 0
-    minFreq: float = 0
-    maxFreq: float = 0
-    
-    def __init__(self, num, minFreq, maxFreq):
-        self.num = num
-        self.minFreq = minFreq
-        self.maxFreq = maxFreq
+@dataclass
+class Frequency:
+    """
+    A class used to rapresent the current, minimum
+    and maximum frequency of a core of the entire CPU.
 
-    def currentFreq(self):
-        return psutil.cpu_freq(percpu=True)[self.num].current
+    Attributes
+    ----------
+    curr : float
+        the current freqerncy
+    min : float
+        the name of the animal
+    sound : str
+        the sound that the animal makes
+    num_legs : int
+        the number of legs the animal has (default 4)
+
+    Methods
+    -------
+    says(sound=None)
+        Prints the animals name and what sound it makes
+    """
+    curr: float = 0
+    min: float = 0
+    max: float = 0
+
+    def __iter__(self):
+        return iter((self.curr, self.min, self.max))
 
 
 class CPU:
@@ -41,7 +57,7 @@ class CPU:
             raise Exception(f'You have {self.cores} cores, but you want to get the frequency of core {core}')
         return CpuDetector.coresFreq()[core].curr
 
-    def allCoresFreq(self) -> list[core]:
+    def allCoresFreq(self) -> list[Frequency]:
         return [self.currCoreFreq(i) for i in range(self.cores)]
 
     def currCpuFreq(self) -> float:
@@ -63,12 +79,12 @@ class CpuDetector:
     def cores(logical=False) -> int:
         return psutil.cpu_count(logical)
     
-    def coresFreq() -> list[core]:
+    def coresFreq() -> list[Frequency]:
         ret = []
         for i, c in enumerate(psutil.cpu_freq(percpu=True)):
-            ret.append(core(c.current, c.min, c.max))
+            ret.append(Frequency(c.current, c.min, c.max))
         return ret
 
-    def cpuFreq() -> core:
+    def cpuFreq() -> Frequency:
         x = psutil.cpu_freq(percpu=False)
-        return core(x.current, x.min, x.max)
+        return Frequency(x.current, x.min, x.max)
