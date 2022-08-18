@@ -1,3 +1,5 @@
+from importlib.machinery import all_suffixes
+from socket import AddressFamily
 import psutil
 from enum import Enum
 from dataclasses import dataclass
@@ -10,39 +12,49 @@ class NetworkKind(Enum):
     OTHER = 2
 
 
-class Bit:
-    pass
+class AddressKind(Enum):
+    """ This enum represents the kind of a network interface. """
+    IPV4 = 0
+    IPV6 = 1
 
+
+@dataclass
 class Address:
-    """ This class represents an address of a network interface.
-    The constructor accepts an address in form of string, then
-    split and store the single bytes, and provides method for convert
-    t from decimal to hexadecimal and viceversa. """
+    ipAddress: str = None
+    netmask: str = None
+    broadcast: str = None
+    addressKind: AddressKind = None
 
-    bytes: list[Bit]
-
-    def __init__(self, addrstr: str) -> None:
-        self.bytes = [int(b) for b in addrstr.split('.')]
-
-class Network:
-    pass
 
 @dataclass
 class NetworkInterface:
-    name: str
-    mac: str
-    kind: NetworkKind = NetworkKind.OTHER
+    name: str = None
+    networkKind: NetworkKind = None
+    macAddress: str = None
+    addresses: list[Address] = None
 
-    interface: str = None
-    mac: str = None
-    ip: str = None
-    subnet: str = None
-    broadcast: str = None
 
-    def scan():
+class NetworkScanner:
+
+    def scanInterfaces():
+        ret = []
         nets = psutil.net_if_addrs()
-        for net in [nets[k] for k in nets.keys()]:
-            yield Network(net.name, net.mac, net.address, net.netmask, net.broadcast)
+        for iname, iarr in nets.items():
+            nif = NetworkInterface()
+            nif.name = iname
+            nif.addresses = []
+            for iaddr in iarr:
+                if iaddr.family == psutil.AF_LINK:
+                    nif.macAddress = iaddr.address
+                    continue
+                if iaddr.family == AddressFamily.AF_INET:
+                    nif.addresses.append(
+                        Address(iaddr.address, iaddr.netmask, iaddr.broadcast, AddressKind.IPV4))
+                if iaddr.family == AddressFamily.AF_INET6:
+                    nif.addresses.append(
+                        Address(iaddr.address, iaddr.netmask, iaddr.broadcast, AddressKind.IPV6))
+            ret.append(nif)
+        return ret
 
     def __init__(self, interface: str, mac: str, ip: str, subnet: str, broadcast: str):
         self.interface = interface
@@ -50,3 +62,4 @@ class NetworkInterface:
         self.ip = ip
         self.subnet = subnet
         self.broadcast = broadcast
+

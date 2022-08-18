@@ -1,6 +1,9 @@
 from hardware import CPU
 
 import psutil
+import json
+
+from hardware.network import NetworkScanner
 
 def test_server_object():
     cpu = CPU()
@@ -24,3 +27,11 @@ def test_server_object():
 
     CPU.currCpuPerc:  {cpu.currCpuPerc()}
     """)
+
+    def get_json(obj):
+        return json.loads(
+            json.dumps(obj, default=lambda o: getattr(o, '__dict__', str(o)))
+        )
+
+    for net in NetworkScanner.scanInterfaces():
+        print(json.dumps(get_json(net), indent=4))
