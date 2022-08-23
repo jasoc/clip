@@ -28,10 +28,8 @@ def test_server_object():
     CPU.currCpuPerc:  {cpu.currCpuPerc()}
     """)
 
-    def get_json(obj):
-        return json.loads(
-            json.dumps(obj, default=lambda o: getattr(o, '__dict__', str(o)))
-        )
-
     for net in NetworkScanner.scanInterfaces():
-        print(json.dumps(get_json(net), indent=4))
+        print(net.__dict__)
+        continue
+        for addr in net.addresses:
+            print(f' - {addr}')

@@ -72,14 +72,14 @@ class CpuDetector:
     def modelName() -> str:
         """ This method returns the model name of the CPU,
         trying to get it from multiple sources. Usually it should
-        return platform.processor(), but if blank, in Linux
-        it look into /proc/cpuinfo for the Model Name.
+        return platform.processor(), but if blank or equal to 'x86_64'
+        in Linux it look into /proc/cpuinfo for the Model Name.
         Ultimately, if nothing is found, it can return None.
         
         TODO: Add support for Windows.
         """
         pproc =  platform.processor()
-        if pproc != '':
+        if pproc != '' and pproc != 'x86_64':
             return pproc
         command = 'cat /proc/cpuinfo | grep "model name"'
         all_info = os.popen(command).read()

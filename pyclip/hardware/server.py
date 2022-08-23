@@ -1,6 +1,7 @@
-from . import CPU, GPU, Disk, Network
+from . import CPU, GPU, Disk, NetworkInterface
+from .utils import Jsonible
 
-class Server:
+class Server(Jsonible):
 
     name: str = None
     ip: str = None
@@ -8,7 +9,7 @@ class Server:
     cpu: CPU = None
     gpu: GPU = None
     disks: list[Disk] = None
-    networks: list[Network] = None
+    networks: list[NetworkInterface] = None
     
     # os: OS = None
 
@@ -24,3 +25,11 @@ class Server:
 
     def __repr__(self):
         return f'{self.name} {self.cpu}'
+
+    def toJson(self) -> dict:
+        return self.__dict__
+        return {
+            'name': self.name,
+            'cpu': self.cpu.toJson(),
+            'networks': [n.toJson() for n in self.networks],
+        }

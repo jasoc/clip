@@ -3,7 +3,7 @@ import re
 import platform
 import psutil
 
-from . import CPU, GPU, Disk, Frequency, Network
+from . import CPU, GPU, Disk, Frequency
 
 def detectCPU() -> CPU:
 
@@ -32,8 +32,3 @@ def detectGPU() -> GPU:
 
 def detectDisks() -> list[Disk]:
     pass
-
-def detectNetworks() -> list[Network]:
-    nets = psutil.net_if_addrs()
-    for net in [nets[k] for k in nets.keys()]:
-        yield Network(net.name, net.mac, net.address, net.netmask, net.broadcast)
