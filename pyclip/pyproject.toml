@@ -8,6 +8,7 @@ authors = ["jasoc <paridegiunta@gmail.com>"]
 python = "^3.10"
 distro = "^1.7.0"
 psutil = "^5.9.1"
+Cython = "^0.29.32"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
