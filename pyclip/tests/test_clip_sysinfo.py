@@ -1,9 +1,8 @@
-from hardware import CPU
-
+from pyclip.hardware import CPU
 import psutil
 import json
 
-from hardware.network import NetworkScanner
+from pyclip.hardware.network import NetworkScanner
 
 def test_server_object():
     cpu = CPU()
