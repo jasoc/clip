@@ -32,7 +32,7 @@ class CPU:
     the system's CPU informations, otherwise a plain
     CPU() object can be created. """
 
-    modelName: str = None
+    modelName: str = "sucsa"
     cores: int = 0
     threads: float = 0
     minFreq: float = 0
