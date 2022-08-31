@@ -1,0 +1,7 @@
+version: "3.8"
+
+services:
+  webserver:
+    build: ./Dockerfile.dev
+    # env_file: 
+    #   - shawarma.env

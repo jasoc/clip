@@ -1,0 +1,9 @@
+version: "3.8"
+
+services:
+  webserver:
+    build:
+      context: ./
+      dockerfile: ./docker/amd64/Dockerfile-dev
+    # env_file: 
+    #   - shawarma.env
