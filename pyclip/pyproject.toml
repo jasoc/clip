@@ -1,14 +1,13 @@
 [tool.poetry]
 name = "pyclip"
-version = "0.1.1"
+version = "0.1.2"
 description = ""
 authors = ["jasoc <paridegiunta@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-distro = "^1.7.0"
+distro = "^1.6.0"
 psutil = "^5.9.1"
-Cython = "^0.29.32"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
