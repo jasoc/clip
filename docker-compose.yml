@@ -1,7 +1,15 @@
 version: "3.8"
 
 services:
-  webserver:
-    build: ./Dockerfile.dev
-    # env_file: 
-    #   - shawarma.env
+
+  clip:
+    container_name: clip
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      target: build
+    image: parisius/clip
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./:/clip

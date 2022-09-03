@@ -1,9 +1,16 @@
 version: "3.8"
 
 services:
-  webserver:
+
+  ws:
+    container_name: clip-ws
     build:
       context: ./
-      dockerfile: ./docker/amd64/Dockerfile-dev
-    # env_file: 
-    #   - shawarma.env
+      dockerfile: Dockerfile
+      target: webserver
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./:/clip
+
+  
