@@ -10,8 +10,11 @@ os.chdir(os.path.join(os.path.dirname(__file__), '..'))
 to_remove = [
     'node_modules',
     'dist',
+    '*.lock',
+    'prod',
     '__pycache__',
     '*.log',
+    'requirements.txt'
 ]
 
 

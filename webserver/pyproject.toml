@@ -7,10 +7,10 @@ authors = ["jasoc <paridegiunta@gmail.com>"]
 [tool.poetry.dependencies]
 python = "^3.10"
 Flask = "^2.2.2"
-pyclip = "0.1.2"
+clip_pyclip = "*"
 
 [tool.poetry.dev-dependencies]
-pyclip = {path = "../pyclip", develop = true}
+clip_pyclip = {path = "../pyclip", develop = true}
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

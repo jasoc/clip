@@ -17,4 +17,4 @@ cd ../webserver
 poetry export --without-hashes -f requirements.txt >> ../prod/requirements.txt
 
 cd ../prod
-pip install -r requirements.txt
+# pip install -r requirements.txt

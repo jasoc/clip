@@ -11,6 +11,8 @@ FROM os as python
 RUN apt-get -y install \
     python3=3.10.4-0ubuntu2 \
     python3-pip \
+    python3.10-venv \
+    make \
     python-is-python3
 
 CMD ["python"]
@@ -41,12 +43,9 @@ CMD ["bash", "./start.sh"]
 FROM poetry as build
 
 # CMD ["ls", "-1", "/clip/pyclip"]
-RUN echo $(ls -1 /tmp/dir)
 
-WORKDIR /clip/scripts
-
-CMD ["bash", "./build.sh"]
-
+WORKDIR /clip
+RUN make install
 # RUN ls
 # RUN pip install dist/pyclip*.whl
 
