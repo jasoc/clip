@@ -26,6 +26,9 @@ ENV POETRY_VIRTUALENVS_IN_PROJECT=true
 ENV PATH="$POETRY_HOME/bin:$PATH"
 RUN pip install "poetry==1.1.15"
 
+WORKDIR /clip
+RUN poetry config virtualenvs.in-project false
+
 CMD ["poetry"]
 
 # ----------------------------------
