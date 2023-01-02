@@ -1,3 +1,4 @@
+from .os import *
 from .cpu import *
 from .gpu import *
 from .disk import *

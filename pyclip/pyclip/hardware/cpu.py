@@ -38,6 +38,9 @@ class CPU:
     minFreq: float = 0
     maxFreq: float = 0
 
+    def __init__(self):
+        self.detect()
+
     def freqIsGoinCrazy() -> bool:
         pass
 

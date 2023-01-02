@@ -1,4 +1,12 @@
 __pycache__
 dist
 prod
-requirements.txt
+bin
+lib
+lib64
+include
+*.egg-info
+
+.venv
+.venv.*
+venv.*

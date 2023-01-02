@@ -4,6 +4,7 @@ import os
 import sys
 import glob
 import shutil
+import argparse
 
 
 os.chdir(os.path.join(os.path.dirname(__file__), '..'))
@@ -12,13 +13,14 @@ to_remove = [
     'node_modules',
     'dist',
     '*.lock',
+    'venv.*',
     '.venv',
+    '.venv.*',
     'prod',
     '__pycache__',
     '*.log',
-    'requirements.txt'
+    '*.egg-info',
 ]
-import argparse
 
 
 def main():
@@ -90,7 +92,7 @@ def clean_docker():
 
 
 def clean_poetry():
-    os.system('rm -rf ~/.cache/pypoetry/virtualenvs/*clip*')
+    os.system('rm -f ~/.cache/pypoetry/virtualenvs/*clip*')
 
 
 def clean_other():

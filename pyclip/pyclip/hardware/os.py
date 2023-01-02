@@ -12,16 +12,14 @@ class OS:
     version_build_number: str = None
 
     def __init__(self):
-        pass
+        self.detect()
 
-    @staticmethod
-    def Detect(self = None):
+    def detect(self):
         if self is None:
             self = OS()
         
         info = distro.info()
         self.name = distro.name()
-
         self.id = info['id']
         self.codename = info['codename']
         
