@@ -2,7 +2,14 @@
 CPATH=$(dirname -- "$(readlink -f -- "$0";)";)/..
 cd $CPATH
 
-# docker-compose -f docker-compose.yml up --remove-orphans
+echo "
+ ██████╗██╗     ██╗██████╗ 
+██╔════╝██║     ██║██╔══██╗
+██║     ██║     ██║██████╔╝
+██║     ██║     ██║██╔═══╝ 
+╚██████╗███████╗██║██║     
+ ╚═════╝╚══════╝╚═╝╚═╝     
+"
 
 noVenv=false
 for f in "$@"
@@ -13,24 +20,24 @@ do
     fi
 done
 
-if [[  "$1" == "prod" || $# == 0 ]]; then
-    export clip_environment=prod
-    if ! $noVenv
-    then
-        venv/init.sh prod
-        source .venv.prod/bin/activate
-    fi
-    scripts/build.sh "$@"
-    server/start.sh "$@"
-fi
+initParam=prod
+export clip_environment=prod
+venv=prod
 
 if [[ "$1" == "debug" ]]; then
+    initParam=debug
+    venv=debug
     export clip_environment=debug
-    if ! $noVenv
-    then
-        venv/init.sh debug
-        source .venv.debug/bin/activate
-    fi
-    scripts/build.sh "$@"
+fi
+
+if ! $noVenv
+then
+    venv/init.sh $initParam
+    source .venv.$venv/bin/activate
+fi
+
+scripts/build.sh "$@"
+
+if [[ $1 == "debug" || $1 == "prod" ]]; then
     server/start.sh "$@"
 fi

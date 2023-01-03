@@ -1,16 +1,14 @@
 version: "3.8"
 
 services:
-
-  ws:
-    container_name: clip-ws
+  clip:
+    container_name: clip_dbg
     build:
       context: ./
       dockerfile: Dockerfile
-      target: webserver
+      target: clip-debug
+    image: parisius/clip_dbg
     ports:
       - "5000:5000"
     volumes:
       - ./:/clip
-
-  

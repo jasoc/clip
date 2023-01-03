@@ -6,13 +6,12 @@ class Configs:
     debug: bool = None
     
     def init(self):
-        print(os.environ.get('clip_environment'))
         if   os.environ.get('clip_environment') == "prod":
             self.debug = False
         elif os.environ.get('clip_environment') == "debug":
             self.debug = True
         else:
-            raise RuntimeError("Invalid value in clip_environment variable.")
+            self.debug = __debug__
 
     @classmethod
     def instance(cls):

@@ -87,8 +87,8 @@ def main():
 
 
 def clean_docker():
-    os.system('docker container rm clip clip-ws')
-    os.system('docker image rm parisius/clip clip-ws')
+    os.system('docker container rm clip clip_dbg')
+    os.system('docker image rm parisius/clip parisius/clip_dbg')
 
 
 def clean_poetry():
