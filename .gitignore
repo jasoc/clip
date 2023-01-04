@@ -1,0 +1,12 @@
+__pycache__
+dist
+prod
+bin
+lib
+lib64
+include
+*.egg-info
+
+.venv
+.venv.*
+venv.*

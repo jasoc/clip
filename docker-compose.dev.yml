@@ -1,9 +1,14 @@
 version: "3.8"
 
 services:
-  webserver:
+  clip:
+    container_name: clip_dbg
     build:
       context: ./
-      dockerfile: ./docker/amd64/Dockerfile-dev
-    # env_file: 
-    #   - shawarma.env
+      dockerfile: Dockerfile
+      target: clip-debug
+    image: parisius/clip_dbg
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./:/clip

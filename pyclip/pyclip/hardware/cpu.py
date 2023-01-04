@@ -32,11 +32,14 @@ class CPU:
     the system's CPU informations, otherwise a plain
     CPU() object can be created. """
 
-    modelName: str = "sucsa"
+    modelName: str = "None"
     cores: int = 0
     threads: float = 0
     minFreq: float = 0
     maxFreq: float = 0
+
+    def __init__(self):
+        self.detect()
 
     def freqIsGoinCrazy() -> bool:
         pass
