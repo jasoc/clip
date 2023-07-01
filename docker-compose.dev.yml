@@ -1,14 +1,23 @@
-version: "3.8"
-
+version: '3'
 services:
-  clip:
-    container_name: clip_dbg
+  spa:
+    container_name: clip-spa-debug
+    image: clip/spa-debug
     build:
-      context: ./
-      dockerfile: Dockerfile
-      target: clip-debug
-    image: parisius/clip_dbg
-    ports:
-      - "5000:5000"
+      context: ./spa
+      dockerfile: Dockerfile.dev
+    ports: 
+      - "4200:4200"
     volumes:
-      - ./:/clip
+      - /app/node_modules
+      - ./spa:/app
+  apiserver:
+    container_name: clip-apiserver-debug
+    image: clip/apiserver-debug
+    build:
+      context: ./apiserver
+      dockerfile: Dockerfile.dev
+    ports: 
+      - "5299:5299"
+    volumes:
+      - ./apiserver:/app
