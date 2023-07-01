@@ -1,0 +1,16 @@
+version: '3'
+services:
+  spa:
+    container_name: clip-spa
+    build:
+      context: ./spa
+      dockerfile: Dockerfile
+    ports: 
+      - "4200:4200"
+  apiserver:
+    container_name: clip-apiserver
+    build:
+      context: ./apiserver
+      dockerfile: Dockerfile
+    ports: 
+      - "5000:5000"
