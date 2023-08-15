@@ -1,16 +1,22 @@
 version: '3'
 services:
-  spa:
-    container_name: clip-spa
+
+  clip-server:
+    container_name: clip-server
+    image: clip/server
     build:
-      context: ./spa
+      context: .
       dockerfile: Dockerfile
-    ports: 
-      - "4200:4200"
-  apiserver:
-    container_name: clip-apiserver
-    build:
-      context: ./apiserver
-      dockerfile: Dockerfile
+      target: apiserver
     ports: 
       - "5000:5000"
+
+  clip-spa:
+    container_name: clip-spa
+    image: clip/spa
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: spa
+    ports: 
+      - "432:80"

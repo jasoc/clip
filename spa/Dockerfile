@@ -1,10 +1,4 @@
-FROM node:18.16.1-alpine
-
-WORKDIR '/app'
-
-RUN npm install
-RUN npm build
-
+FROM node:18.16.1-alpine as base
+WORKDIR /app
 EXPOSE 4200
-
-CMD ["npm", "start"]
+CMD [ "node" ]

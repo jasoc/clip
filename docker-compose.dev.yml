@@ -1,23 +1,27 @@
 version: '3'
 services:
-  spa:
+
+  clip-spa-debug:
     container_name: clip-spa-debug
     image: clip/spa-debug
+    user: node
     build:
       context: ./spa
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     ports: 
       - "4200:4200"
     volumes:
-      - /app/node_modules
       - ./spa:/app
-  apiserver:
+    command: npm run docker
+
+  clip-apiserver-debug:
     container_name: clip-apiserver-debug
     image: clip/apiserver-debug
     build:
       context: ./apiserver
-      dockerfile: Dockerfile.dev
-    ports: 
+      dockerfile: Dockerfile
+    ports:
       - "5299:5299"
     volumes:
       - ./apiserver:/app
+    command: dotnet watch Clip.Server.csproj
