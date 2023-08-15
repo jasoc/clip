@@ -1,0 +1,133 @@
+@use 'src/styles/theme' as *;
+@use "sass:map";
+
+:host {
+    width: 40%;
+}
+
+#flat-input {
+    position: relative;
+    border-radius: 100px !important;
+    padding-right: 15px !important;
+    background: #80808026;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    transition-duration: 280ms;
+
+    #placeholder {
+        position: absolute;
+        top: 50%;
+        left: 10px;
+        font-family: roboto;
+        font-size: 17px;
+        transform: translate(0, -50%);
+        pointer-events: none;
+    }
+
+    #main-content {
+        height: 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        input {
+            margin-left: 15px;
+            padding: 0 10px 0 10px;
+            height: 50px;
+            width: 100%;
+            text-decoration: none;
+            outline: none;
+            font-size: 20px;
+            background: transparent;
+            border: none;
+            color: var(--clip-main-ui-text-color);
+            font-size: 16px;
+            font-family: roboto;
+        }
+
+        mat-icon {
+            color: map.get($clip-accent-palette, 500);
+            padding: 0 10px 0 0px;
+            pointer-events: none;
+        }
+    }
+
+    #context-menu {
+        min-height: 100px;
+        min-width: 100%;
+        max-width: 60vw;
+        width: 50vw;
+        margin-top: 7px;
+        border-radius: 20px;
+        position: absolute;
+        background-color: red;
+        left: 50%;
+        transform: translate(-50%, 0px);
+        background-color: var(--clip-background-color);
+        color: var(--clip-main-ui-text-color);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+
+        #context-menu__categories {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-direction: row;
+
+            .context-menu__category {
+                position: relative;
+                cursor: pointer;
+                text-wrap: nowrap;
+                height: 50px;
+                border-radius: 20px;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-weight: 500;
+                user-select: none;
+
+                :after {
+                    position: absolute;
+                    height: 2px;
+                    width: 100%;
+                    background-color: green;
+                }
+
+                mat-icon {
+                    cursor: pointer;
+                    margin-right: 10px;
+                }
+            }
+        }
+    }
+}
+
+.bordered {
+    box-shadow: inset 0 0 0 2px map.get($clip-accent-palette, 500) !important;
+    background: var(--clip-background-color) !important;
+}
+
+#hint {
+    padding-left: 10px;
+    font-family: roboto;
+    font-size: 12px;
+    transform: translate(0, -50%);
+    pointer-events: none;
+}
+
+.width-small {
+    width: 150px;
+}
+
+.width-medium {
+    width: 200px;
+}
+
+.width-big {
+    width: 300px;
+}
+
+.style-search {
+    border-radius: 100px !important;
+    padding-right: 15px !important;
+
+}

@@ -1,1 +1,39 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+@use 'styles/theme/maps' as ct;
+// @import 'styles/theme';
+
+@include mat.core();
+
+$clip-primary: mat.define-palette(ct.$clip-primary-palette);
+$clip-accent: mat.define-palette(ct.$clip-accent-palette, A200, A100, A400);
+
+$clip-warn: mat.define-palette(mat.$red-palette);
+
+$clip-theme: mat.define-light-theme((color: (primary: $clip-primary,
+        accent: $clip-accent,
+        warn: $clip-warn,
+      )));
+
+@include mat.all-component-themes($clip-theme);
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  background-color: var(--clip-background-color);
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+mat-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

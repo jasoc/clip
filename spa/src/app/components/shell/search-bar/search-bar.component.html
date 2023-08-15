@@ -1,0 +1,25 @@
+<div id="flat-input" [ngClass]="{
+    'bordered': colored
+}">
+    <div id="main-content">
+        <input placeholder="Search..." type="text" [(ngModel)]="text" (focus)="onFocus($event)"
+            (focusout)="onFocusOut($event)" (ngModelChange)="textChange.emit(text)" />
+        <mat-icon [style.color]="colored ? '' : 'grey'">search</mat-icon>
+    </div>
+    <div id="context-menu" @contextMenuOpen *ngIf="contextMenuOpen">
+        <div id="context-menu__categories">
+            <div class="context-menu__category" matRipple matRippleColor="#ffffff21">
+                <mat-icon>android</mat-icon>
+                Applications
+            </div>
+            <div class="context-menu__category" matRipple matRippleColor="#ffffff21">
+                <mat-icon>folder</mat-icon>
+                Files and folders
+            </div>
+            <div class="context-menu__category" matRipple matRippleColor="#ffffff21">
+                <mat-icon>settings</mat-icon>
+                Settings
+            </div>
+        </div>
+    </div>
+</div>

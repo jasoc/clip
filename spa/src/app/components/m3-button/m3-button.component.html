@@ -1,0 +1,27 @@
+<button class="m3-button" matRipple
+        [matRippleColor]="Ripple ? '#ffffff21' : 'transparent'"
+        [ngStyle]="{
+            'background-color': BackgroundColor,
+            'color': TextColor,
+        }"
+        [ngClass]="{
+            'elevation-1': Elevation == 1,
+            'round': Type == 'round',
+            'fab': Type == 'fab',
+            'sidenav-left': Type == 'sidenav-left',
+            'transparent': Style == 'transparent',
+            'primary': Style == 'primary',
+            'accent': Style == 'accent',
+            'wide': Wide,
+            'margin': Margin
+        }">
+    <div class="m3-button__inner" [ngStyle]="{
+        'justify-content': Wide && HasText() ? 'space-between' : 'center'
+    }">
+        <div class="m3-icon" *ngIf="Icon != null" [ngStyle]="{ 'margin-right': HasText() ? '7px' : '0' }">
+            <mat-icon aria-hidden="false" aria-label="Example home icon" [fontIcon]="Icon"></mat-icon>
+        </div>
+        <div class="text" *ngIf="HasText()" @ShowText>{{Text}}</div>
+        <span *ngIf="Wide && HasText()" style="width: 31px;"></span>
+    </div>
+</button>

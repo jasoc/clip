@@ -1,0 +1,69 @@
+@import './themes';
+
+$clip-primary-palette: (
+  50:   var(--clip-primary-color-50),
+  100:  var(--clip-primary-color-100),
+  200:  var(--clip-primary-color-200),
+  300:  var(--clip-primary-color-300),
+  400:  var(--clip-primary-color-400),
+  500:  var(--clip-primary-color-500),
+  600:  var(--clip-primary-color-600),
+  700:  var(--clip-primary-color-700),
+  800:  var(--clip-primary-color-800),
+  900:  var(--clip-primary-color-900),
+  A100: var(--clip-primary-color-A100),
+  A200: var(--clip-primary-color-A200),
+  A400: var(--clip-primary-color-A400),
+  A700: var(--clip-primary-color-A700),
+  
+  contrast: (
+    50:   var(--clip-primary-contrast-50),
+    100:  var(--clip-primary-contrast-100),
+    200:  var(--clip-primary-contrast-200),
+    300:  var(--clip-primary-contrast-300),
+    400:  var(--clip-primary-contrast-400),
+    500:  var(--clip-primary-contrast-500),
+    600:  var(--clip-primary-contrast-600),
+    700:  var(--clip-primary-contrast-700),
+    800:  var(--clip-primary-contrast-800),
+    900:  var(--clip-primary-contrast-900),
+    A100: var(--clip-primary-contrast-A100),
+    A200: var(--clip-primary-contrast-A200),
+    A400: var(--clip-primary-contrast-A400),
+    A700: var(--clip-primary-contrast-A700),
+  )
+);
+
+$clip-accent-palette: (
+  50:   var(--clip-accent-color-50),
+  100:  var(--clip-accent-color-100),
+  200:  var(--clip-accent-color-200),
+  300:  var(--clip-accent-color-300),
+  400:  var(--clip-accent-color-400),
+  500:  var(--clip-accent-color-500),
+  600:  var(--clip-accent-color-600),
+  700:  var(--clip-accent-color-700),
+  800:  var(--clip-accent-color-800),
+  900:  var(--clip-accent-color-900),
+  A100: var(--clip-accent-color-A100),
+  A200: var(--clip-accent-color-A200),
+  A400: var(--clip-accent-color-A400),
+  A700: var(--clip-accent-color-A700),
+  
+  contrast: (
+    50:   var(--clip-accent-contrast-50),
+    100:  var(--clip-accent-contrast-100),
+    200:  var(--clip-accent-contrast-200),
+    300:  var(--clip-accent-contrast-300),
+    400:  var(--clip-accent-contrast-400),
+    500:  var(--clip-accent-contrast-500),
+    600:  var(--clip-accent-contrast-600),
+    700:  var(--clip-accent-contrast-700),
+    800:  var(--clip-accent-contrast-800),
+    900:  var(--clip-accent-contrast-900),
+    A100: var(--clip-accent-contrast-A100),
+    A200: var(--clip-accent-contrast-A200),
+    A400: var(--clip-accent-contrast-A400),
+    A700: var(--clip-accent-contrast-A700),
+  )
+);

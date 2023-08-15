@@ -1,0 +1,67 @@
+@use '../tokens' as *;
+
+[data-theme="dark"] {
+    --clip-background-color: #181818;
+
+    --clip-main-ui-text-color: white;
+
+    --clip-primary-color-50: #fcece4;
+    --clip-primary-color-100: #f7d1bc;
+    --clip-primary-color-200: #f2b28f;
+    --clip-primary-color-300: #ed9362;
+    --clip-primary-color-400: #e97b40;
+    --clip-primary-color-500: #e5641e;
+    --clip-primary-color-600: #e25c1a;
+    --clip-primary-color-700: #de5216;
+    --clip-primary-color-800: #da4812;
+    --clip-primary-color-900: #d3360a;
+    --clip-primary-color-A100: #fffefd;
+    --clip-primary-color-A200: #ffd4ca;
+    --clip-primary-color-A400: #ffaa97;
+    --clip-primary-color-A700: #ff957e;
+
+    --clip-primary-contrast-50: #{$clip-dark-primary-text};
+    --clip-primary-contrast-100: #{$clip-dark-primary-text};
+    --clip-primary-contrast-200: #{$clip-dark-primary-text};
+    --clip-primary-contrast-300: #{$clip-light-primary-text};
+    --clip-primary-contrast-400: #{$clip-light-primary-text};
+    --clip-primary-contrast-500: #{$clip-light-primary-text};
+    --clip-primary-contrast-600: #{$clip-light-primary-text};
+    --clip-primary-contrast-700: #{$clip-light-primary-text};
+    --clip-primary-contrast-800: #{$clip-light-primary-text};
+    --clip-primary-contrast-900: #{$clip-light-primary-text};
+    --clip-primary-contrast-A100: #{$clip-dark-primary-text};
+    --clip-primary-contrast-A200: #{$clip-light-primary-text};
+    --clip-primary-contrast-A400: #{$clip-light-primary-text};
+    --clip-primary-contrast-A700: #{$clip-light-primary-text};
+
+    --clip-accent-color-50: #e4eef7;
+    --clip-accent-color-100: #bbd4ea;
+    --clip-accent-color-200: #8eb7dd;
+    --clip-accent-color-300: #619acf;
+    --clip-accent-color-400: #3f85c4;
+    --clip-accent-color-500: #1d6fba;
+    --clip-accent-color-600: #1a67b3;
+    --clip-accent-color-700: #155cab;
+    --clip-accent-color-800: #1152a3;
+    --clip-accent-color-900: #0a4094;
+    --clip-accent-color-A100: #c2d7ff;
+    --clip-accent-color-A200: #8fb5ff;
+    --clip-accent-color-A400: #5c93ff;
+    --clip-accent-color-A700: #4283ff;
+
+    --clip-accent-contrast-50: #{$clip-dark-primary-text};
+    --clip-accent-contrast-100: #{$clip-dark-primary-text};
+    --clip-accent-contrast-200: #{$clip-dark-primary-text};
+    --clip-accent-contrast-300: #{$clip-light-primary-text};
+    --clip-accent-contrast-400: #{$clip-light-primary-text};
+    --clip-accent-contrast-500: #{$clip-light-primary-text};
+    --clip-accent-contrast-600: #{$clip-light-primary-text};
+    --clip-accent-contrast-700: #{$clip-light-primary-text};
+    --clip-accent-contrast-800: #{$clip-light-primary-text};
+    --clip-accent-contrast-900: #{$clip-light-primary-text};
+    --clip-accent-contrast-A100: #{$clip-dark-primary-text};
+    --clip-accent-contrast-A200: #{$clip-light-primary-text};
+    --clip-accent-contrast-A400: #{$clip-light-primary-text};
+    --clip-accent-contrast-A700: #{$clip-light-primary-text};
+}

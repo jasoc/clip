@@ -1,0 +1,23 @@
+<div id="flat-input" [ngStyle]="{
+    'border': colored ? '2px solid ' + color : '1px solid grey',
+    'padding': colored ? '0px ' : '1px',
+    'margin-bottom': hint ? '10px' : '0px'
+}" [ngClass]="{
+    'width-small': width == 'small',
+    'width-medium': width == 'medium',
+    'width-big': width == 'big',
+    'style-search': style == 'search',
+    'style-round': style == 'round'
+}">
+    <div id="main-content">
+        <input [placeholder]="getPlaceholder()" type="text" [(ngModel)]="text" (focus)="onFocus($event)"
+            (focusout)="onFocusOut($event)" (ngModelChange)="textChange.emit(text)" />
+        <mat-icon [style.color]="colored ? color : 'grey'" *ngIf="icon">{{icon}}</mat-icon>
+    </div>
+    <label id="placeholder" *ngIf="style != 'search'" [ngStyle]="{
+    'color': colored ? color : 'grey'
+}" [@placeholderAnimated]="placeholderAnimated ? 'moved' : 'static'">{{placeholder}}</label>
+</div>
+<label id="hint" *ngIf="hint" [ngStyle]="{
+'color': colored ? color : 'grey'
+}">{{hint}}</label>

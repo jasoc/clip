@@ -1,0 +1,42 @@
+<div id="navigation-drawer" [@openClose]="collapsed ? 'closed' : 'open'">
+    <div class="navigation-drawer__top" (click)="ToggleCollapse()" [ngStyle]="{
+        'justify-content': collapsed ? 'center' : 'space-between'
+    }">
+        <p *ngIf="!collapsed">Clip</p>
+        <m3-button [Icon]="collapsed ? 'menu' : 'chevron_left'" Type="fab" [Wide]="true" [Ripple]="false"
+            [Margin]="false" [Style]="'transparent'">
+        </m3-button>
+
+    </div>
+    
+
+    <div class="entries">
+        <m3-button [Icon]="isLightTheme ? 'toggle_off' : 'toggle_on'" Type="sidenav-left"
+            [Text]="collapsed ? '' : 'Dark Theme'" [Wide]="true" [Ripple]="true" [Style]="'transparent'"
+            (click)="onThemeSwitchChange()">
+        </m3-button>
+        <m3-button [Icon]="'token'" Type="sidenav-left" [Text]="collapsed ? '' : 'Clip Home'" [Wide]="true"
+            [Style]="'transparent'" (click)="navigate('/home')">
+        </m3-button>
+        <m3-button [Icon]="'dataset'" Type="sidenav-left" [Text]="collapsed ? '' : 'Applications'" [Wide]="true"
+            [Style]="'transparent'" (click)="navigate('/home/about')">
+        </m3-button>
+        <m3-button [Icon]="'computer'" Type="sidenav-left" [Text]="collapsed ? '' : 'Virtual Machines'" [Wide]="true"
+            [Style]="'transparent'" (click)="navigate('/vms')">
+        </m3-button>
+        <m3-button [Icon]="'psychology'" Type="sidenav-left" [Text]="collapsed ? '' : 'Virtual Assistant'" [Wide]="true"
+            [Style]="'transparent'" (click)="navigate('/vms')">
+        </m3-button>
+        <m3-button [Icon]="'directions_boat'" Type="sidenav-left" [Text]="collapsed ? '' : 'Kubernetes'" [Wide]="true"
+            [Style]="'transparent'" (click)="navigate('/kubernetes')">
+        </m3-button>
+    </div>
+
+    <div style="margin: auto 0px"></div>
+
+    <div class="show-user">
+        <m3-button [Wide]="true" @showUserButton Icon="settings"></m3-button>
+        <m3-button *ngIf="!collapsed" Style="accent" @showUserButton Icon="homepage" Text="Home page"></m3-button>
+    </div>
+
+</div>

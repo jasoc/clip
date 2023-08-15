@@ -1,0 +1,99 @@
+// @use 'src/styles/theme/maps' as ct;
+@use '../../../styles/theme' as *;
+@use 'src/styles/fonts' as fonts;
+@use "sass:map";
+
+$MARGIN: 16px;
+$TRANSLUCENT_COLOR: #ffffffc9;
+
+:host {
+    min-width: 38px;
+}
+
+.m3-button {
+    background: map.get($clip-accent-palette, 500);
+    width: auto;
+    border: none;
+    font-family: 'Roboto';
+    min-width: 38px;
+    font-weight: 500;
+    font-size: 14px;
+    text-wrap: nowrap;
+    user-select: none;
+    cursor: pointer;
+    transition: cubic-bezier(0.2, 0.0, 0, 1.0) 150ms;
+
+    &:hover {
+        transition: cubic-bezier(0.2, 0.0, 0, 1.0) 150ms;
+        border-radius: 10px !important;
+    }
+
+    .m3-button__inner {
+        cursor: pointer;
+        padding: 0 16px;
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+        align-items: center;
+        height: 24px;
+
+        .text {
+        }
+
+        .m3-icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}
+
+.elevation-1 {
+    box-shadow: $box-shadow;
+}
+
+.round {
+    height: 49px;
+    border-radius: 100px;
+}
+
+.fab {
+    height: 56px;
+    border-radius: 16px;
+}
+
+.sidenav-left {
+    height: 49px;
+    border-radius: 16px;
+    justify-content: flex-start;
+    .m3-button__inner {
+        justify-content: flex-start !important;
+        .m3-icon {
+            margin-right: 20px !important;
+        }
+    }
+}
+
+.wide {
+    width: 100%;
+}
+
+.primary {
+    background: map.get($clip-primary-palette, 500);
+    color: map.get($clip-primary-palette, 'contrast', 500);
+}
+
+
+.accent {
+    background: map.get($clip-accent-palette, 500);
+    color: map.get($clip-accent-palette, 'contrast', 500);
+}
+
+.transparent {
+    background: transparent;
+    color: var(--clip-main-ui-text-color);
+}
+
+.margin {
+    margin: $MARGIN;
+}
