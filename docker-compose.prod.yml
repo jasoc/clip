@@ -1,22 +1,25 @@
 version: '3'
 services:
 
-  clip-server:
-    container_name: clip-server
-    image: clip/server
+  apiserver-prod:
+    container_name: clip-apiserver
+    image: clip/apiserver
+    restart: unless-stopped
+    environment:
+      - CLIP_APISERVER_PORT=80
+      - CLIP_APISERVER_HOST=0.0.0.0
     build:
       context: .
-      dockerfile: Dockerfile
-      target: apiserver
-    ports: 
-      - "5000:5000"
+      dockerfile: apiserver/Dockerfile
+      target: prod
 
-  clip-spa:
+  spa-prod:
     container_name: clip-spa
     image: clip/spa
+    restart: unless-stopped
     build:
       context: .
-      dockerfile: Dockerfile
-      target: spa
+      dockerfile: spa/Dockerfile
+      target: prod
     ports: 
       - "432:80"

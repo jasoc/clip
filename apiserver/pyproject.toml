@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "clip-apiserver"
+version = "0.0.1"
+description = ""
+authors = ["Jasoc <paridegiunta@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.101.1"
+uvicorn = {extras = ["standard"], version = "^0.23.2"}
+sqlalchemy = "^2.0.20"
+psycopg2-binary = "^2.9.7"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

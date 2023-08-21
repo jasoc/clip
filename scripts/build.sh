@@ -4,9 +4,31 @@ CLIP_PROJECT_PATH=$(dirname -- "$(readlink -f -- "$0";)";)/..
 
 build_apiserver()
 {
+    if [ ! -d "$CLIP_PROJECT_PATH/dist/apiserver" ]
+    then
+        mkdir $CLIP_PROJECT_PATH/dist/apiserver
+    fi
+
     cd $CLIP_PROJECT_PATH/apiserver
-    dotnet build Clip.Server.csproj --configuration Release --runtime linux-x64 --no-self-contained
-    cp -r $CLIP_PROJECT_PATH/apiserver/bin/Release/net7.0/linux-x64 $CLIP_PROJECT_PATH/dist/apiserver
+    
+    export PYTHONUNBUFFERED=1
+    export PYTHONDONTWRITEBYTECODE=1
+    export PIP_NO_CACHE_DIR=off
+    export PIP_DISABLE_PIP_VERSION_CHECK=on
+    export PIP_DEFAULT_TIMEOUT=100
+    export POETRY_VERSION=1.0.3
+    export POETRY_VIRTUALENVS_IN_PROJECT=true
+    export POETRY_NO_INTERACTION=1
+    export PYSETUP_PATH="/opt/pysetup"
+    export PATH="$POETRY_HOME/bin:$PATH"
+
+    poetry install
+    poetry build
+    poetry export --without-hashes --format=requirements.txt > requirements.txt
+
+    cp $CLIP_PROJECT_PATH/apiserver/requirements.txt $CLIP_PROJECT_PATH/dist/apiserver/requirements.txt
+    # cp -r $CLIP_PROJECT_PATH/apiserver/dist/* $CLIP_PROJECT_PATH/dist/apiserver
+    cp -r $CLIP_PROJECT_PATH/apiserver/clip_apiserver/* $CLIP_PROJECT_PATH/dist/apiserver
 }
 
 build_spa()

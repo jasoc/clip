@@ -1,6 +1,6 @@
 @use '@angular/material' as mat;
 @use 'styles/theme/maps' as ct;
-// @import 'styles/theme';
+@use 'styles/fonts' as fonts;
 
 @include mat.core();
 
