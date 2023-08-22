@@ -1,1 +1,28 @@
 from .session import DBSession
+from sqlalchemy.engine import URL
+
+from utils import config, get_logger
+
+
+logger = get_logger(__name__)
+
+
+def init_clip_database():
+    url: str = None
+    
+    if not config.postgresql_enabled():
+        url = f"sqlite:///{config.SQLITE_DATABASE_PATH}"
+        logger.info("Using SQLite")
+    else:
+        logger.info("Using PostgreSQL")
+        url = URL.create(
+            drivername = "postgresql",
+            host = config.POSTGRESQL_HOST,
+            port = config.POSTGRESQL_PORT,
+            username = config.POSTGRESQL_USER,
+            password = config.POSTGRESQL_PASSWORD,
+            database = config.POSTGRESQL_DATABASE_NAME
+        )
+
+    DBSession.start(url)
+    DBSession.get().init_database()
