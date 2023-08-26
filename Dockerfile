@@ -1,4 +1,6 @@
-FROM python:3.11.3-slim-bullseye as dev
+################# API SERVER DEV #################
+
+FROM python:3.11.3-slim-bullseye as apiserver-dev
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
     curl \
@@ -21,14 +23,33 @@ RUN curl -sSL https://install.python-poetry.org | python3 - --version 1.5.1
 EXPOSE 8000
 WORKDIR /clip/scripts
 
-FROM dev as build
+################# API SERVER BUILD #################
+
+FROM apiserver-dev as apiserver-build
 WORKDIR /clip
 COPY ./scripts ./scripts
 COPY ./apiserver ./apiserver
 RUN /bin/sh /clip/scripts/build.sh apiserver
 
-FROM python:3.11.3-slim-bullseye as prod
+################# SPA DEV #################
+
+FROM node:18.16.1-alpine as spa-dev
+WORKDIR /clip/scripts
+EXPOSE 4200
+
+################# SPA BUILD #################
+
+FROM node:18.16.1-alpine as spa-build
 WORKDIR /clip
-COPY --from=build /clip/scripts ./scripts
-COPY --from=build /clip/dist/apiserver ./dist/apiserver
-CMD [ "/bin/sh", "/clip/scripts/run.sh", "apiserver" ]
+COPY ./scripts ./scripts
+COPY ./spa ./spa
+RUN /bin/sh /clip/scripts/build.sh spa
+
+################# CLIP PROD #################
+
+FROM python:3.11.3-slim-bullseye as clip-prod
+WORKDIR /clip
+COPY ./scripts ./scripts
+COPY --from=apiserver-build /clip/dist/apiserver ./dist/apiserver
+COPY --from=spa-build /clip/dist/spa ./dist/spa
+CMD ["/bin/sh", "/clip/scripts/run.sh"]
