@@ -134,3 +134,6 @@ dist/
 
 .venv
 __pycache__
+
+# Apiserver database
+apiserver/database.db
