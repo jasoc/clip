@@ -25,4 +25,4 @@ def init_clip_database():
         )
 
     DBSession.start(url)
-    DBSession.get().init_database()
+    DBSession.init_database()

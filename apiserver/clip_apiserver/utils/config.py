@@ -1,8 +1,8 @@
 import os
-import sys
 
 class Config:
 
+    
     CLIP_REMOTE_ADDRESS: str | None = None
     CLIP_APISERVER_HOST: str = None
     CLIP_APISERVER_PORT: int = None
@@ -11,8 +11,12 @@ class Config:
     POSTGRESQL_HOST: str | None = None
     POSTGRESQL_PORT: str | None = None
     POSTGRESQL_DATABASE_NAME: str | None = None
-
+    ACCESS_TOKEN_EXPIRE_MINUTES: str | None = None
+    SECRET_KEY: str
+    
     SQLITE_DATABASE_PATH: str
+    
+    ALGORITHM: str = "HS256"
 
     def __init__(self):
         self.CLIP_REMOTE_ADDRESS = os.getenv("CLIP_REMOTE_ADDRESS")
@@ -23,7 +27,9 @@ class Config:
         self.POSTGRESQL_HOST = os.getenv("POSTGRESQL_HOST")
         self.POSTGRESQL_PORT = os.getenv("POSTGRESQL_PORT")
         self.POSTGRESQL_DATABASE_NAME = os.getenv("POSTGRESQL_DATABASE_NAME")
-        if (os.getenv("POSTGRESQL_DBATABASE_NAME") is None):
+        self.ACCESS_TOKEN_EXPIRE_MINUTES = os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES") or 1440
+        self.SECRET_KEY = os.getenv("SECRET_KEY")
+        if (os.getenv("SQLITE_DATABASE_PATH") is None):
             # TODO:
             # This is a very ugly solution, this
             # should check if is running on docker
