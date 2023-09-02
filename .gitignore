@@ -134,3 +134,5 @@ dist/
 
 .venv
 __pycache__
+
+docker-compose.*
