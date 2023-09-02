@@ -136,3 +136,5 @@ dist/
 __pycache__
 
 docker-compose.*
+# Apiserver database
+apiserver/database.db

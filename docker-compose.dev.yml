@@ -7,8 +7,8 @@ services:
     command: /bin/sh dev.sh apiserver
     build:
       context: .
-      dockerfile: apiserver/Dockerfile
-      target: dev
+      dockerfile: ./Dockerfile
+      target: apiserver-dev
     ports:
       - "8000:8000"
     volumes:
@@ -21,8 +21,8 @@ services:
     command: /bin/sh dev.sh spa
     build:
       context: .
-      dockerfile: spa/Dockerfile
-      target: dev
+      dockerfile: ./Dockerfile
+      target: spa-dev
     ports: 
       - "4200:4200"
     volumes:

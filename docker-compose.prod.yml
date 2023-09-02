@@ -1,25 +1,16 @@
 version: '3'
 services:
 
-  apiserver-prod:
-    container_name: clip-apiserver
-    image: clip/apiserver
+  clip:
+    container_name: clip
+    image: parisius/clip
     restart: unless-stopped
     environment:
       - CLIP_APISERVER_PORT=80
       - CLIP_APISERVER_HOST=0.0.0.0
     build:
       context: .
-      dockerfile: apiserver/Dockerfile
-      target: prod
-
-  spa-prod:
-    container_name: clip-spa
-    image: clip/spa
-    restart: unless-stopped
-    build:
-      context: .
-      dockerfile: spa/Dockerfile
-      target: prod
-    ports: 
-      - "432:80"
+      dockerfile: ./Dockerfile
+      target: clip-prod
+    ports:
+      - 432:80
