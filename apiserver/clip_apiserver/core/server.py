@@ -1,32 +1,21 @@
 import os
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 from starlette.middleware.cors import CORSMiddleware
 from database import init_clip_database
 from api import api_v1_router
 from utils import config
 
+templates = Jinja2Templates(directory="templates")
 
 def create_app() -> FastAPI:
-    app = FastAPI(
-        debug=True,
-        title="Clip Server"
-    )
-    register_cors(app)
-    register_router(app)
-    register_static_file(app)
-    register_init(app)
 
-    return app
+    app = FastAPI(debug=True, title="Clip Server")
+    
+    app.include_router(api_v1_router)
 
-
-def register_static_file(app: FastAPI) -> None:
-    if not os.path.exists("./static"):
-        os.mkdir("./static")
-    app.mount("/static", StaticFiles(directory="static"), name="static")
-
-
-def register_cors(app: FastAPI) -> None:
     app.add_middleware(
         CORSMiddleware,
         allow_origins=[config.CLIP_REMOTE_ADDRESS or "*"],
@@ -35,18 +24,11 @@ def register_cors(app: FastAPI) -> None:
         allow_headers=["*"],
     )
 
-
-def register_router(app: FastAPI) -> None:
-    app.include_router(
-        api_v1_router,
-    )
-
-
-def register_init(app: FastAPI) -> None:
-
     @app.on_event("startup")
     async def init_connect():
         init_clip_database()
+
+    return app
 
 
 clip_server_app = create_app()
