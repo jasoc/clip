@@ -1,13 +1,13 @@
 version: '3'
 services:
 
-  apiserver:
+  clip-apiserver-debug:
     container_name: clip-apiserver-debug
     image: clip/apiserver-debug
     command: /bin/sh dev.sh apiserver
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: ./apiserver/Dockerfile
       target: apiserver-dev
     ports:
       - "8000:8000"
@@ -15,13 +15,13 @@ services:
       - ./apiserver:/clip/apiserver
       - ./scripts:/clip/scripts
 
-  spa:
+  clip-spa-debug:
     container_name: clip-spa-debug
     image: clip/spa-debug
     command: /bin/sh dev.sh spa
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: ./spa/Dockerfile
       target: spa-dev
     ports: 
       - "4200:4200"
