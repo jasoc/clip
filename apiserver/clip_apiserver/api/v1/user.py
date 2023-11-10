@@ -30,50 +30,54 @@ class RegisterModel(BaseModel):
     surname: str = None
     email: str = None
 
+class LoginModel(BaseModel):
+    username: str = None
+    password: str = None
+
 
 @user_router.post("/register")
-def register_dummy(form_data: Annotated[RegisterModel, Body()]):
-    user = get_user(form_data.username)
+def register_dummy(body: Annotated[RegisterModel, Body()]):
+    user = get_user(body.username)
     if user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=f"An user with username {form_data.username} already exists.",
+            detail=f"An user with username {body.username} already exists.",
             headers={"WWW-Authenticate": "Bearer"},
         )
     with DBSession.disposable() as session:
         obj = User()
-        obj.email = form_data.email
-        obj.name = form_data.name
-        obj.surname = form_data.surname
-        obj.username = form_data.username
-        obj.hashed_password = get_password_hash(form_data.password)
+        obj.email = body.email
+        obj.name = body.name
+        obj.surname = body.surname
+        obj.username = body.username
+        obj.hashed_password = get_password_hash(body.password)
         session.add(obj)
         session.commit()
-    logger.info(f"Registered user with username {form_data.username} and email {form_data.email}")
+    logger.info(f"Registered user with username {body.username} and email {body.email}")
     return JSONResponse(status_code=status.HTTP_201_CREATED, content=None)
 
 
 @user_router.post("/login", response_model=Token)
-async def login_for_access_token(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
-    user: User = get_user(form_data.username)
+async def login_for_access_token(body: Annotated[LoginModel, Body()]):
+    user: User = get_user(body.username)
     if not user:
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=f"No user found with username {form_data.username}.",
-            headers={"WWW-Authenticate": "Bearer"},
+            status_code = status.HTTP_401_UNAUTHORIZED,
+            detail = f"No user found with username {body.username}.",
+            headers = {"WWW-Authenticate": "Bearer"},
         )
-    if not verify_password(form_data.password, user.hashed_password):
+    if not verify_password(body.password, user.hashed_password):
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect password.",
-            headers={"WWW-Authenticate": "Bearer"},
+            status_code = status.HTTP_401_UNAUTHORIZED,
+            detail = "Incorrect password.",
+            headers = {"WWW-Authenticate": "Bearer"},
         )
     access_token_expires = timedelta(minutes=float(config.ACCESS_TOKEN_EXPIRE_MINUTES))
     access_token = create_access_token(user.username, expires_delta=access_token_expires)
-    return {
+    return JSONResponse(status_code=status.HTTP_200_OK, content={
         "access_token": access_token,
         "token_type": "bearer"
-    }
+    })
 
 
 @user_router.get("/info", response_model=UserSchema)

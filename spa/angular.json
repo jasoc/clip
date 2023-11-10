@@ -35,7 +35,7 @@
             "scripts": []
           },
           "configurations": {
-            "production": {
+            "docker-prod": {
               "budgets": [
                 {
                   "type": "initial",
@@ -43,30 +43,59 @@
                   "maximumError": "1mb"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.docker.prod.ts"
+                }
+              ]
             },
-            "development": {
+            "docker-debug": {
               "buildOptimizer": false,
               "optimization": false,
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.docker.debug.ts"
+                }
+              ]
+            },
+            "local-debug": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.local.debug.ts"
+                }
+              ]
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "docker-production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
-            "production": {
-              "browserTarget": "clip:build:production"
+            "docker-prod": {
+              "browserTarget": "clip:build:docker-prod"
             },
-            "development": {
-              "browserTarget": "clip:build:development"
+            "docker-debug": {
+              "browserTarget": "clip:build:docker-debug"
+            },
+            "local-debug": {
+              "browserTarget": "clip:build:local-debug"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "docker-debug"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",

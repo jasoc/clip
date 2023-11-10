@@ -3,12 +3,14 @@ services:
 
   clip-apiserver-debug:
     container_name: clip-apiserver-debug
-    image: clip/apiserver-debug
+    image: clip/apiserver:debug
     command: /bin/sh dev.sh apiserver
     build:
       context: .
       dockerfile: ./apiserver/Dockerfile
       target: apiserver-dev
+    networks:
+      - clip-network
     ports:
       - "8000:8000"
     volumes:
@@ -17,7 +19,7 @@ services:
 
   clip-spa-debug:
     container_name: clip-spa-debug
-    image: clip/spa-debug
+    image: clip/spa:debug
     command: /bin/sh dev.sh spa
     build:
       context: .
@@ -25,6 +27,12 @@ services:
       target: spa-dev
     ports: 
       - "4200:4200"
+    networks:
+      - clip-network
     volumes:
       - ./spa:/clip/spa
       - ./scripts:/clip/scripts
+
+networks:
+  clip-network:
+    name: clip-network

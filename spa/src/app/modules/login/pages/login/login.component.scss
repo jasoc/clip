@@ -1,0 +1,17 @@
+#login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: auto;
+
+    .login-card {
+        background-color: rgb(218, 218, 218);
+        padding: 100px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: var(--clip-main-ui-text-color);
+    }
+}

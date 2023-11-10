@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AboutPageComponent } from './about-page.component';
+import { MainShellComponent } from './main-shell.component';
 
-describe('AboutPageComponent', () => {
-  let component: AboutPageComponent;
-  let fixture: ComponentFixture<AboutPageComponent>;
+describe('MainShellComponent', () => {
+  let component: MainShellComponent;
+  let fixture: ComponentFixture<MainShellComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [AboutPageComponent]
+      declarations: [MainShellComponent]
     });
-    fixture = TestBed.createComponent(AboutPageComponent);
+    fixture = TestBed.createComponent(MainShellComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
