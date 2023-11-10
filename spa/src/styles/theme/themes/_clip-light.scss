@@ -1,6 +1,6 @@
 @use '../tokens' as *;
 
-[data-theme="light"] {
+[data-theme="clip-light"] {
     --clip-background-color: #ffffff;
 
     --clip-main-ui-text-color: #{$clip-dark-primary-text};

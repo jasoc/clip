@@ -8,6 +8,7 @@ import { NestedTreeControl } from '@angular/cdk/tree';
 import { Router } from '@angular/router'; 
 import { simpleFade } from 'src/app/animations/enterAndLeave';
 import { M3ButtonComponent } from '../../m3-button/m3-button.component';
+import { ThemeService } from 'src/app/services/theme.service';
 
 interface FoodNode {
   name: string;
@@ -39,6 +40,7 @@ const TREE_DATA: FoodNode[] = [
   selector: 'app-navigation-drawer',
   templateUrl: './navigation-drawer.component.html',
   styleUrls: ['./navigation-drawer.component.scss'],
+  providers: [ThemeService],
   imports: [CommonModule, MatButtonModule, M3ButtonComponent, MatTreeModule, MatIconModule],
   
   animations: [
@@ -64,7 +66,7 @@ export class NavigationDrawerComponent {
   treeControl = new NestedTreeControl<FoodNode>(node => node.children);
   dataSource = new MatTreeNestedDataSource<FoodNode>();
 
-  constructor(public router: Router) {
+  constructor(public router: Router, public themeService: ThemeService) {
     this.dataSource.data = TREE_DATA;
   }
 
@@ -78,15 +80,11 @@ export class NavigationDrawerComponent {
   }
 
   onThemeSwitchChange() {
-    this.isLightTheme = !this.isLightTheme;
-
-    document.body.setAttribute(
-      'data-theme',
-      this.isLightTheme ? 'light' : 'dark'
-    );
+    this.themeService.switchDarkLight();
   }
 
   navigate(path: string) {
     this.router.navigate([path]);
+    //this.router.navigate([{ outlets: { 'inner-ro': [path] }}]);
   }
 }
