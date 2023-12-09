@@ -19,7 +19,7 @@ def get_user(username: str) -> User:
         statement = select(User).filter_by(username=username)
         return session.scalars(statement).one_or_none()
 
-async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
+async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]) -> User:
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -27,7 +27,6 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
     )
     try:
         payload = jwt.decode(token, config.SECRET_KEY, algorithms=[config.ALGORITHM])
-        logger.info(payload)
         username: str = payload.get("sub")
         if username is None:
             raise credentials_exception

@@ -10,6 +10,7 @@ const routes: Routes = [
         component: ShellComponent,
         children: [
             { path: 'home', canActivate: [PermissionsService.CanActivateFn], loadChildren: () => import('../modules/home/home.module').then((m) => m.HomeModule) },
+            { path: 'dashboards', canActivate: [PermissionsService.CanActivateFn], loadChildren: () => import('../modules/dashboard/dashboard.module').then((m) => m.DasboardModule) },
         ]
     },
 ];

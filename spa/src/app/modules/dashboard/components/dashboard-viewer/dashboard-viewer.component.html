@@ -1,0 +1,14 @@
+<div class="dashboard-viewer"
+    [ngStyle]="{
+        'grid-template-columns': gridTemplateColumns,
+        'grid-template-rows': gridTemplateRows
+    }">
+    <ng-template #container></ng-template>
+</div>
+<div *ngIf="composerMode && gridTemplateColumns && gridTemplateRows" class="dashboard-workgrids"
+[ngStyle]="{
+    'grid-template-columns': gridTemplateColumns,
+    'grid-template-rows': gridTemplateRows
+}">
+    <div *ngFor="let col of numbers" class="dashboard-workgrids-cell"></div>
+</div>

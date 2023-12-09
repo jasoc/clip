@@ -1,0 +1,42 @@
+<div id="dashboard-composer" *ngIf="dashboard">
+    <div class="dashboard-composer-board">
+        <clip-dashboard-viewer #viewer *ngIf="dashboard" [composer-mode]="true"
+            [dashboard]="dashboard"></clip-dashboard-viewer>
+    </div>
+    <div class="dashboard-composer-spacer"></div>
+    <div class="dashboard-composer-widgets">
+        <h3>{{(!dashboard.name || dashboard.name == '') ? 'Dashboard name' : dashboard.name}}</h3>
+
+        <m3-tabs>
+            <m3-tab label="Widgets list" icon="splitscreen_add">
+                <m3-input id="password-input" placeholder="Search widget" icon="search"></m3-input>
+                <div class="dashboard-composer-widgets-all">
+                    <div cdkDrag class="widget" *ngFor="let widget of widgetsMap | keyvalue" (cdkDragEnded)="onWidgetDraggedFromList($event, widget.key)">
+                        <m3-icon [filled]="true" font-size="40px">{{widget.value.prototype.metadata?.icon}}</m3-icon>
+                        {{widget.value.prototype.metadata?.name}}
+                    </div>
+                </div>
+            </m3-tab>
+
+            <m3-tab label="Dashboard" icon="dashboard">
+                <div class="dashboard-composer-widgets-defaults">
+                    <m3-input id="password-input" width="100%" left-icon="badge" icon="abc" [(text)]="dashboard.name"
+                        placeholder="Dashboard name"></m3-input>
+                    <div class="dashboard-composer-widgets-defaults__inner">
+                        <m3-input id="password-input" type="number" width="50%" [(text)]="dashboard.rows"
+                            placeholder="Rows"></m3-input>
+                        <m3-input id="password-input" type="number" width="50%" [(text)]="dashboard.columns"
+                            placeholder="Columns"></m3-input>
+                    </div>
+                    <m3-button Text="Save" Icon="save" (click)="onSave()"></m3-button>
+                </div>
+            </m3-tab>
+
+            <m3-tab label="Selected" icon="settings">
+                fdfd
+            </m3-tab>
+
+        </m3-tabs>
+
+    </div>
+</div>

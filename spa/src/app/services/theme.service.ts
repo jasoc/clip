@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 
-enum Theme {
+export enum Theme {
     Light = 'clip-light',
     Dark = 'clip-dark'
 }
@@ -15,7 +15,6 @@ export class ThemeService {
 
     constructor() {
         let localValue = localStorage.getItem('theme');
-        console.log(localValue);
         if (localValue != null) {
             this.currentTheme = Theme[Object.keys(Theme)[Object.values(Theme).indexOf(localValue as unknown as Theme)] as keyof typeof Theme];
         }

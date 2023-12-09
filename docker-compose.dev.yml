@@ -27,6 +27,7 @@ services:
       target: spa-dev
     ports: 
       - "4200:4200"
+      - "9222:9222"
     networks:
       - clip-network
     volumes:

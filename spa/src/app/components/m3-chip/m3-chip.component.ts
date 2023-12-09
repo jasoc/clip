@@ -11,8 +11,8 @@ import { Component, Input } from '@angular/core';
 export class M3ChipComponent {
 
   @Input()
-  public BackgroundColor: string = 'black';
+  public BackgroundColor: string | null = null;
 
   @Input()
-  public TextColor: string = 'white';
+  public TextColor: string | null = null
 }

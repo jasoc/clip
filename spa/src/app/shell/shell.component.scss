@@ -1,3 +1,5 @@
+@use 'src/styles/theme' as *;
+
 :host {
     height: 100vh;
     width: 100vw;
@@ -17,14 +19,14 @@
     #router {
         height: 100vh;
         width: 100%;
-        $MARGIN: 12px;
         display: grid;
-        grid-template-columns: $MARGIN auto $MARGIN;
-        grid-template-rows: 57px auto $MARGIN;
+        grid-template-columns: $clip-shell-margin auto $clip-shell-margin;
+        grid-template-rows: 64px auto $clip-shell-margin;
 
         #navigation-bar {
             grid-column: 1 / 4;
             grid-row: 1;
+            height: auto;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -35,9 +37,10 @@
             width: 100%;
             height: 100%;
             background: #74747454;
-            border-radius: 10px;
+            border-radius: $clip-shell-rounding;
             grid-column: 1 / 3;
             grid-row: 2;
+            overflow-x: hidden;
         }
     }
 }

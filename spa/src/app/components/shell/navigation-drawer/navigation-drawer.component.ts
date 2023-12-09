@@ -1,39 +1,14 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { animate, animateChild, group, query, state, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import {MatTreeModule, MatTreeNestedDataSource} from '@angular/material/tree';
-import {MatIconModule} from '@angular/material/icon';
-import { NestedTreeControl } from '@angular/cdk/tree';
-import { Router } from '@angular/router'; 
+import { MatTreeModule, MatTreeNestedDataSource } from '@angular/material/tree';
+import { MatIconModule } from '@angular/material/icon';
+import { Router } from '@angular/router';
 import { simpleFade } from 'src/app/animations/enterAndLeave';
 import { M3ButtonComponent } from '../../m3-button/m3-button.component';
 import { ThemeService } from 'src/app/services/theme.service';
-
-interface FoodNode {
-  name: string;
-  children?: FoodNode[];
-}
-
-const TREE_DATA: FoodNode[] = [
-  {
-    name: 'Fruit',
-    children: [{name: 'Apple'}, {name: 'Banana'}, {name: 'Fruit loops'}],
-  },
-  {
-    name: 'Vegetables',
-    children: [
-      {
-        name: 'Green',
-        children: [{name: 'Broccoli'}, {name: 'Brussels sprouts'}],
-      },
-      {
-        name: 'Orange',
-        children: [{name: 'Pumpkins'}, {name: 'Carrots'}],
-      },
-    ],
-  },
-];
+import { M3ChipComponent } from '../../m3-chip/m3-chip.component';
 
 @Component({
   standalone: true,
@@ -41,8 +16,8 @@ const TREE_DATA: FoodNode[] = [
   templateUrl: './navigation-drawer.component.html',
   styleUrls: ['./navigation-drawer.component.scss'],
   providers: [ThemeService],
-  imports: [CommonModule, MatButtonModule, M3ButtonComponent, MatTreeModule, MatIconModule],
-  
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [CommonModule, MatButtonModule, M3ButtonComponent, M3ChipComponent, MatTreeModule, MatIconModule],
   animations: [
     trigger('showUserButton', simpleFade('150ms')),
     trigger('openClose', [
@@ -61,30 +36,230 @@ const TREE_DATA: FoodNode[] = [
     ]),
   ],
 })
-export class NavigationDrawerComponent {
-  
-  treeControl = new NestedTreeControl<FoodNode>(node => node.children);
-  dataSource = new MatTreeNestedDataSource<FoodNode>();
+export class NavigationDrawerComponent implements OnInit {
 
-  constructor(public router: Router, public themeService: ThemeService) {
-    this.dataSource.data = TREE_DATA;
-  }
-
-  hasChild = (_: number, node: FoodNode) => !!node.children && node.children.length > 0;
-  
   public collapsed: boolean = false;
   public isLightTheme: boolean = false;
 
+  navigationElementsTree: NavigationElement[] = [
+    new NavigationElement({
+      name: 'Home',
+      icon: 'token',
+      redirect: 'home',
+      subElements: [
+        new NavigationElement({
+          name: 'Overview',
+          icon: 'navigate_next',
+          redirect: 'home',
+        }),
+        new NavigationElement({
+          name: 'About',
+          icon: 'info',
+          redirect: 'home/about',
+        })
+      ]
+    }),
+    new NavigationElement({
+      type: 'tag',
+      name: 'Clip',
+      icon: 'token'
+    }),
+    new NavigationElement({
+      name: 'Dashboards',
+      icon: 'dataset',
+      subElements: [
+        new NavigationElement({
+          name: 'Overview',
+          icon: 'navigate_next',
+          redirect: 'dashboards',
+        }),
+        new NavigationElement({
+          name: 'All dashboards',
+          icon: 'wysiwyg',
+          redirect: 'dashboards/all'
+        }),
+        new NavigationElement({
+          name: 'New dashboard',
+          icon: 'add_circle',
+          redirect: 'dashboards/composer'
+        })
+      ]
+    }),
+    new NavigationElement({
+      type: 'tag',
+      name: 'Automation',
+    }),
+    new NavigationElement({
+      name: 'Virtual Assistant',
+      icon: 'psychology',
+      redirect: 'vms'
+    }),
+    new NavigationElement({
+      type: 'tag',
+      name: 'System',
+    }),
+    new NavigationElement({
+      name: 'Virtual Machines',
+      icon: 'computer',
+      redirect: 'vms'
+    }),
+    new NavigationElement({
+      name: 'Kubernetes',
+      icon: 'directions_boat',
+      subElements: [
+        new NavigationElement({
+          name: 'Overview',
+          icon: 'navigate_next',
+          redirect: 'home',
+        }),
+        new NavigationElement({
+          type: 'tag',
+          name: 'Workloads',
+        }),
+        new NavigationElement({
+          name: 'Pods',
+          icon: 'wysiwyg',
+          redirect: 'dashboards/composer'
+        }),
+        new NavigationElement({
+          name: 'Deployment',
+          icon: 'add_circle',
+          redirect: 'dashboards/composer'
+        }),
+        new NavigationElement({
+          name: 'Services',
+          icon: 'layers',
+          redirect: 'dashboards/composer'
+        }),
+        new NavigationElement({
+          name: 'ReplicaSet',
+          icon: 'view_module',
+          redirect: 'dashboards/composer'
+        }),
+        new NavigationElement({
+          name: 'StatefulSet',
+          icon: 'storage',
+          redirect: 'dashboards/composer'
+        }),
+        new NavigationElement({
+          name: 'DaemonSet',
+          icon: 'settings_input_component',
+          redirect: 'dashboards/composer'
+        }),
+        new NavigationElement({
+          name: 'Job',
+          icon: 'work',
+          redirect: 'dashboards/composer'
+        }),
+        new NavigationElement({
+          name: 'Secret',
+          icon: 'vpn_key',
+          redirect: 'dashboards/composer'
+        }),
+        new NavigationElement({
+          name: 'ConfigMap',
+          icon: 'map',
+          redirect: 'dashboards/composer'
+        }),
+        new NavigationElement({
+          type: 'tag',
+          name: 'Network',
+        }),
+        new NavigationElement({
+          name: 'Ingress',
+          icon: 'call_split',
+          redirect: 'dashboards/composer'
+        }),
+        new NavigationElement({
+          type: 'tag',
+          name: 'Storage',
+        }),
+        new NavigationElement({
+          name: 'Volume',
+          icon: 'folder',
+          redirect: 'dashboards/composer'
+        })
+      ]
+    }),
+  ];
+
+  constructor(public router: Router, public themeService: ThemeService) { }
+
+  ngOnInit() {
+    let lsCollapsed = localStorage.getItem('navigation-drawer-collapsed');
+    this.collapsed = lsCollapsed == '1';
+  }
+
   public ToggleCollapse() {
+    this.navigationElementsTree.forEach((element) => {
+      element.isExpanded = false;
+      if (this.collapsed)
+        element.rippled = false;
+    });
     this.collapsed = !this.collapsed;
+    localStorage.setItem('navigation-drawer-collapsed', this.collapsed ? '1' : '0');
   }
 
   onThemeSwitchChange() {
     this.themeService.switchDarkLight();
+    window.location.reload();
   }
 
-  navigate(path: string) {
-    this.router.navigate([path]);
-    //this.router.navigate([{ outlets: { 'inner-ro': [path] }}]);
+  navigate(navigationElement: NavigationElement, parentElement: NavigationElement | null = null) {
+    if (this.collapsed && parentElement == null) {
+      this.router.navigateByUrl(navigationElement.subElements.filter(subel => subel.name == 'Overview')[0].redirect);
+    }
+    if (navigationElement.subElements.length == 0) {
+      this.router.navigateByUrl(navigationElement.redirect);
+    }
+    this.navigationElementsTree.forEach((element) => {
+      if (element != parentElement) {
+        element.rippled = false;
+      }
+      else {
+        element.rippled = true;
+      }
+      element.subElements.forEach((subElement) => {
+        subElement.rippled = false;
+      });
+    })
+    if (!this.collapsed) {
+      if (navigationElement.subElements.length > 0) {
+        if (navigationElement.isExpanded) {
+          navigationElement.rippled = false;
+          navigationElement.isExpanded = false;
+        }
+        else {
+          navigationElement.rippled = true;
+          navigationElement.isExpanded = true;
+        }
+      }
+      else {
+        navigationElement.rippled = true;
+      }
+    }
+    else {
+      navigationElement.rippled = true;
+    }
+  }
+}
+
+class NavigationElement {
+  public subElements: NavigationElement[] = [];
+
+  public name: string = '';
+
+  public icon: string = '';
+
+  public redirect: string = '';
+
+  public rippled: boolean = false;
+
+  public isExpanded: boolean = false;
+
+  public type: 'button' | 'tag' = 'button';
+
+  public constructor(init?: Partial<NavigationElement>) {
+    Object.assign(this, init);
   }
 }

@@ -2,6 +2,8 @@
 @use 'styles/theme/maps' as ct;
 @use 'styles/fonts' as fonts;
 
+@import 'material-symbols';
+
 @include mat.core();
 
 $clip-primary: mat.define-palette(ct.$clip-primary-palette);
@@ -9,12 +11,31 @@ $clip-accent: mat.define-palette(ct.$clip-accent-palette, A200, A100, A400);
 
 $clip-warn: mat.define-palette(mat.$red-palette);
 
-$clip-theme: mat.define-light-theme((color: (primary: $clip-primary,
-        accent: $clip-accent,
-        warn: $clip-warn,
-      )));
+$clip-light-theme: mat.define-light-theme((
+  color: (
+    primary: $clip-primary,
+    accent: $clip-accent,
+    warn: $clip-warn,
+  ),
+  typography: mat.define-typography-config()
+));
 
-@include mat.all-component-themes($clip-theme);
+$clip-dark-theme: mat.define-dark-theme((
+  color: (
+    primary: $clip-primary,
+    accent: $clip-accent,
+    warn: $clip-warn,
+  ),
+  typography: mat.define-typography-config()
+));
+
+[data-theme="clip-dark"] {
+  @include mat.all-component-colors($clip-dark-theme);
+}
+
+[data-theme="clip-light"] {
+  @include mat.all-component-colors($clip-light-theme);
+}
 
 * {
   margin: 0;
@@ -30,10 +51,4 @@ body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-}
-
-mat-icon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }

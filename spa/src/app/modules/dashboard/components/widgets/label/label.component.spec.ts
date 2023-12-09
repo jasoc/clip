@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MainShellComponent } from './main-shell.component';
+import { LabelComponent } from './label.component';
 
-describe('MainShellComponent', () => {
-  let component: MainShellComponent;
-  let fixture: ComponentFixture<MainShellComponent>;
+describe('LabelComponent', () => {
+  let component: LabelComponent;
+  let fixture: ComponentFixture<LabelComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [MainShellComponent]
+      declarations: [LabelComponent]
     });
-    fixture = TestBed.createComponent(MainShellComponent);
+    fixture = TestBed.createComponent(LabelComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

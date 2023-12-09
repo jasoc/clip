@@ -47,6 +47,5 @@ export class UserService {
 
     async ping() {
         let res = await firstValueFrom(this.httpClient.get<HttpResponse<{pong:String}>>(environment.apiBaseurl + '/user/ping'));
-        console.log(res);
     }
 }

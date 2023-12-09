@@ -1,5 +1,13 @@
+@use '../../../styles/theme' as *;
+@use 'src/styles/fonts' as fonts;
+@use "sass:map";
+
 .m3-chip {
-    background: yellow;
+    background-color: map.get($clip-accent-palette, 400);
+    color: map.get($clip-accent-palette, 'contrast', 500);
     padding: 3px 7px 3px 7px;
     border-radius: 100px;
+    font-family: 'Roboto';
+    font-size: 13px;
+    font-weight: 600;
 }

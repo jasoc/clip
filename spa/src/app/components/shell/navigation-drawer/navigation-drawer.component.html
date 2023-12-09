@@ -3,33 +3,67 @@
         'justify-content': collapsed ? 'center' : 'space-between'
     }">
         <p *ngIf="!collapsed">Clip</p>
-        <m3-button [Icon]="collapsed ? 'menu' : 'chevron_left'" Type="fab" [Wide]="true" [Ripple]="false"
-            [Margin]="false" [Style]="'transparent'">
+        <m3-button [Icon]="collapsed ? 'menu' : 'chevron_left'" [icon-weight]="600" Type="fab" [Wide]="true" [Ripple]="false"
+            [Margin]="false" BackgroundColor="transparent">
         </m3-button>
 
     </div>
     
 
     <div class="entries">
-        <m3-button [Icon]="isLightTheme ? 'toggle_off' : 'toggle_on'" Type="sidenav-left"
-            [Text]="collapsed ? '' : 'Dark Theme'" [Wide]="true" [Ripple]="true" [Style]="'transparent'"
+        <m3-button [Icon]="isLightTheme ? 'toggle_off' : 'toggle_on'" [icon-weight]="600" Type="sidenav-left"
+            [Text]="collapsed ? '' : 'Dark Theme'" [Wide]="true" [Ripple]="true" BackgroundColor="transparent"
             (click)="onThemeSwitchChange()">
         </m3-button>
-        <m3-button [Icon]="'token'" Type="sidenav-left" [Text]="collapsed ? '' : 'Clip Home'" [Wide]="true"
-            [Style]="'transparent'" (click)="navigate('/home')">
-        </m3-button>
-        <m3-button [Icon]="'dataset'" Type="sidenav-left" [Text]="collapsed ? '' : 'Applications'" [Wide]="true"
-            [Style]="'transparent'" (click)="navigate('/home/about')">
-        </m3-button>
-        <m3-button [Icon]="'computer'" Type="sidenav-left" [Text]="collapsed ? '' : 'Virtual Machines'" [Wide]="true"
-            [Style]="'transparent'" (click)="navigate('/vms')">
-        </m3-button>
-        <m3-button [Icon]="'psychology'" Type="sidenav-left" [Text]="collapsed ? '' : 'Virtual Assistant'" [Wide]="true"
-            [Style]="'transparent'" (click)="navigate('/vms')">
-        </m3-button>
-        <m3-button [Icon]="'directions_boat'" Type="sidenav-left" [Text]="collapsed ? '' : 'Kubernetes'" [Wide]="true"
-            [Style]="'transparent'" (click)="navigate('/kubernetes')">
-        </m3-button>
+
+        <!-- 1st level -->
+        <ng-container *ngFor="let element of navigationElementsTree">
+
+            <div
+                class="navigation-entry"
+                [ngClass]="{
+                    'navigation-entry-wide': this.collapsed,
+                    'navigation-entry-expanded': element.isExpanded
+                }">
+                <m3-button *ngIf="element.type == 'button'" [icon-weight]="600" [icon-filled]="element.rippled" [Icon]="element.icon" [Rippled]="element.rippled" BackgroundColor="transparent"
+                           Type="sidenav-left" [Text]="collapsed ? '' : element.name" [Wide]="true" (click)="navigate(element)">
+                </m3-button>
+
+                <div *ngIf="!this.collapsed && element.type == 'tag'" class="navigation-separator"></div>
+
+                <m3-chip *ngIf="!this.collapsed && element.type == 'tag'"
+                    BackgroundColor="transparent">{{element.name}}</m3-chip>
+    
+                <!-- 2nd level -->
+                <ng-container *ngIf="element.isExpanded">
+                    <div class="navigation-entry-subelements">
+                        <div class="navigation-entry-subelements-left">
+                            <div class="navigation-entry-subelements-left-spacer"></div>
+                        </div>
+                        <div class="navigation-entry-subelements-right">
+                            <ng-container *ngFor="let element_1 of element.subElements">
+                                <m3-chip *ngIf="element_1.type == 'tag'"
+                                    BackgroundColor="transparent"
+                                >{{element_1.name}}</m3-chip>
+
+                                <m3-button *ngIf="element_1.type == 'button'"
+                                    Type="thin"
+                                    [Icon]="element_1.icon"
+                                    [Wide]="true"
+                                    [icon-weight]="600"
+                                    [icon-filled]="element_1.rippled"
+                                    [Text]="collapsed ? '' : element_1.name"
+                                    BackgroundColor="transparent"
+                                    [Rippled]="element_1.rippled"
+                                    (click)="navigate(element_1, element)">
+                                </m3-button>
+                            </ng-container>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+
+        </ng-container>
     </div>
 
     <div style="margin: auto 0px"></div>

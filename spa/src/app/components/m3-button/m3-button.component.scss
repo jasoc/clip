@@ -1,5 +1,5 @@
 // @use 'src/styles/theme/maps' as ct;
-@use '../../../styles/theme' as *;
+@use 'src/styles/theme' as *;
 @use 'src/styles/fonts' as fonts;
 @use "sass:map";
 
@@ -21,10 +21,9 @@ $TRANSLUCENT_COLOR: #ffffffc9;
     text-wrap: nowrap;
     user-select: none;
     cursor: pointer;
-    transition: cubic-bezier(0.2, 0.0, 0, 1.0) 150ms;
+    transition: cubic-bezier(0.2, 0.0, 0, 1.0) 200ms;
 
     &:hover {
-        transition: cubic-bezier(0.2, 0.0, 0, 1.0) 150ms;
         border-radius: 10px !important;
     }
 
@@ -37,13 +36,11 @@ $TRANSLUCENT_COLOR: #ffffffc9;
         align-items: center;
         height: 24px;
 
-        .text {
-        }
-
         .m3-icon {
             display: flex;
             justify-content: center;
             align-items: center;
+            margin-left: -1px;
         }
     }
 }
@@ -53,13 +50,24 @@ $TRANSLUCENT_COLOR: #ffffffc9;
 }
 
 .round {
-    height: 49px;
+    height: 40px;
     border-radius: 100px;
 }
 
 .fab {
     height: 56px;
     border-radius: 16px;
+}
+
+.thin {
+    border-radius: 100px;
+    height: 40px;
+    .m3-button__inner {
+        justify-content: flex-start !important;
+        .m3-icon {
+            margin-right: 20px !important;
+        }
+    }
 }
 
 .sidenav-left {

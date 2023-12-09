@@ -1,23 +1,32 @@
 <div id="flat-input" [ngStyle]="{
-    'border': colored ? '2px solid ' + color : '1px solid grey',
+    'border': colored ? '2px solid ' + color : '1px solid var(--clip-background-shader-stronger)',
     'padding': colored ? '0px ' : '1px',
-    'margin-bottom': hint ? '10px' : '0px'
+    'margin-bottom': hint ? '10px' : '0px',
 }" [ngClass]="{
-    'width-small': width == 'small',
-    'width-medium': width == 'medium',
-    'width-big': width == 'big',
-    'style-search': style == 'search',
-    'style-round': style == 'round'
+    'style-search': inputStyle == 'search',
+    'style-round': inputStyle == 'round'
 }">
-    <div id="main-content">
-        <input [placeholder]="getPlaceholder()" type="text" [(ngModel)]="text" (focus)="onFocus($event)"
-            (focusout)="onFocusOut($event)" (ngModelChange)="textChange.emit(text)" />
-        <mat-icon [style.color]="colored ? color : 'grey'" *ngIf="icon">{{icon}}</mat-icon>
+    <div class="main-content">
+        <m3-icon
+            *ngIf="leftIcon"
+            class="left-icon"
+            [weight]="600"
+            [style.color]="colored ? color : 'var(--clip-background-shader-stronger)'"
+        >{{leftIcon}}</m3-icon>
+        <input [type]="Type" [(ngModel)]="text" (focus)="onFocus($event)" [ngStyle]="{
+            'width': 'calc(100% - ' + getInputWidth() + 'px)'
+        }" (focusout)="onFocusOut($event)" (ngModelChange)="textChange.emit(text)" />
+        <m3-icon *ngIf="icon" class="right-icon" [style.color]="colored ? color : 'var(--clip-background-shader-stronger)'">{{icon}}</m3-icon>
     </div>
-    <label id="placeholder" *ngIf="style != 'search'" [ngStyle]="{
-    'color': colored ? color : 'grey'
-}" [@placeholderAnimated]="placeholderAnimated ? 'moved' : 'static'">{{placeholder}}</label>
+    <label [@placeholderAnimated]="placeholderAnimated ? 'moved' : 'static'" *ngIf="inputStyle != 'search'"
+        class="placeholder" [ngStyle]="{
+            'left': leftIcon ? '40px' : '16px',
+            'color': getPlaceholderColor(),
+            'background': getPlaceholderBackground()
+        }">
+        {{placeholder}}
+    </label>
 </div>
 <label id="hint" *ngIf="hint" [ngStyle]="{
-'color': colored ? color : 'grey'
+'color': colored ? color : 'var(--clip-background-shader-stronger)'
 }">{{hint}}</label>

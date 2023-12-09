@@ -1,0 +1,28 @@
+:host {
+    height: 100%;
+    width: 100%;
+}
+
+.clip-widget-flex-box {
+    height: 100%;
+    width: 100%;
+
+    .clip-widget-flex-box__inner {
+        display: flex;
+        height: 100%;
+        width: 100%;
+
+        .subFlexBox {
+            height: 100%;
+            width: 100%;
+        }
+    }
+}
+
+.composer {
+    background: #579aff29;
+}
+
+.highlighted {
+    border: 3px solid red;
+}

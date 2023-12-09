@@ -20,6 +20,7 @@
     "@angular/platform-browser": "^16.1.0",
     "@angular/platform-browser-dynamic": "^16.1.0",
     "@angular/router": "^16.1.0",
+    "material-symbols": "^0.14.2",
     "ngx-cookie-service": "^16.0.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

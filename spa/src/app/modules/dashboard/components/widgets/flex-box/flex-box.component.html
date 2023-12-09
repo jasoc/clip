@@ -1,0 +1,20 @@
+<div class="clip-widget-flex-box" [ClipWidgetRoot]="this" *ngIf="this.widgetNode">
+    <div
+        cdkDropList
+        [cdkDropListData]="this.widgetNode.subComponents!"
+        (cdkDropListDropped)="drop($event)"
+        class="clip-widget-flex-box__inner"
+        [ngStyle]="{
+            'justify-content': this.widgetNode.values?.justifyContent ?? 'center',
+            'align-items': this.widgetNode.values?.alignItems ?? 'center',
+            'flex-direction': this.widgetNode.values?.flexDirection ?? 'row',
+        }"
+        [ngClass]="{
+            'composer': composerMode
+        }">
+        <!-- <ng-template #container></ng-template> -->
+        <div [ngClass]="{ 'subFlexBox': subComponent.className == 'FlexBoxComponent' }" *ngFor="let subComponent of this.widgetNode.subComponents" cdkDrag [cdkDragDisabled]="!composerMode">
+            <ng-template #subcontainer></ng-template>
+        </div>
+    </div>
+</div>

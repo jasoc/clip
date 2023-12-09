@@ -9,4 +9,5 @@ def verify_password(plain_password, hashed_password):
 
 
 def get_password_hash(password):
+    print(f"\n\n\n{password}\n\n\n")
     return pwd_context.hash(password)

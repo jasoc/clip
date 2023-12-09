@@ -1,9 +1,13 @@
 @use '../tokens' as *;
 
 [data-theme="clip-light"] {
-    --clip-background-color: #ffffff;
+    --clip-background-color: #f7f9fc;
+    --clip-background-layer-color: #fff;
 
     --clip-main-ui-text-color: #{$clip-dark-primary-text};
+    --clip-background-shader: #0000001f;
+    --clip-background-shader-lighter: #00000011;
+    --clip-background-shader-stronger: #0000007e;
 
     --clip-primary-color-50: #fcece4;
     --clip-primary-color-100: #f7d1bc;
@@ -53,9 +57,9 @@
     --clip-accent-contrast-50: #{$clip-dark-primary-text};
     --clip-accent-contrast-100: #{$clip-dark-primary-text};
     --clip-accent-contrast-200: #{$clip-dark-primary-text};
-    --clip-accent-contrast-300: #{$clip-light-primary-text};
-    --clip-accent-contrast-400: #{$clip-light-primary-text};
-    --clip-accent-contrast-500: #{$clip-light-primary-text};
+    --clip-accent-contrast-300: #{$clip-dark-primary-text};
+    --clip-accent-contrast-400: #{$clip-dark-primary-text};
+    --clip-accent-contrast-500: #{$clip-dark-primary-text};
     --clip-accent-contrast-600: #{$clip-light-primary-text};
     --clip-accent-contrast-700: #{$clip-light-primary-text};
     --clip-accent-contrast-800: #{$clip-light-primary-text};

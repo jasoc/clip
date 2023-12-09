@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {Component, Input, Output, EventEmitter, HostBinding, AfterViewInit} from '@angular/core';
 import {
   trigger,
   state,
@@ -9,26 +9,23 @@ import {
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
+import { M3IconComponent } from '../m3-icon/m3-icon.component';
 
 @Component({
   selector: 'm3-input',
   standalone: true,
   templateUrl: './m3-input.component.html',
   styleUrls: ['./m3-input.component.scss'],
-  imports: [CommonModule, MatIconModule, FormsModule],
+  imports: [CommonModule, MatIconModule, FormsModule, M3IconComponent],
   animations: [
     trigger('placeholderAnimated', [
       state('static', style({
-        fontSize: '*',
         top: '*',
-        left: '*',
-        background: '*',
       })),
       state('moved', style({
-        fontSize: '13px',
-        top: '-15px',
-        left: '5px',
-        background: 'solid',
+        fontSize: '10px',
+        fontWeight: '600',
+        top: '-2px',
       })),
       transition('* <=> *', [
         animate('280ms cubic-bezier(0.18, 0.89, 0.32, 1)'),
@@ -36,35 +33,59 @@ import { FormsModule } from '@angular/forms';
     ]),
   ],
 })
-export class M3InputComponent {
+export class M3InputComponent implements AfterViewInit {
     @Input()
     placeholder: string = 'Placeholder example';
 
     @Input()
     color: string = 'royalblue';
 
-    @Input()
-    icon: string = "";
+    @Input('left-icon')
+    leftIcon?: string;
 
     @Input()
-    hint: string = "";
+    icon?: string;
 
     @Input()
-    text: string = "";
+    hint?: string;
 
     @Input()
-    width: string = 'big' || 'medium' || 'small';
+    text?: any;
 
+    @Input('type')
+    Type: string = "text";
+
+    @HostBinding('style.width')
     @Input()
-    style: 'normal' | 'round' | 'search' = "normal";
+    width: string = 'auto';
+
+    @Input('input-style')
+    inputStyle: 'normal' | 'round' | 'search' = "normal";
 
     @Output()
-    textChange = new EventEmitter<string>();
+    textChange = new EventEmitter<any>();
 
     public colored: boolean = false;
     public placeholderAnimated: boolean = false;
 
     constructor() { }
+
+    ngAfterViewInit(): void {
+      if (this.text && this.text.length > 0) {
+        this.placeholderAnimated = true;
+      }
+    }
+
+    getInputWidth(): number {
+      let calc = 0;
+      if (this.icon) {
+        calc += 40;
+      }
+      if (this.leftIcon) {
+        calc += 40;
+      }
+      return calc;
+    }
 
     onFocus(event: Event) {
       this.placeholderAnimated = true;
@@ -86,7 +107,32 @@ export class M3InputComponent {
     }
 
     getPlaceholder() {
-      if (!this.placeholderAnimated && this.style != 'search') return '';
+      if (!this.placeholderAnimated && this.inputStyle != 'search') return '';
       return this.placeholder;
+    }
+
+    getPlaceholderColor(): string {
+      if (this.placeholderAnimated) {
+        return this.colored ? this.getContrast(this.color) : this.getContrast('#6b6b6b');
+      }
+      return this.colored ? this.color : 'var(--clip-background-shader-stronger)';
+    }
+
+    getContrast(hexColor: string): string {
+      if (hexColor.startsWith('#')) {
+          hexColor = hexColor.slice(1);
+      }
+      const r = parseInt(hexColor.slice(0, 2), 16);
+      const g = parseInt(hexColor.slice(2, 4), 16);
+      const b = parseInt(hexColor.slice(4, 6), 16);
+      const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+      return (yiq >= 128) ? 'black' : 'white';
+    }
+
+    getPlaceholderBackground(): string {
+      if (!this.colored) {
+        return this.placeholderAnimated ? '#6b6b6b' : 'transparent';
+      }
+      return this.placeholderAnimated ? this.color : 'transparent';
     }
 }
