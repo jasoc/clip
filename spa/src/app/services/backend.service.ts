@@ -13,8 +13,8 @@ export class BackendService {
         'Authorization': `Bearer ${this.cookieService.get('token')}`
     };
 
-    constructor(private httpClient: HttpClient, private cookieService: CookieService) {
-        this.baseUrl = environment.apiBaseurl;
+    constructor(protected httpClient: HttpClient, protected cookieService: CookieService) {
+        this.baseUrl = this.resolveOrigin(environment.apiBaseurl);
         if (!this.baseUrl.endsWith('/')) {
             this.baseUrl = this.baseUrl + '/';
         }
@@ -36,11 +36,18 @@ export class BackendService {
         if (relativeUrl.startsWith('/')) {
             relativeUrl = relativeUrl.slice(1);
         }
+        if (!relativeUrl.endsWith('/')) {
+            relativeUrl = relativeUrl + '/';
+        }
         let response = await firstValueFrom(
             this.httpClient.get<ReturnType>(this.baseUrl + relativeUrl,
                 { observe: 'response', headers: this.headers })
         );
         callback(response);
         return response;
+    }
+
+    private resolveOrigin(baseUrl: string): string {
+        return baseUrl.replaceAll("{origin}", location.origin);    
     }
 }

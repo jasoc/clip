@@ -1,8 +1,4 @@
-##################
-# API SERVER DEV #
-##################
-
-FROM python:3.11.3-slim-bullseye as apiserver-dev
+FROM python:3.11.3-slim-bullseye as apiserver-base
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
     curl \
@@ -23,21 +19,13 @@ ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
 RUN curl -sSL https://install.python-poetry.org | python3 - --version 1.5.1
 # USER user
 EXPOSE 8000
+COPY ./scripts /clip/scripts
+COPY ./apiserver /clip/apiserver
 WORKDIR /clip/scripts
 
-####################
-# API SERVER BUILD #
-####################
-
-FROM apiserver-dev as apiserver-build
+FROM apiserver-base as apiserver-build
 WORKDIR /clip
-COPY ./scripts ./scripts
-COPY ./apiserver ./apiserver
 RUN /bin/sh /clip/scripts/build.sh apiserver
-
-###################
-# API SERVER PROD #
-###################
 
 FROM python:3.11.3-slim-bullseye as apiserver-prod
 WORKDIR /clip

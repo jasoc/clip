@@ -8,14 +8,24 @@ services:
     build:
       context: .
       dockerfile: ./apiserver/Dockerfile
-      target: apiserver-dev
+      target: apiserver-base
+      network: host
+    develop:
+      watch:
+        - action: sync
+          path: ./scripts
+          target: /clip/scripts
+        - action: sync
+          path: ./apiserver
+          target: /clip/apiserver
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: ./apiserver/pyproject.toml   
     networks:
       - clip-network
     ports:
       - "8000:8000"
-    volumes:
-      - ./apiserver:/clip/apiserver
-      - ./scripts:/clip/scripts
 
   clip-spa-debug:
     container_name: clip-spa-debug
@@ -24,15 +34,27 @@ services:
     build:
       context: .
       dockerfile: ./spa/Dockerfile
-      target: spa-dev
+      target: spa-base
+      network: host
+    develop:
+      watch:
+        - action: sync
+          path: ./scripts
+          target: /clip/scripts
+        - action: sync
+          path: ./spa
+          target: /clip/spa
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: ./spa/package.json
+    networks:
+      - clip-network
     ports: 
       - "4200:4200"
       - "9222:9222"
-    networks:
-      - clip-network
     volumes:
-      - ./spa:/clip/spa
-      - ./scripts:/clip/scripts
+      - ./spa/node_modules:/clip/spa/node_modules
 
 networks:
   clip-network:

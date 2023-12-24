@@ -4,6 +4,7 @@ import { CdkDragEnd } from "@angular/cdk/drag-drop";
 import { DashboardService } from '../../../dashboard.service';
 import { geometricNode } from "../../../classes/GeometricNode";
 import { WidgetMetadata } from "../../../classes/WidgetMetadata";
+import { widgetsMap } from "..";
 
 @Component({
     selector: 'clip-base-widget',
@@ -12,12 +13,9 @@ import { WidgetMetadata } from "../../../classes/WidgetMetadata";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WidgetBaseComponent extends geometricNode implements AfterViewInit {
-    
-    @ViewChild('container', {read: ViewContainerRef})
-    container: ViewContainerRef | null = null;
 
-    @HostBinding('cdkDragDisabled')
-    cdkDragDisabled: boolean = true;
+    @ViewChild('container', { read: ViewContainerRef })
+    container: ViewContainerRef | null = null;
 
     widgetNode: WidgetNode | undefined;
 
@@ -26,11 +24,11 @@ export class WidgetBaseComponent extends geometricNode implements AfterViewInit 
     forceDisableDrag: boolean = false;
 
     rendered: boolean = false;
-    
+
     highlighted: boolean = false;
 
     metadata: WidgetMetadata = { name: "Widget base" };
- 
+
     constructor(public dashboardService: DashboardService, private hostViewRef: ElementRef, private renderer: Renderer2, private cd: ChangeDetectorRef) {
         super(hostViewRef);
     }
@@ -44,13 +42,22 @@ export class WidgetBaseComponent extends geometricNode implements AfterViewInit 
 
     onDragEndEvent(event: CdkDragEnd) {
         if (!this.composerMode || !this.widgetNode) return;
-        
         let { x, y } = event.source.getFreeDragPosition();
-        if (this.dashboardService.tryAssignNewPositionToWidget(this.widgetNode!, x, y)) {
+        let movingRes = this.dashboardService.tryAssignNewPositionToWidget(this.widgetNode!, x, y);
+        if (movingRes.x) {
             this.dashboardService.updateDashboard(this.dashboardService.dashboardByWidget.get(this.widgetNode)!);
         }
 
         let widgetDashboard = this.dashboardService.dashboardByWidget.get(this.widgetNode);
+
+        if (widgetDashboard && movingRes.overlappingWidget && widgetsMap[movingRes.overlappingWidget.className].prototype.metadata.canHaveSubWidgets) {
+            if (!movingRes.overlappingWidget.subComponents) {
+                movingRes.overlappingWidget.subComponents = [];
+            }
+            movingRes.overlappingWidget.subComponents.push(this.widgetNode);
+            widgetDashboard.widgetsTree.subComponents!.splice(widgetDashboard.widgetsTree.subComponents!.indexOf(this.widgetNode), 1)
+        }
+
         if (widgetDashboard) {
             this.dashboardService.renderDashboard(widgetDashboard);
         }

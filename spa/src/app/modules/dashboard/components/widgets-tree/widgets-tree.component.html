@@ -1,0 +1,12 @@
+<div class="clip-widgets-tree" (drop)="dropOutside($event)" (dragover)="allowDrop($event)">
+    <div class="clip-widgets-tree-node" 
+         *ngFor="let node of flatList; let i = index" 
+         [style.margin-left.px]="(node.level ?? 0) * 20"
+         draggable="true"
+         (dragstart)="dragStart($event, i)"
+         (dragover)="dragOver($event, i)"
+         (drop)="drop($event, i)"
+         [attr.id]="'node-' + i">
+        {{node.className}}
+    </div>
+</div>

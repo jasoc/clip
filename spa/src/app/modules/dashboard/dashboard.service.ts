@@ -6,6 +6,12 @@ import { WidgetBaseComponent } from "./components/widgets/base/widget-base.compo
 import { ComponentRef, Type, ViewContainerRef } from "@angular/core";
 import { widgetsMap } from "./components/widgets";
 
+type PositionAssignmentResult = {
+    x?: number;
+    y?: number;
+    overlappingWidget?: WidgetNode;
+}
+
 export class DashboardService extends BackendService {
     
     public dashboardByWidget = new Map<WidgetNode, Dashboard>();
@@ -23,7 +29,6 @@ export class DashboardService extends BackendService {
         dashboard.json_grid = JSON.stringify(dashboard.widgetsTree);
         await this.post('dashboards/update', dashboard);
     }
-
     
     public async getAll(): Promise<Dashboard[]> {
         let res = (await this.get<Dashboard[]>('dashboards')).body ?? [];
@@ -72,7 +77,15 @@ export class DashboardService extends BackendService {
     }
 
     public spawnWidget(dashboard: Dashboard, widget: WidgetNode, x: number, y: number, addinNodes: boolean = false, uncertainCoordinates: boolean = false): boolean {
-        if (this.tryAssignNewPositionToWidget(widget, x, y, dashboard, uncertainCoordinates)) {
+        let movingRes = this.tryAssignNewPositionToWidget(widget, x, y, dashboard, uncertainCoordinates);
+        if (movingRes.overlappingWidget) {
+            if (!movingRes.overlappingWidget.subComponents) {
+                movingRes.overlappingWidget.subComponents = [];
+            }
+            movingRes.overlappingWidget.subComponents?.push(widget);
+            return true;
+        }
+        else if (movingRes.x) {
             if (addinNodes) {
                 dashboard.widgetsTree.subComponents?.push(widget);
             }
@@ -80,7 +93,9 @@ export class DashboardService extends BackendService {
             this.cacheWidget(dashboard, widget, newComponentRef);
             return true;
         }
-        return false;
+        else {
+            return false;
+        }
     }
 
     public addNodeInContainer(widget: WidgetNode, container: ViewContainerRef): ComponentRef<WidgetBaseComponent> {
@@ -100,16 +115,15 @@ export class DashboardService extends BackendService {
         this.dashboardByWidget.set(widget, dashboard);
         this.widgetRefByNode.set(widget, widgetComponent);
 
-        let currWidgetLst = this.widgetsByDashboard.get(dashboard) ?? [];
-        currWidgetLst.push(widget);
-        this.widgetsByDashboard.set(dashboard, currWidgetLst);
+        let currWidgetList = this.widgetsByDashboard.get(dashboard) ?? [];
+        currWidgetList.push(widget);
+        this.widgetsByDashboard.set(dashboard, currWidgetList);
     }
 
     public spawnSubWidget(parentWidget: WidgetNode, widget: WidgetNode, widgetComponent: ComponentRef<WidgetBaseComponent>): WidgetBaseComponent {
         let dashboard = this.dashboardByWidget.get(parentWidget)!;
         
         widgetComponent.instance.widgetNode = widget;
-        console.log(widgetComponent.instance.widgetNode)
         widgetComponent.instance.composerMode = this.dashboardRefByNode.get(dashboard)!.composerMode;
 
         this.dashboardByWidget.set(widget, dashboard);
@@ -128,9 +142,14 @@ export class DashboardService extends BackendService {
         this.widgetRefByNode.get(widget)!.instance.highlighted = true;
     }
 
-    public tryAssignNewPositionToWidget(widget: WidgetNode, screenX: number, screenY: number, newDashboard?: Dashboard, uncertainCoordinates: boolean = false): boolean {
+    public tryAssignNewPositionToWidget(widget: WidgetNode,
+                                        screenX: number,
+                                        screenY: number,
+                                        newDashboard?: Dashboard,
+                                        absoluteCoordinates: boolean = false): PositionAssignmentResult {
         if (!this.dashboardByWidget.has(widget) && !newDashboard) {
-            return false;
+            console.error("no dashboard");
+            return { };
         }
 
         let widgetRef = this.widgetRefByNode.get(widget)!;
@@ -141,28 +160,33 @@ export class DashboardService extends BackendService {
         if (dashboardRef && !widgetRef) {
             let widgetClass = this.getWidgetClassByClassName(widget.className)?.prototype as WidgetBaseComponent | undefined;
             if (widgetClass) {
-                widget.width = widgetClass.metadata.requestedWidth;
-                widget.height = widgetClass.metadata.requestedHeight;
+                widget.width = widgetClass.metadata.requestedWidth ?? 1;
+                widget.height = widgetClass.metadata.requestedHeight ?? 1;
             }
             else {
-                return false;
+                return { };
             }
             dragDivisionFactor = 4;
         }
         
-        if (uncertainCoordinates) {
+        if (!absoluteCoordinates) {
+            screenX += (widgetRef?.instance?.offsetLeft ?? 0); 
+            screenY += (widgetRef?.instance?.offsetTop ?? 0);
+        }
+        else {
             screenX -= dashboardRef.offsetLeft;
             screenY -= dashboardRef.offsetTop;
         }
 
-        let topLeftCornerOfWidgetX = dashboardRef.offsetLeft + (widgetRef?.instance?.offsetLeft ?? 0) + screenX + (dashboard.width / dashboard.columns / dragDivisionFactor);
-        let topLeftCornerOfWidgetY = dashboardRef.offsetTop + (widgetRef?.instance?.offsetTop ?? 0) + screenY + (dashboard.height / dashboard.rows / dragDivisionFactor);
-
-        let { x, y } = this.getCellFromCoordinates(dashboard, topLeftCornerOfWidgetX - dashboardRef.offsetLeft,
-                                                              topLeftCornerOfWidgetY - dashboardRef.offsetTop);
+        let topLeftCornerOfWidgetX = dashboardRef.offsetLeft + screenX + (dashboard.width / dashboard.columns / dragDivisionFactor);
+        let topLeftCornerOfWidgetY = dashboardRef.offsetTop + screenY + (dashboard.height / dashboard.rows / dragDivisionFactor);
         
+        let { x, y } = this.getCellFromCoordinates(dashboard, topLeftCornerOfWidgetX - dashboardRef.offsetLeft,
+            topLeftCornerOfWidgetY - dashboardRef.offsetTop);
+            
+        console.error(widgetRef?.instance?.offsetLeft, screenX, screenY);
         if (x <= 0 || x > dashboard.columns || y <= 0 || y > dashboard.rows) {
-            return false;
+            return { };
         }
 
         let overlappingWidget = this.getOverlappingWidget(dashboard, x, y, widget.height!, widget.width!, widget);
@@ -170,11 +194,10 @@ export class DashboardService extends BackendService {
         if (!overlappingWidget) {
             widget.positionStartX = x;
             widget.positionStartY = y;
-
-            return true;
+            return { x, y }
         }
 
-        return false;
+        return { overlappingWidget }
     }
 
     private getOverlappingWidget(dashboard: Dashboard, x: number, y: number, height: number, width: number, widgetToExclude: WidgetNode): WidgetNode | null {
@@ -186,8 +209,8 @@ export class DashboardService extends BackendService {
             let subWidgetEndY = (subWidget.positionStartY! + subWidget.height!) - 1;
             let subWidgetStartY = subWidget.positionStartY!;
     
-            let boxEndX = x + width - 1;
-            let boxEndY = y + height - 1;
+            let boxEndX = x + (width ?? 1) - 1;
+            let boxEndY = y + (height ?? 1) - 1;
     
             if ((x <= subWidgetEndX && boxEndX >= subWidgetStartX) 
              && (y <= subWidgetEndY && boxEndY >= subWidgetStartY)) {

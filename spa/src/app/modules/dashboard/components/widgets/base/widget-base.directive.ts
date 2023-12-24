@@ -9,6 +9,7 @@ export function ClipWidget(metadata: WidgetMetadata) {
    return function decorator(target: Type<WidgetBaseComponent>) {
       if (!metadata.requestedHeight) metadata.requestedHeight = 1;
       if (!metadata.requestedWidth) metadata.requestedWidth = 1;
+      if (!metadata.canHaveSubWidgets) metadata.canHaveSubWidgets = false;
       target.prototype.metadata = metadata;
    }
 }
@@ -19,7 +20,7 @@ export function ClipWidget(metadata: WidgetMetadata) {
 export class ClipWidgetRoot extends CdkDrag implements OnInit {
    
    ngOnInit(): void {
-      this.disabled = !this.instance.composerMode || this.instance.forceDisableDrag;
+      this.disabled = !this.instance.composerMode;
    }
 
    @Input('ClipWidgetRoot')

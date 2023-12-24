@@ -18,11 +18,13 @@ import { M3TabsComponent } from "../../components/m3-tabs/m3-tabs.component";
 import { M3TabComponent } from 'src/app/components/m3-tabs/m3-tab/m3-tab.component';
 import { M3IconComponent } from 'src/app/components/m3-icon/m3-icon.component';
 import { ClipWidgetRoot } from './components/widgets/base/widget-base.directive';
+import { WidgetsTreeComponent } from './components/widgets-tree/widgets-tree.component';
 
 @NgModule({
     declarations: [
         DashboardMainComponent,
         DashboardComposerComponent,
+        WidgetsTreeComponent,
         DashboardViewerComponent,
         ClipWidgetRoot,
         FlexBoxComponent,

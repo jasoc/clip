@@ -1,0 +1,9 @@
+@use 'src/styles/theme' as *;
+
+* {
+    color: var(--clip-main-ui-text-color);
+}
+
+.clip-widgets-tree-node-children {
+    margin-left: 20px;
+}

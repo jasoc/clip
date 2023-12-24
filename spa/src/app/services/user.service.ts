@@ -1,8 +1,6 @@
-import { HttpClient, HttpErrorResponse, HttpResponse } from "@angular/common/http";
-import { CookieService } from "ngx-cookie-service";
-import { catchError, firstValueFrom } from "rxjs";
-import { environment } from '../../environments/environment';
 import { Injectable } from "@angular/core";
+import { environment } from 'src/environments/environment';
+import { BackendService } from "src/app/services/backend.service";
 
 interface RegisterModelPost {
     username: string;
@@ -15,12 +13,10 @@ interface RegisterModelPost {
 @Injectable({
     providedIn: 'root'
 })
-export class UserService {
-
-    constructor(private httpClient: HttpClient, private cookieService: CookieService) { }
+export class UserService extends BackendService {
 
     async RegisterUser(userInfo: RegisterModelPost): Promise<boolean> {
-        let res = await firstValueFrom(this.httpClient.post<HttpResponse<any>>(environment.apiBaseurl + '/user/register', userInfo));
+        let res = await this.post('/user/register', userInfo);
         if (res.status === 201) {
             return await this.LoginUser(userInfo.username, userInfo.password);
         }
@@ -32,20 +28,14 @@ export class UserService {
     }
 
     async LoginUser(username: string, password: string) {
-        let res: any = await firstValueFrom(
-            this.httpClient.post(environment.apiBaseurl + '/user/login', {
-                'username': username,
-                'password': password,
-            }, { observe: 'response' })
-        );
+        let res = await this.post<{ access_token: string }>('/user/login', {
+            'username': username,
+            'password': password,
+        });
         if (res.status != 200) {
             return false;
         }
         this.cookieService.set("token", res.body!.access_token);
         return true;
-    }
-
-    async ping() {
-        let res = await firstValueFrom(this.httpClient.get<HttpResponse<{pong:String}>>(environment.apiBaseurl + '/user/ping'));
     }
 }

@@ -8,6 +8,11 @@
         <h3>{{(!dashboard.name || dashboard.name == '') ? 'Dashboard name' : dashboard.name}}</h3>
 
         <m3-tabs>
+
+            <m3-tab label="Widgets tree" icon="account_tree">
+                <clip-widgets-tree [node]="dashboard.widgetsTree" (nodeUpdated)="updateNode($event)"></clip-widgets-tree>
+            </m3-tab>
+
             <m3-tab label="Widgets list" icon="splitscreen_add">
                 <m3-input id="password-input" placeholder="Search widget" icon="search"></m3-input>
                 <div class="dashboard-composer-widgets-all">
@@ -29,6 +34,8 @@
                             placeholder="Columns"></m3-input>
                     </div>
                     <m3-button Text="Save" Icon="save" (click)="onSave()"></m3-button>
+                    <m3-button Text="Print Tree" Icon="bug_report" BackgroundColor="primary" (click)="tree()"></m3-button>
+                    <m3-button Text="Empty" Icon="indeterminate_check_box" BackgroundColor="green" (click)="empty()"></m3-button>
                 </div>
             </m3-tab>
 

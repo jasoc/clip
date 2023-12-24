@@ -3,14 +3,23 @@ services:
 
   clip-apiserver:
     container_name: clip-apiserver
-    image: parisius/clip-apiserver
+    image: clip/apiserver
     restart: unless-stopped
     environment:
-      - CLIP_APISERVER_PORT=8000
+      - CLIP_REMOTE_ADDRESS=clip.parisius.dev
       - CLIP_APISERVER_HOST=0.0.0.0
+      - CLIP_APISERVER_PORT=8000
+      - POSTGRESQL_USER=postgres
+      - POSTGRESQL_PASSWORD=mpaPhSk458Mzjfgi6pwdp4UKiUMojSzZ
+      - POSTGRESQL_HOST=192.168.178.10
+      - POSTGRESQL_PORT=5432
+      - POSTGRESQL_DATABASE_NAME=clip
+      - ACCESS_TOKEN_EXPIRE_MINUTES=10000
+      - SECRET_KEY=52683936eb2b1526f7237d5dcaef25f31763137d72f790716a895df13c42e855
     build:
       context: .
       dockerfile: ./apiserver/Dockerfile
+      network: host
     networks:
       - clip-network
     ports:
@@ -18,11 +27,12 @@ services:
 
   clip-spa:
     container_name: clip-spa
-    image: parisius/clip-spa
+    image: clip/spa
     restart: unless-stopped
     build:
-      context: .
+      context: ./
       dockerfile: ./spa/Dockerfile
+      network: host
     networks:
       - clip-network
     ports:

@@ -1,24 +1,12 @@
-###########
-# SPA DEV #
-###########
-
-FROM node:18.16.1-alpine as spa-dev
+FROM node:20-alpine as spa-base
+COPY ./scripts /clip/scripts
+COPY ./spa /clip/spa
 WORKDIR /clip/scripts
 EXPOSE 4200
 
-#############
-# SPA BUILD #
-#############
-
-FROM node:18.16.1-alpine as spa-build
+FROM spa-base as spa-build
 WORKDIR /clip
-COPY ./scripts ./scripts
-COPY ./spa ./spa
 RUN /bin/sh /clip/scripts/build.sh spa
-
-#############
-# SPA PROD #
-#############
 
 FROM nginx:1.21.6-alpine as spa-prod
 RUN rm -rf /usr/share/nginx/html/*

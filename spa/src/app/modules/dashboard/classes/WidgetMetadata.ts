@@ -6,5 +6,6 @@ export type WidgetMetadata = {
     icon?: string;
     requestedWidth?: number;
     requestedHeight?: number;
+    canHaveSubWidgets?: boolean;
     optionType?: Type<WidgetbaseOptions>;
 }

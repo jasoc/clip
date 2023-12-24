@@ -16,15 +16,21 @@ export class DashboardComposerComponent implements OnInit {
   
   @ViewChild('viewer', { read: DashboardViewerComponent })
   dashboardViewer: DashboardViewerComponent | null = null;
-
+  
   @ViewChild('viewer', { read: ElementRef })
   dashboardViewerEl: ElementRef | null = null;
-
+  
   public currentDashboard: Promise<Dashboard | undefined> | undefined;
   public dashboard: Dashboard | undefined;
   widgetsMap = widgetsMap;
-
+  
   constructor(private dashboardService: DashboardService, private route: ActivatedRoute) { }
+  
+  updateNode(node: WidgetNode) {
+    console.log(node)
+    this.dashboard!.widgetsTree = node;
+    this.dashboardService.renderDashboard(this.dashboard!);
+  }
 
   async ngOnInit() {
     let id = this.route.snapshot.paramMap.get('id');
@@ -36,6 +42,15 @@ export class DashboardComposerComponent implements OnInit {
   onSave() {
     this.dashboardService.renderDashboard(this.dashboard!);
     this.dashboardService.updateDashboard(this.dashboard!);
+  }
+
+  tree() {
+    console.log(this.dashboard?.widgetsTree.subComponents)
+  }
+
+  empty() {
+    this.dashboard!.widgetsTree.subComponents = [];
+    this.dashboardService.renderDashboard(this.dashboard!);
   }
 
   onWidgetDraggedFromList(event: CdkDragEnd, widgetClassName: string) {

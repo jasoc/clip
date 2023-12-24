@@ -2,8 +2,8 @@
 
 CLIP_PROJECT_PATH=$(dirname -- "$(readlink -f -- "$0";)";)/..
 
-docker container rm clip-spa-debug clip-apiserver-debug clip-apiserver clip-spa
-docker image rm parisius/clip-spa:debug parisius/clip-apiserver:debug parisius/clip-spa parisius/clip-apiserver
+docker container rm clip-spa-debug clip-apiserver-debug clip-apiserver clip-spa --force
+docker image rm clip/spa:debug clip/apiserver:debug clip/spa clip/apiserver
 
 rm -r $CLIP_PROJECT_PATH/dist
 rm -r $CLIP_PROJECT_PATH/spa/dist

@@ -24,7 +24,7 @@ dev_spa()
 {
     cd $CLIP_PROJECT_PATH/spa
 
-    if [ ! -d "$CLIP_PROJECT_PATH/spa/node_modules" ] 
+    if [ ! -d "$CLIP_PROJECT_PATH/spa/node_modules" ] || [ ! "$(ls -A $CLIP_PROJECT_PATH/spa/node_modules)" ]
     then
         npm install
     fi

@@ -6,4 +6,5 @@ export interface WidgetNode {
     height?: number;
     values?: any;
     subComponents?: WidgetNode[];
+    level?: number;
 }

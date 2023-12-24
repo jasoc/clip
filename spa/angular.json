@@ -80,7 +80,7 @@
               ]
             }
           },
-          "defaultConfiguration": "docker-production"
+          "defaultConfiguration": "docker-prod"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",

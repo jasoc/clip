@@ -48,6 +48,7 @@ export class DashboardViewerComponent extends geometricNode implements AfterView
     this.gridTemplateRows = `repeat(${this.dashboard!.rows}, minmax(0, 1fr))`;
     this.gridTemplateColumns = `repeat(${this.dashboard!.columns}, minmax(0, 1fr))`;
 
+    this.container?.clear();
     this.dashboard.widgetsTree.subComponents?.forEach((componentNode) => {
       this.dashboardService.destroyWidget(componentNode);
       let newComponentRef = this.dashboardService.addNodeInContainer(componentNode, this.container!);
@@ -55,4 +56,3 @@ export class DashboardViewerComponent extends geometricNode implements AfterView
     });
   }
 }
-
