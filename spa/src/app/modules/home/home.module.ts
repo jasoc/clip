@@ -4,6 +4,7 @@ import { M3ButtonComponent } from 'src/app/components/m3-button/m3-button.compon
 import { HomeMainComponent } from './pages/main/home-main.component';
 import { HomeAboutComponent } from './pages/about/home-about.component';
 import { HomeRoutingModule } from './home-routing.module';
+import { DynamicFormComponent } from 'src/app/components/dynamic-form/dynamic-form.component';
 
 @NgModule({
   declarations: [
@@ -12,6 +13,7 @@ import { HomeRoutingModule } from './home-routing.module';
   ],
   imports: [
     CommonModule,
+    DynamicFormComponent,
     HomeRoutingModule,
     M3ButtonComponent
   ]

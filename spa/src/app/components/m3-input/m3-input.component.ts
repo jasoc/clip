@@ -35,7 +35,7 @@ import { M3IconComponent } from '../m3-icon/m3-icon.component';
 })
 export class M3InputComponent implements AfterViewInit {
     @Input()
-    placeholder: string = 'Placeholder example';
+    placeholder?: string;
 
     @Input()
     color: string = 'royalblue';

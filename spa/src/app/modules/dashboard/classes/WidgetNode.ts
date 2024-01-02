@@ -7,4 +7,6 @@ export interface WidgetNode {
     values?: any;
     subComponents?: WidgetNode[];
     level?: number;
+    show?: boolean;
+    dragging?: boolean;
 }

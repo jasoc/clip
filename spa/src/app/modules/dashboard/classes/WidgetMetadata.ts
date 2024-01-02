@@ -1,5 +1,6 @@
 import { Type } from "@angular/core";
 import { WidgetbaseOptions } from "./WidgetBaseOptions";
+import { RecursiveInputTypes } from "src/app/components/dynamic-form";
 
 export type WidgetMetadata = {
     name: string;
@@ -7,5 +8,5 @@ export type WidgetMetadata = {
     requestedWidth?: number;
     requestedHeight?: number;
     canHaveSubWidgets?: boolean;
-    optionType?: Type<WidgetbaseOptions>;
+    properties?: RecursiveInputTypes;
 }

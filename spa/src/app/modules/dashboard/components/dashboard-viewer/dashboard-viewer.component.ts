@@ -1,8 +1,11 @@
 
-import { AfterViewInit, ChangeDetectorRef, Component, ComponentRef, ElementRef, Input, Type, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ComponentRef, ElementRef, EventEmitter, Input, Output, Type, ViewChild, ViewContainerRef } from '@angular/core';
 import { Dashboard } from '../../classes/IDashboards';
 import { geometricNode } from '../../classes/GeometricNode';
 import { DashboardService } from '../../dashboard.service';
+import { CdkDragEnd } from '@angular/cdk/drag-drop';
+import { WidgetNode } from '../../classes/WidgetNode';
+import { WidgetBaseComponent } from '../widgets/base/widget-base.component';
 
 @Component({
   selector: 'clip-dashboard-viewer',
@@ -22,17 +25,23 @@ export class DashboardViewerComponent extends geometricNode implements AfterView
   @Input()
   public dashboard: Dashboard | undefined;
 
+  @Output()
+  public onDragEndEvent = new EventEmitter();
+
+  @Output()
+  public onClickEvent = new EventEmitter();
+
   @Input('composer-mode')
   public composerMode: boolean = false;
+
+  public spawnedWidgets: WidgetBaseComponent[] = [];
 
   constructor(private _hostView: ElementRef, private dashboardService: DashboardService, private cd: ChangeDetectorRef) {
     super(_hostView);
   }
 
   ngAfterViewInit(): void {
-
     if (this.dashboard) {
-      this.dashboardService.spawnDashboard(this.dashboard, this);
       this.renderDashboard();
     }
   }
@@ -49,10 +58,14 @@ export class DashboardViewerComponent extends geometricNode implements AfterView
     this.gridTemplateColumns = `repeat(${this.dashboard!.columns}, minmax(0, 1fr))`;
 
     this.container?.clear();
+
     this.dashboard.widgetsTree.subComponents?.forEach((componentNode) => {
-      this.dashboardService.destroyWidget(componentNode);
-      let newComponentRef = this.dashboardService.addNodeInContainer(componentNode, this.container!);
-      this.dashboardService.cacheWidget(this.dashboard!, componentNode, newComponentRef);
+      this.spawnedWidgets.push(this.dashboardService.spawnWidget(this.container!, {
+        widgetNode: componentNode,
+        composerMode: true,
+        onDragEndEvent: (event) => this.onDragEndEvent.emit(event),
+        onClickEvent: (event) => this.onClickEvent.emit(event),
+      }).instance);
     });
   }
 }

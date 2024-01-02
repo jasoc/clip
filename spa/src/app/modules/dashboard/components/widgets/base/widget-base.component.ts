@@ -1,10 +1,16 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentRef, ElementRef, HostBinding, OnInit, Renderer2, Type, ViewChild, ViewContainerRef } from "@angular/core";
-import { WidgetNode } from "../../../classes/IWidgetNode";
+import { WidgetNode } from "../../../classes/WidgetNode";
 import { CdkDragEnd } from "@angular/cdk/drag-drop";
 import { DashboardService } from '../../../dashboard.service';
 import { geometricNode } from "../../../classes/GeometricNode";
 import { WidgetMetadata } from "../../../classes/WidgetMetadata";
-import { widgetsMap } from "..";
+
+export type WidgetBaseInitArgs = {
+    widgetNode: WidgetNode;
+    composerMode: boolean;
+    onDragEndEvent: (event: any) => any;
+    onClickEvent: (event: any) => any;
+}
 
 @Component({
     selector: 'clip-base-widget',
@@ -18,7 +24,7 @@ export class WidgetBaseComponent extends geometricNode implements AfterViewInit 
     container: ViewContainerRef | null = null;
 
     widgetNode: WidgetNode | undefined;
-
+ 
     composerMode: boolean = false;
 
     forceDisableDrag: boolean = false;
@@ -29,38 +35,29 @@ export class WidgetBaseComponent extends geometricNode implements AfterViewInit 
 
     metadata: WidgetMetadata = { name: "Widget base" };
 
+    onDragEndEvent: (event: { widgetInstance: WidgetBaseComponent, cdkDragEnd: CdkDragEnd }) => void = () => { };
+    
+    onClickEvent: (event: { widgetInstance: WidgetBaseComponent, mouseEvent: MouseEvent }) => void = () => { };
+
     constructor(public dashboardService: DashboardService, private hostViewRef: ElementRef, private renderer: Renderer2, private cd: ChangeDetectorRef) {
         super(hostViewRef);
     }
 
-    onClick(event: MouseEvent) {
-        if (!this.composerMode) return;
-        this.dashboardService.highlightWidget(this.widgetNode!);
-        this.highlighted = true;
-        this.cd.detectChanges();
+    getProperty(key: string): any {
+        if (!this.widgetNode?.values) {
+            return undefined;
+        }
+        if (this.widgetNode.values.hasOwnProperty(key)) {
+            return this.widgetNode.values[key];
+        }
+        return undefined;
     }
 
-    onDragEndEvent(event: CdkDragEnd) {
-        if (!this.composerMode || !this.widgetNode) return;
-        let { x, y } = event.source.getFreeDragPosition();
-        let movingRes = this.dashboardService.tryAssignNewPositionToWidget(this.widgetNode!, x, y);
-        if (movingRes.x) {
-            this.dashboardService.updateDashboard(this.dashboardService.dashboardByWidget.get(this.widgetNode)!);
-        }
-
-        let widgetDashboard = this.dashboardService.dashboardByWidget.get(this.widgetNode);
-
-        if (widgetDashboard && movingRes.overlappingWidget && widgetsMap[movingRes.overlappingWidget.className].prototype.metadata.canHaveSubWidgets) {
-            if (!movingRes.overlappingWidget.subComponents) {
-                movingRes.overlappingWidget.subComponents = [];
-            }
-            movingRes.overlappingWidget.subComponents.push(this.widgetNode);
-            widgetDashboard.widgetsTree.subComponents!.splice(widgetDashboard.widgetsTree.subComponents!.indexOf(this.widgetNode), 1)
-        }
-
-        if (widgetDashboard) {
-            this.dashboardService.renderDashboard(widgetDashboard);
-        }
+    public init(args: WidgetBaseInitArgs) {
+        this.widgetNode = args.widgetNode;
+        this.composerMode = args.composerMode;
+        this.onDragEndEvent = args.onDragEndEvent;
+        this.onClickEvent = args.onClickEvent;
     }
 
     ngAfterViewInit(): void {
@@ -97,10 +94,9 @@ export class WidgetBaseComponent extends geometricNode implements AfterViewInit 
 
     renderSubWidgets(): void {
         if (this.container && this.widgetNode!.subComponents && this.widgetNode!.subComponents.length > 0) {
+            this.container.clear();
             this.widgetNode!.subComponents.forEach((componentNode) => {
-                this.dashboardService.destroyWidget(componentNode);
-                let newComponentRef = this.dashboardService.addNodeInContainer(componentNode, this.container!);
-                this.dashboardService.spawnSubWidget(this.widgetNode!, componentNode, newComponentRef);
+                this.dashboardService.addNodeInContainer(componentNode, this.container!);
             });
         }
     }

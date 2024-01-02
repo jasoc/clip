@@ -1,10 +1,11 @@
 import { BackendService } from "src/app/services/backend.service";
 import { Dashboard } from "./classes/IDashboards";
-import { WidgetNode } from "./classes/IWidgetNode";
+import { WidgetNode } from "./classes/WidgetNode";
 import { DashboardViewerComponent } from "./components/dashboard-viewer/dashboard-viewer.component";
-import { WidgetBaseComponent } from "./components/widgets/base/widget-base.component";
+import { WidgetBaseComponent, WidgetBaseInitArgs } from "./components/widgets/base/widget-base.component";
 import { ComponentRef, Type, ViewContainerRef } from "@angular/core";
 import { widgetsMap } from "./components/widgets";
+import { CdkDragEnd } from "@angular/cdk/drag-drop";
 
 type PositionAssignmentResult = {
     x?: number;
@@ -16,10 +17,9 @@ export class DashboardService extends BackendService {
     
     public dashboardByWidget = new Map<WidgetNode, Dashboard>();
     
+    public currentDashboard?: Dashboard;
+
     private dashboardsById: { [id: string]: Dashboard } = {};
-    private dashboardRefByNode = new Map<Dashboard, DashboardViewerComponent>();
-    private widgetsByDashboard = new Map<Dashboard, WidgetNode[]>();
-    private widgetRefByNode = new Map<WidgetNode, ComponentRef<WidgetBaseComponent>>();
 
     public async createDashboard(dashboard: Dashboard) {
         await this.post('dashboards/create', dashboard);
@@ -50,141 +50,39 @@ export class DashboardService extends BackendService {
         return widgetsMap[className];
     }
 
-    public spawnDashboard(dashboard: Dashboard, dashboardComponent: DashboardViewerComponent): void {
-        if(!this.dashboardRefByNode.has(dashboard)) {
-            this.dashboardRefByNode.set(dashboard, dashboardComponent);
-        }
-    }
-
-    public renderDashboard(dashboard: Dashboard): void {
-        if(!this.dashboardRefByNode.has(dashboard)) {
-            return;
-        }
-        this.dashboardRefByNode.get(dashboard)!.renderDashboard();
-    }
-
-    public destroyWidget(widget: WidgetNode): void {
-        if (!this.widgetRefByNode.has(widget)) {
-            return;
-        }
-        this.widgetRefByNode.get(widget)?.destroy();
-        this.widgetRefByNode.delete(widget);
-
-        let dashboard = this.dashboardByWidget.get(widget)!;
-        let currWidgetLst = this.widgetsByDashboard.get(dashboard) ?? [];
-        currWidgetLst.splice(currWidgetLst.indexOf(widget), 1);
-        this.widgetsByDashboard.set(dashboard, currWidgetLst);
-    }
-
-    public spawnWidget(dashboard: Dashboard, widget: WidgetNode, x: number, y: number, addinNodes: boolean = false, uncertainCoordinates: boolean = false): boolean {
-        let movingRes = this.tryAssignNewPositionToWidget(widget, x, y, dashboard, uncertainCoordinates);
-        if (movingRes.overlappingWidget) {
-            if (!movingRes.overlappingWidget.subComponents) {
-                movingRes.overlappingWidget.subComponents = [];
-            }
-            movingRes.overlappingWidget.subComponents?.push(widget);
-            return true;
-        }
-        else if (movingRes.x) {
-            if (addinNodes) {
-                dashboard.widgetsTree.subComponents?.push(widget);
-            }
-            let newComponentRef = this.addNodeInContainer(widget, this.dashboardRefByNode.get(dashboard)!.container!);
-            this.cacheWidget(dashboard, widget, newComponentRef);
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-
     public addNodeInContainer(widget: WidgetNode, container: ViewContainerRef): ComponentRef<WidgetBaseComponent> {
       let newComp = container.createComponent(widgetsMap[widget.className]);
       newComp.instance.widgetNode = widget;
       return newComp;
     }
 
-    public cacheWidget(dashboard: Dashboard, widget: WidgetNode, widgetComponent: ComponentRef<WidgetBaseComponent>): void {
-        if(!this.dashboardRefByNode.has(dashboard)) {
-            return;
+    public spawnWidget(container: ViewContainerRef, widgetInitOptions: WidgetBaseInitArgs): ComponentRef<WidgetBaseComponent> {
+        let newComponentRef = this.addNodeInContainer(widgetInitOptions.widgetNode, container);
+        newComponentRef.instance.init(widgetInitOptions);
+        return newComponentRef;
+    }
+
+    public getNewPositionForWidget(widget: WidgetNode, screenX: number, screenY: number, dashboard : Dashboard, isNewWidget: boolean = false): PositionAssignmentResult {
+
+        let widgetClass = this.getWidgetClassByClassName(widget.className)?.prototype as WidgetBaseComponent | undefined;
+        if (widgetClass) {
+            widget.width = widgetClass.metadata.requestedWidth ?? 1;
+            widget.height = widgetClass.metadata.requestedHeight ?? 1;
         }
-        
-        widgetComponent.instance.widgetNode = widget;
-        widgetComponent.instance.composerMode =  this.dashboardRefByNode.get(dashboard)!.composerMode;
-
-        this.dashboardByWidget.set(widget, dashboard);
-        this.widgetRefByNode.set(widget, widgetComponent);
-
-        let currWidgetList = this.widgetsByDashboard.get(dashboard) ?? [];
-        currWidgetList.push(widget);
-        this.widgetsByDashboard.set(dashboard, currWidgetList);
-    }
-
-    public spawnSubWidget(parentWidget: WidgetNode, widget: WidgetNode, widgetComponent: ComponentRef<WidgetBaseComponent>): WidgetBaseComponent {
-        let dashboard = this.dashboardByWidget.get(parentWidget)!;
-        
-        widgetComponent.instance.widgetNode = widget;
-        widgetComponent.instance.composerMode = this.dashboardRefByNode.get(dashboard)!.composerMode;
-
-        this.dashboardByWidget.set(widget, dashboard);
-        this.widgetRefByNode.set(widget, widgetComponent);
-
-        let currWidgetLst = this.widgetsByDashboard.get(dashboard) ?? [];
-        currWidgetLst.push(widget);
-        this.widgetsByDashboard.set(dashboard, currWidgetLst);
-        return widgetComponent.instance;
-    }
-
-    public highlightWidget(widget: WidgetNode) {
-        this.widgetsByDashboard.get(this.dashboardByWidget.get(widget)!)?.forEach((innerWidget) => {
-            this.widgetRefByNode.get(innerWidget)!.instance.highlighted = false;
-        });
-        this.widgetRefByNode.get(widget)!.instance.highlighted = true;
-    }
-
-    public tryAssignNewPositionToWidget(widget: WidgetNode,
-                                        screenX: number,
-                                        screenY: number,
-                                        newDashboard?: Dashboard,
-                                        absoluteCoordinates: boolean = false): PositionAssignmentResult {
-        if (!this.dashboardByWidget.has(widget) && !newDashboard) {
-            console.error("no dashboard");
+        else {
             return { };
         }
 
-        let widgetRef = this.widgetRefByNode.get(widget)!;
-        let dashboard = this.dashboardByWidget.get(widget) ?? newDashboard!;
-        let dashboardRef = this.dashboardRefByNode.get(dashboard)!;
+        let topLeftCornerOfWidgetX = screenX;
+        let topLeftCornerOfWidgetY = screenY;
 
-        let dragDivisionFactor = 2;
-        if (dashboardRef && !widgetRef) {
-            let widgetClass = this.getWidgetClassByClassName(widget.className)?.prototype as WidgetBaseComponent | undefined;
-            if (widgetClass) {
-                widget.width = widgetClass.metadata.requestedWidth ?? 1;
-                widget.height = widgetClass.metadata.requestedHeight ?? 1;
-            }
-            else {
-                return { };
-            }
-            dragDivisionFactor = 4;
+        if (!isNewWidget) {
+            topLeftCornerOfWidgetX += (dashboard.width / dashboard.columns / 2);
+            topLeftCornerOfWidgetY += (dashboard.height / dashboard.rows / 2);
         }
         
-        if (!absoluteCoordinates) {
-            screenX += (widgetRef?.instance?.offsetLeft ?? 0); 
-            screenY += (widgetRef?.instance?.offsetTop ?? 0);
-        }
-        else {
-            screenX -= dashboardRef.offsetLeft;
-            screenY -= dashboardRef.offsetTop;
-        }
+        let { x, y } = this.getCellFromCoordinates(dashboard, topLeftCornerOfWidgetX, topLeftCornerOfWidgetY);
 
-        let topLeftCornerOfWidgetX = dashboardRef.offsetLeft + screenX + (dashboard.width / dashboard.columns / dragDivisionFactor);
-        let topLeftCornerOfWidgetY = dashboardRef.offsetTop + screenY + (dashboard.height / dashboard.rows / dragDivisionFactor);
-        
-        let { x, y } = this.getCellFromCoordinates(dashboard, topLeftCornerOfWidgetX - dashboardRef.offsetLeft,
-            topLeftCornerOfWidgetY - dashboardRef.offsetTop);
-            
-        console.error(widgetRef?.instance?.offsetLeft, screenX, screenY);
         if (x <= 0 || x > dashboard.columns || y <= 0 || y > dashboard.rows) {
             return { };
         }

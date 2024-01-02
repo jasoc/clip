@@ -19,6 +19,7 @@ import { M3TabComponent } from 'src/app/components/m3-tabs/m3-tab/m3-tab.compone
 import { M3IconComponent } from 'src/app/components/m3-icon/m3-icon.component';
 import { ClipWidgetRoot } from './components/widgets/base/widget-base.directive';
 import { WidgetsTreeComponent } from './components/widgets-tree/widgets-tree.component';
+import { DynamicFormComponent } from 'src/app/components/dynamic-form/dynamic-form.component';
 
 @NgModule({
     declarations: [
@@ -42,6 +43,7 @@ import { WidgetsTreeComponent } from './components/widgets-tree/widgets-tree.com
         M3IconComponent,
         M3TabsComponent,
         M3TabComponent,
+        DynamicFormComponent,
         MatTabsModule,
         MatTableModule,
         MatSortModule,

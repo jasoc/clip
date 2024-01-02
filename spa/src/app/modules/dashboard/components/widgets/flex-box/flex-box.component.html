@@ -2,9 +2,9 @@
     <div
         class="clip-widget-flex-box__inner"
         [ngStyle]="{
-            'justify-content': this.widgetNode.values?.justifyContent ?? 'center',
-            'align-items': this.widgetNode.values?.alignItems ?? 'center',
-            'flex-direction': this.widgetNode.values?.flexDirection ?? 'row',
+            'justify-content': this.getProperty('justify-content') ?? 'center',
+            'align-items': this.getProperty('align-items') ?? 'center',
+            'flex-direction': this.getProperty('flex-direction') ?? 'row',
         }"
         [ngClass]="{
             'composer': composerMode

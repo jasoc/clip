@@ -1,0 +1,55 @@
+@use 'src/styles/theme' as *;
+
+* {
+    color: var(--clip-main-ui-text-color);
+}
+
+.dynamic-form {
+    display: flex;
+    flex-direction: column;
+    color: var(--clip-main-ui-text-color);
+    gap: 12px;
+
+    .input-descriptor {
+        color: var(--clip-accent-color-300);
+        font-weight: 500;
+        margin-right: 16px;
+        max-width: 20%;
+    }
+    
+    .form-descriptor {
+        color: var(--clip-main-ui-text-color);
+        font-weight: 400;
+        font-size: 1.5em;
+        margin-left: 16px;
+    }
+
+    .form-descriptor-minor {
+        color: var(--clip-main-ui-text-color);
+        font-weight: 400;
+        font-size: 1.2em;
+        margin-left: 12px;
+    }
+
+    .input-types-string {
+        display: flex;
+        gap: 12px;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+    
+    .input-types-int {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    .sub-form {
+        margin-top: 6px;
+        margin-bottom: 6px;
+    }
+}

@@ -1,7 +1,10 @@
 <div id="dashboard-composer" *ngIf="dashboard">
     <div class="dashboard-composer-board">
         <clip-dashboard-viewer #viewer *ngIf="dashboard" [composer-mode]="true"
-            [dashboard]="dashboard"></clip-dashboard-viewer>
+            [dashboard]="dashboard"
+            (onDragEndEvent)="onDragEndEvent($event)"
+            (onClickEvent)="onClickEvent($event)"
+        ></clip-dashboard-viewer>
     </div>
     <div class="dashboard-composer-spacer"></div>
     <div class="dashboard-composer-widgets">
@@ -9,8 +12,12 @@
 
         <m3-tabs>
 
+            <m3-tab label="Selected" icon="settings">
+                <dynamic-form *ngIf="this.highlightedWidget" [initial-values]="highlightedWidget.widgetNode?.values" (valueChanged)="onWidgetPropertyChanged($event)" [properties]="getHighlightedWidgetProperties()"></dynamic-form>
+            </m3-tab>
+
             <m3-tab label="Widgets tree" icon="account_tree">
-                <clip-widgets-tree [node]="dashboard.widgetsTree" (nodeUpdated)="updateNode($event)"></clip-widgets-tree>
+                <clip-widgets-tree [node]="subjectNode.asObservable()" (onWidgetTreeChanged)="updateNode($event)"></clip-widgets-tree>
             </m3-tab>
 
             <m3-tab label="Widgets list" icon="splitscreen_add">
@@ -37,10 +44,6 @@
                     <m3-button Text="Print Tree" Icon="bug_report" BackgroundColor="primary" (click)="tree()"></m3-button>
                     <m3-button Text="Empty" Icon="indeterminate_check_box" BackgroundColor="green" (click)="empty()"></m3-button>
                 </div>
-            </m3-tab>
-
-            <m3-tab label="Selected" icon="settings">
-                fdfd
             </m3-tab>
 
         </m3-tabs>

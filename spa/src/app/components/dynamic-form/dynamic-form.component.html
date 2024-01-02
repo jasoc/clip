@@ -1,0 +1,72 @@
+<div class="dynamic-form"
+    [style.border-radius.px]="32 / (level + 1)"
+    [style.padding.px]="level > 0 ? 12 : 0"
+    [style.background-color]="level > 0 ? 'var(--clip-background-shader-lighter)' : 'none'"
+>
+    <div *ngFor="let property of propertiesObject | keyvalue">
+
+        <container-element [ngSwitch]="property.value.type">
+            <!--
+                InputTypes.string
+                Text box
+            -->
+            <div *ngSwitchCase="0" class="input-types-string">
+                <label *ngIf="level < 3 && property.value.label.length < 15" class="input-descriptor">{{property.value.label}}</label>
+                <m3-input [text]="getInitialValue(property.key)" (textChange)="onValueChanged(property.key, $event)" width="100%" [icon]="property.value.icon" [placeholder]="property.value.label"></m3-input>
+            </div>
+            <!--
+                InputTypes.int
+                Text box
+            -->
+            <div *ngSwitchCase="1" class="input-types-string">
+                <label *ngIf="level < 3 && property.value.label.length < 15" class="input-descriptor">{{property.value.label}}</label>
+                <m3-input [text]="getInitialValue(property.key)" (textChange)="onValueChanged(property.key, $event)" type="number" [placeholder]="property.value.label"></m3-input>
+            </div>
+            <!--
+                InputTypes.float
+                Text box
+            -->
+            <div *ngSwitchCase="2" class="input-types-int">
+                <!-- <label *ngIf="level < 3 && property.value.label.length < 20" class="input-descriptor">{{property.value.label}}</label> -->
+                <m3-button BackgroundColor="transparent" Icon="remove"></m3-button>
+                <m3-button BackgroundColor="transparent" Icon="add"></m3-button>
+                <div [style.margin-left.px]="12"></div>
+                <m3-input [text]="getInitialValue(property.key)" (textChange)="onValueChanged(property.key, $event)" width="60%" [type]="property.value.icon ?? 'number'" left-icon="numbers" [placeholder]="property.value.label"></m3-input>
+            </div>
+            <!--
+                InputTypes.date
+                Text box
+            -->
+            <div *ngSwitchCase="3" class="input-types-string">
+                <label *ngIf="level < 3 && property.value.label.length < 15" class="input-descriptor">{{property.value.label}}</label>
+                <m3-input [text]="getInitialValue(property.key)" (textChange)="onValueChanged(property.key, $event)" width="100%" [placeholder]="property.value.label"></m3-input>
+            </div>
+            <!--
+                InputTypes.code
+                Text box
+            -->
+            <div *ngSwitchCase="4" class="input-types-string">
+                <label *ngIf="level < 3 && property.value.label.length < 15" class="input-descriptor">{{property.value.label}}</label>
+                <m3-input [text]="getInitialValue(property.key)" (textChange)="onValueChanged(property.key, $event)" width="100%" [placeholder]="property.value.label"></m3-input>
+            </div>
+            <!--
+                InputTypes.object
+                Recursive call to <dynamic-form>
+            -->
+            <div *ngSwitchCase="7">
+                <label [ngClass]="{
+                    'form-descriptor': level == 0,
+                    'form-descriptor-minor': level > 0,
+                }">
+                    <m3-icon *ngIf="property.value.icon">{{property.value.icon}}</m3-icon>
+                    {{property.key}}
+                </label>
+                <div class="sub-form">
+                    <dynamic-form [properties]="property.value.keys!" [level]="level + 1"></dynamic-form>
+                </div>
+            </div>
+
+        </container-element>
+    </div>
+
+</div>

@@ -1,12 +1,18 @@
-<div class="clip-widgets-tree" (drop)="dropOutside($event)" (dragover)="allowDrop($event)">
-    <div class="clip-widgets-tree-node" 
-         *ngFor="let node of flatList; let i = index" 
-         [style.margin-left.px]="(node.level ?? 0) * 20"
-         draggable="true"
-         (dragstart)="dragStart($event, i)"
-         (dragover)="dragOver($event, i)"
-         (drop)="drop($event, i)"
-         [attr.id]="'node-' + i">
-        {{node.className}}
+<div class="clip-widgets-tree" cdkDropList
+     (cdkDropListDropped)="drop($event)">
+    <div *ngFor="let node of flatList; let i = index" class="clip-widgets-tree-node" cdkDrag
+    (cdkDragStarted)="dragStart($event, i)">
+        <div
+            *ngIf="node.show"
+            class="clip-widgets-tree-inner" (click)="onNodeClick(node)"
+            [style.margin-left.px]="(node.level!) * 20">
+            <div class="clip-widgets-tree-expander"
+                 *ngIf="(node.subComponents?.length ?? 0) > 0">
+                <m3-icon>arrow_drop_down</m3-icon>
+            </div>
+            <div class="clip-widgets-tree-widget">
+                {{node.className}}
+            </div>
+        </div>
     </div>
 </div>

@@ -1,4 +1,4 @@
-import { WidgetNode } from "./IWidgetNode";
+import { WidgetNode } from "./WidgetNode";
 
 export interface Dashboard {
     id: string;

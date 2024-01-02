@@ -1,14 +1,18 @@
-import { Component, Injectable, QueryList, ViewChildren, ViewContainerRef } from '@angular/core';
+import { Component, QueryList, ViewChildren, ViewContainerRef } from '@angular/core';
 import { WidgetBaseComponent } from '../base/widget-base.component';
 import { ClipWidget } from '../base/widget-base.directive';
-import { CdkDragDrop, CdkDragEnd, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { WidgetNode } from '../../../classes/IWidgetNode';
+import { InputTypes } from 'src/app/components/dynamic-form';
 
 @ClipWidget({
   name: "Flex box",
   icon: "flex_no_wrap",
   canHaveSubWidgets: true,
-  requestedWidth: 2
+  requestedWidth: 2,
+  properties: {
+    "flex-direction": { label: "Flex Direction", type: InputTypes.string },
+    "justify-content": { label: "Justify Content", type: InputTypes.string },
+    "align-items": { label: "Align Items", type: InputTypes.string },
+  }
 })
 @Component({
   selector: 'clip-widget-flex-box',

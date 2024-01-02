@@ -1,9 +1,7 @@
 import { Type, Directive, ElementRef, Renderer2, HostListener, Input, HostBinding, SimpleChanges, OnChanges, OnInit } from '@angular/core';
 import { WidgetMetadata } from "../../../classes/WidgetMetadata";
 import { WidgetBaseComponent } from "./widget-base.component";
-import { FlexBoxComponent } from '../flex-box/flex-box.component';
-import { LabelComponent } from '../label/label.component';
-import { CdkDrag } from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDragEnd } from '@angular/cdk/drag-drop';
 
 export function ClipWidget(metadata: WidgetMetadata) {
    return function decorator(target: Type<WidgetBaseComponent>) {
@@ -29,13 +27,12 @@ export class ClipWidgetRoot extends CdkDrag implements OnInit {
    @HostBinding('class.highlighted') get isHighlighted() { return this.instance.highlighted; }
 
    @HostListener('cdkDragEnded', ['$event'])
-
-   onDragEndEvent(event: any) {
-      this.instance.onDragEndEvent(event);
+   onDragEndEvent(event: CdkDragEnd) {
+      this.instance.onDragEndEvent({ widgetInstance: this.instance, cdkDragEnd: event });
    }
 
    @HostListener('click', ['$event'])
-   onClick(event: any) {
-      this.instance.onClick(event);
+   onClickEvent(event: MouseEvent) {
+      this.instance.onClickEvent({ widgetInstance: this.instance, mouseEvent: event });
    }
 }

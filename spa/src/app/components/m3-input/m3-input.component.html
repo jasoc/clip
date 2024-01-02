@@ -18,7 +18,7 @@
         }" (focusout)="onFocusOut($event)" (ngModelChange)="textChange.emit(text)" />
         <m3-icon *ngIf="icon" class="right-icon" [style.color]="colored ? color : 'var(--clip-background-shader-stronger)'">{{icon}}</m3-icon>
     </div>
-    <label [@placeholderAnimated]="placeholderAnimated ? 'moved' : 'static'" *ngIf="inputStyle != 'search'"
+    <label [@placeholderAnimated]="placeholderAnimated ? 'moved' : 'static'" *ngIf="placeholder && inputStyle != 'search'"
         class="placeholder" [ngStyle]="{
             'left': leftIcon ? '40px' : '16px',
             'color': getPlaceholderColor(),
