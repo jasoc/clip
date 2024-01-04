@@ -1,11 +1,10 @@
 import { BackendService } from "src/app/services/backend.service";
 import { Dashboard } from "./classes/IDashboards";
 import { WidgetNode } from "./classes/WidgetNode";
-import { DashboardViewerComponent } from "./components/dashboard-viewer/dashboard-viewer.component";
 import { WidgetBaseComponent, WidgetBaseInitArgs } from "./components/widgets/base/widget-base.component";
-import { ComponentRef, Type, ViewContainerRef } from "@angular/core";
+import { ComponentRef, Injectable, Type, ViewContainerRef } from "@angular/core";
 import { widgetsMap } from "./components/widgets";
-import { CdkDragEnd } from "@angular/cdk/drag-drop";
+import { WidgetMetadata } from "./classes/WidgetMetadata";
 
 type PositionAssignmentResult = {
     x?: number;
@@ -13,12 +12,15 @@ type PositionAssignmentResult = {
     overlappingWidget?: WidgetNode;
 }
 
+@Injectable()
 export class DashboardService extends BackendService {
     
     public dashboardByWidget = new Map<WidgetNode, Dashboard>();
     
     public currentDashboard?: Dashboard;
-
+    
+    public spawnedWidgetsByDashboardId: { [key: string]: WidgetBaseComponent[] } = {};
+    
     private dashboardsById: { [id: string]: Dashboard } = {};
 
     public async createDashboard(dashboard: Dashboard) {
@@ -50,6 +52,10 @@ export class DashboardService extends BackendService {
         return widgetsMap[className];
     }
 
+    public getWidgetMetadata(className: string): WidgetMetadata | undefined {
+        return widgetsMap[className].prototype.metadata;
+    }
+
     public addNodeInContainer(widget: WidgetNode, container: ViewContainerRef): ComponentRef<WidgetBaseComponent> {
       let newComp = container.createComponent(widgetsMap[widget.className]);
       newComp.instance.widgetNode = widget;
@@ -59,6 +65,10 @@ export class DashboardService extends BackendService {
     public spawnWidget(container: ViewContainerRef, widgetInitOptions: WidgetBaseInitArgs): ComponentRef<WidgetBaseComponent> {
         let newComponentRef = this.addNodeInContainer(widgetInitOptions.widgetNode, container);
         newComponentRef.instance.init(widgetInitOptions);
+        if (!this.spawnedWidgetsByDashboardId[widgetInitOptions.dashboardId]) {
+            this.spawnedWidgetsByDashboardId[widgetInitOptions.dashboardId] = [];
+        }
+        this.spawnedWidgetsByDashboardId[widgetInitOptions.dashboardId].push(newComponentRef.instance);
         return newComponentRef;
     }
 
@@ -66,8 +76,12 @@ export class DashboardService extends BackendService {
 
         let widgetClass = this.getWidgetClassByClassName(widget.className)?.prototype as WidgetBaseComponent | undefined;
         if (widgetClass) {
-            widget.width = widgetClass.metadata.requestedWidth ?? 1;
-            widget.height = widgetClass.metadata.requestedHeight ?? 1;
+            if (!widget.height) {
+                widget.height = widgetClass.metadata.requestedHeight ?? 1;
+            }
+            if (!widget.width) {
+                widget.width = widgetClass.metadata.requestedWidth ?? 1;
+            }
         }
         else {
             return { };

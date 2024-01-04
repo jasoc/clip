@@ -7,7 +7,6 @@
     width: 100%;
 }
 
-$GAP: 8px;
 
 .dashboard-viewer {
     z-index: 2;
@@ -15,7 +14,6 @@ $GAP: 8px;
     left: 0;
     position: absolute;
     display: grid;
-    gap: $GAP;
     height: 100%;
     width: 100%;
 }
@@ -26,12 +24,10 @@ $GAP: 8px;
     left: 0;
     height: 100%;
     display: grid;
-    gap: $GAP;
     width: 100%;
     position: absolute;
 }
 
 .dashboard-workgrids-cell {
-    // border-radius: $clip-shell-rounding;
     border: 1px solid var(--clip-background-shader-lighter);
 }

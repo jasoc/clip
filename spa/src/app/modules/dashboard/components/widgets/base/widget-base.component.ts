@@ -1,6 +1,6 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentRef, ElementRef, HostBinding, OnInit, Renderer2, Type, ViewChild, ViewContainerRef } from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentRef, ElementRef, HostBinding, HostListener, OnInit, Renderer2, Type, ViewChild, ViewContainerRef } from "@angular/core";
 import { WidgetNode } from "../../../classes/WidgetNode";
-import { CdkDragEnd } from "@angular/cdk/drag-drop";
+import { CdkDragEnd, CdkDragStart } from "@angular/cdk/drag-drop";
 import { DashboardService } from '../../../dashboard.service';
 import { geometricNode } from "../../../classes/GeometricNode";
 import { WidgetMetadata } from "../../../classes/WidgetMetadata";
@@ -8,6 +8,8 @@ import { WidgetMetadata } from "../../../classes/WidgetMetadata";
 export type WidgetBaseInitArgs = {
     widgetNode: WidgetNode;
     composerMode: boolean;
+    dashboardId: string;
+    onDragStartEvent: (event: any) => any;
     onDragEndEvent: (event: any) => any;
     onClickEvent: (event: any) => any;
 }
@@ -33,12 +35,16 @@ export class WidgetBaseComponent extends geometricNode implements AfterViewInit 
 
     highlighted: boolean = false;
 
+    dashboardId: string = '';
+
     metadata: WidgetMetadata = { name: "Widget base" };
+
+    onDragStartEvent: (event: { widgetInstance: WidgetBaseComponent, cdkDragEnd: CdkDragStart }) => void = () => { };
 
     onDragEndEvent: (event: { widgetInstance: WidgetBaseComponent, cdkDragEnd: CdkDragEnd }) => void = () => { };
     
     onClickEvent: (event: { widgetInstance: WidgetBaseComponent, mouseEvent: MouseEvent }) => void = () => { };
-
+    
     constructor(public dashboardService: DashboardService, private hostViewRef: ElementRef, private renderer: Renderer2, private cd: ChangeDetectorRef) {
         super(hostViewRef);
     }
@@ -56,6 +62,8 @@ export class WidgetBaseComponent extends geometricNode implements AfterViewInit 
     public init(args: WidgetBaseInitArgs) {
         this.widgetNode = args.widgetNode;
         this.composerMode = args.composerMode;
+        this.dashboardId = args.dashboardId;
+        this.onDragStartEvent = args.onDragStartEvent;
         this.onDragEndEvent = args.onDragEndEvent;
         this.onClickEvent = args.onClickEvent;
     }
@@ -96,7 +104,14 @@ export class WidgetBaseComponent extends geometricNode implements AfterViewInit 
         if (this.container && this.widgetNode!.subComponents && this.widgetNode!.subComponents.length > 0) {
             this.container.clear();
             this.widgetNode!.subComponents.forEach((componentNode) => {
-                this.dashboardService.addNodeInContainer(componentNode, this.container!);
+                this.dashboardService.spawnWidget(this.container!, {
+                    widgetNode: componentNode,
+                    dashboardId: this.dashboardId,
+                    composerMode: this.composerMode,
+                    onDragStartEvent: this.onDragStartEvent,
+                    onDragEndEvent: this.onDragEndEvent,
+                    onClickEvent: this.onClickEvent,
+                })
             });
         }
     }

@@ -1,15 +1,14 @@
 export enum InputTypes {
     // Primitives
-    string,
-    int,
-    float,
-    date,
+    string,   // 0
+    number,   // 1
+    date,     // 2
     // Advanced data types
-    code,
-    range,
-    selector,
+    code,     // 3
+    range,    // 4
+    selector, // 5
     // Utility types
-    object,
+    object,   // 6
 }
 
 export type InputInfo = {

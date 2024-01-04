@@ -4,13 +4,14 @@ import { CommonModule } from "@angular/common";
 import { M3InputComponent } from "../m3-input/m3-input.component";
 import { M3ButtonComponent } from "../m3-button/m3-button.component";
 import { M3IconComponent } from "../m3-icon/m3-icon.component";
+import { M3DropdownComponent } from "../m3-dropdown/m3-dropdown.component";
 
 @Component({
     selector: 'dynamic-form',
     standalone: true,
     templateUrl: './dynamic-form.component.html',
     styleUrls: ['./dynamic-form.component.scss'],
-    imports: [CommonModule, M3InputComponent, M3ButtonComponent, M3IconComponent],
+    imports: [CommonModule, M3DropdownComponent, M3InputComponent, M3ButtonComponent, M3IconComponent],
 })
 export class DynamicFormComponent {
 
@@ -23,7 +24,7 @@ export class DynamicFormComponent {
     @Input("properties")
     propertiesObject: RecursiveInputTypes = {
         "ApiKind": { type: InputTypes.string, label: "Api Kind", icon: "api" },
-        "level": { type: InputTypes.int, label: "level" },
+        "level": { type: InputTypes.number, label: "level" },
         "Pene": {
             icon: "home",
             type: InputTypes.object,
@@ -42,8 +43,8 @@ export class DynamicFormComponent {
                     type: InputTypes.object,
                     label: "Dimensione",
                     keys: {
-                        "lp": { type: InputTypes.float, label: "Lunghezza pene" },
-                        "dp": { type: InputTypes.float, label: "Diametro palle" },
+                        "lp": { type: InputTypes.number, label: "Lunghezza pene" },
+                        "dp": { type: InputTypes.number, label: "Diametro palle" },
                     }
                 },
             }

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, HostBinding, Input } from '@angular/core';
 
 @Component({
   selector: 'm3-icon',
@@ -21,4 +21,7 @@ export class M3IconComponent {
 
   @Input("font-size")
   public fontSize: string = "24px";
+
+  @HostBinding('style.width') get width() { return this.fontSize }
+  @HostBinding('style.height') get height() { return this.fontSize }
 }

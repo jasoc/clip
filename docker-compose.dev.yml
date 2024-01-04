@@ -23,7 +23,7 @@ services:
         - action: rebuild
           path: ./apiserver/pyproject.toml   
     networks:
-      - clip-network
+      - clip-network-dev
     ports:
       - "8000:8000"
 
@@ -49,7 +49,7 @@ services:
         - action: rebuild
           path: ./spa/package.json
     networks:
-      - clip-network
+      - clip-network-dev
     ports: 
       - "4200:4200"
       - "9222:9222"
@@ -57,5 +57,5 @@ services:
       - ./spa/node_modules:/clip/spa/node_modules
 
 networks:
-  clip-network:
-    name: clip-network
+  clip-network-dev:
+    name: clip-network-dev

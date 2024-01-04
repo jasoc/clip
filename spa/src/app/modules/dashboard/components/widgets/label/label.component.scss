@@ -1,3 +1,5 @@
+@use 'src/styles/theme' as *;
+
 * {
-    color: white;
+    color: var(--clip-main-ui-text-color);
 }

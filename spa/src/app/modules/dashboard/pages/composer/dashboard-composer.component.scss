@@ -31,6 +31,22 @@
 
         $MARGIN: 24px;
 
+        .drawer-header {
+            color: var(--clip-main-ui-text-color);
+            font-weight: 400;
+            font-size: 1.5em;
+            margin-left: 12px;
+            margin-bottom: 24px;
+        }
+
+        .drawer-no-widget {
+            color: var(--clip-main-ui-text-color);
+            width: 100%;
+            text-align: center;
+            font-weight: 500;
+            font-size: 1em;
+        }
+
         .dashboard-composer-widgets-defaults {
             display: flex;
             flex-direction: column;
@@ -90,6 +106,7 @@
             gap: $GAP;
             flex-direction: column;
             margin-top: $GAP;
+            position: fixed;
 
             .widget {
                 display: flex;

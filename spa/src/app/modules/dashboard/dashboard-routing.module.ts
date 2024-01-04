@@ -3,9 +3,11 @@ import { ActivatedRouteSnapshot, RouterModule, RouterStateSnapshot, Routes } fro
 import { PermissionsService } from 'src/app/services/permissions.service';
 import { DashboardComposerComponent } from './pages/composer/dashboard-composer.component';
 import { DashboardMainComponent } from './pages/main/dashboard-main.component';
+import { DashboardViewerComponent } from './pages/viewer/dashboard-viewer.component';
 
 const routes: Routes = [
   { path: '', canActivate: [PermissionsService.CanActivateFn], component: DashboardMainComponent },
+  { path: 'view/:id', canActivate: [PermissionsService.CanActivateFn], component: DashboardViewerComponent },
   { path: 'composer/:id', canActivate: [PermissionsService.CanActivateFn], component: DashboardComposerComponent },
 ];
 @NgModule({

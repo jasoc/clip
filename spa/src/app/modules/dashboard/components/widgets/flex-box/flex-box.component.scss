@@ -1,9 +1,9 @@
 :host {
-    height: 100%;
-    width: 100%;
+    resize: both;
 }
 
 .clip-widget-flex-box {
+    resize: both;
     height: 100%;
     width: 100%;
 
@@ -21,8 +21,4 @@
 
 .composer {
     background: #579aff29;
-}
-
-.highlighted {
-    border: 3px solid red;
 }

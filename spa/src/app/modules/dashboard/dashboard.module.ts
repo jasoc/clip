@@ -5,7 +5,7 @@ import { DashboardMainComponent } from './pages/main/dashboard-main.component';
 import { DashboardComposerComponent } from './pages/composer/dashboard-composer.component';
 import { HomeRoutingModule } from './dashboard-routing.module';
 import { M3InputComponent } from 'src/app/components/m3-input/m3-input.component';
-import { DashboardViewerComponent } from './components/dashboard-viewer/dashboard-viewer.component';
+import { DashboardViewerComponent } from './pages/viewer/dashboard-viewer.component';
 import { FlexBoxComponent } from './components/widgets/flex-box/flex-box.component';
 import { LabelComponent } from './components/widgets/label/label.component';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -20,16 +20,21 @@ import { M3IconComponent } from 'src/app/components/m3-icon/m3-icon.component';
 import { ClipWidgetRoot } from './components/widgets/base/widget-base.directive';
 import { WidgetsTreeComponent } from './components/widgets-tree/widgets-tree.component';
 import { DynamicFormComponent } from 'src/app/components/dynamic-form/dynamic-form.component';
+import { M3DropdownComponent } from 'src/app/components/m3-dropdown/m3-dropdown.component';
+import { DashboardCanvasComponent } from './components/dashboard-canvas/dashboard-canvas.component';
+import { SpacerComponent } from './components/widgets/spacer/spacer.component';
 
 @NgModule({
     declarations: [
         DashboardMainComponent,
         DashboardComposerComponent,
         WidgetsTreeComponent,
+        DashboardCanvasComponent,
         DashboardViewerComponent,
         ClipWidgetRoot,
         FlexBoxComponent,
         LabelComponent,
+        SpacerComponent,
         WidgetBaseComponent
     ],
     providers: [
@@ -42,6 +47,7 @@ import { DynamicFormComponent } from 'src/app/components/dynamic-form/dynamic-fo
         M3ButtonComponent,
         M3IconComponent,
         M3TabsComponent,
+        M3DropdownComponent,
         M3TabComponent,
         DynamicFormComponent,
         MatTabsModule,

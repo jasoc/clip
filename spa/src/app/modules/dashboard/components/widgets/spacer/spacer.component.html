@@ -1,0 +1,14 @@
+<div [ClipWidgetRoot]="this"
+    [ngStyle]="{
+        'height': getSpacerHeight(),
+        'width': getSpacerWidth(),
+    }">
+    <div class="composer-h-spacer-info" *ngIf="composerMode && direction == 'Horizontal'">
+        <p>{{size}}</p>
+        <div class="h-spacer"></div>
+    </div>
+    <div class="composer-v-spacer-info" *ngIf="composerMode && direction == 'Vertical'">
+        <div class="v-spacer"></div>
+        <p>{{size}}</p>
+    </div>
+</div>

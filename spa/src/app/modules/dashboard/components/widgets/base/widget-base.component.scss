@@ -1,4 +1,8 @@
-.clip-base-widget {
-    height: 100%;
-    width: 100%;
+.clip-widget {
+    border-radius: 8px;
+}
+
+.highlighted {
+    box-shadow: 0 0 4px 4px #15a1ff9c;
+    cursor: grab;
 }

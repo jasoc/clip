@@ -1,0 +1,8 @@
+@use 'src/styles/theme' as *;
+
+#dashboard-viewer {
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+    background: var(--clip-background-layer-color);
+}

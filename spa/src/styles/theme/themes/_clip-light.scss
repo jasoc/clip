@@ -2,9 +2,12 @@
 
 [data-theme="clip-light"] {
     --clip-background-color: #f7f9fc;
+    --clip-background-color-light: white;
     --clip-background-layer-color: #fff;
 
     --clip-main-ui-text-color: #{$clip-dark-primary-text};
+    --clip-main-ui-text-color-light: #3b3b3b;
+
     --clip-background-shader: #0000001f;
     --clip-background-shader-lighter: #00000011;
     --clip-background-shader-stronger: #0000007e;

@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter, HostBinding, AfterViewInit} from '@angular/core';
+import {Component, Input, Output, EventEmitter, HostBinding, OnInit} from '@angular/core';
 import {
   trigger,
   state,
@@ -33,7 +33,7 @@ import { M3IconComponent } from '../m3-icon/m3-icon.component';
     ]),
   ],
 })
-export class M3InputComponent implements AfterViewInit {
+export class M3InputComponent implements OnInit {
     @Input()
     placeholder?: string;
 
@@ -51,6 +51,9 @@ export class M3InputComponent implements AfterViewInit {
 
     @Input()
     text?: any;
+
+    @Input()
+    readonly: boolean = false;
 
     @Input('type')
     Type: string = "text";
@@ -70,8 +73,8 @@ export class M3InputComponent implements AfterViewInit {
 
     constructor() { }
 
-    ngAfterViewInit(): void {
-      if (this.text && this.text.length > 0) {
+    ngOnInit(): void {
+      if (this.text && this.text.toString().length > 0) {
         this.placeholderAnimated = true;
       }
     }
@@ -93,13 +96,12 @@ export class M3InputComponent implements AfterViewInit {
     }
 
     onFocusOut(event: Event) {
-      if (!this.text) {
+      if (this.text == undefined) {
         this.placeholderAnimated = false;
         this.colored = false;
         return;
       }
-
-      if (this.text.length > 0) {
+      if (this.text.toString().length > 0) {
         this.placeholderAnimated = true;
         this.colored = false;
         return;
@@ -116,6 +118,13 @@ export class M3InputComponent implements AfterViewInit {
         return this.colored ? this.getContrast(this.color) : this.getContrast('#6b6b6b');
       }
       return this.colored ? this.color : 'var(--clip-background-shader-stronger)';
+    }
+
+    emitTextChange(text: any) {
+      if (this.Type == "number") {
+        text = parseFloat(text);
+    }
+      this.textChange.emit(text);
     }
 
     getContrast(hexColor: string): string {

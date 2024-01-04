@@ -13,9 +13,9 @@
             [weight]="600"
             [style.color]="colored ? color : 'var(--clip-background-shader-stronger)'"
         >{{leftIcon}}</m3-icon>
-        <input [type]="Type" [(ngModel)]="text" (focus)="onFocus($event)" [ngStyle]="{
+        <input [readonly]="readonly" [type]="Type" [(ngModel)]="text" (focus)="onFocus($event)" [ngStyle]="{
             'width': 'calc(100% - ' + getInputWidth() + 'px)'
-        }" (focusout)="onFocusOut($event)" (ngModelChange)="textChange.emit(text)" />
+        }" (focusout)="onFocusOut($event)" (ngModelChange)="emitTextChange(text)" />
         <m3-icon *ngIf="icon" class="right-icon" [style.color]="colored ? color : 'var(--clip-background-shader-stronger)'">{{icon}}</m3-icon>
     </div>
     <label [@placeholderAnimated]="placeholderAnimated ? 'moved' : 'static'" *ngIf="placeholder && inputStyle != 'search'"

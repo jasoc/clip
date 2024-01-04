@@ -1,18 +1,15 @@
 
-import { AfterViewInit, ChangeDetectorRef, Component, ComponentRef, ElementRef, EventEmitter, Input, Output, Type, ViewChild, ViewContainerRef } from '@angular/core';
+import { OnInit, ChangeDetectorRef, Component, ComponentRef, ElementRef, EventEmitter, Input, Output, Type, ViewChild, ViewContainerRef } from '@angular/core';
 import { Dashboard } from '../../classes/IDashboards';
 import { geometricNode } from '../../classes/GeometricNode';
 import { DashboardService } from '../../dashboard.service';
-import { CdkDragEnd } from '@angular/cdk/drag-drop';
-import { WidgetNode } from '../../classes/WidgetNode';
-import { WidgetBaseComponent } from '../widgets/base/widget-base.component';
 
 @Component({
-  selector: 'clip-dashboard-viewer',
-  templateUrl: './dashboard-viewer.component.html',
-  styleUrls: ['./dashboard-viewer.component.scss']
+  selector: 'clip-dashboard-canvas',
+  templateUrl: './dashboard-canvas.component.html',
+  styleUrls: ['./dashboard-canvas.component.scss']
 })
-export class DashboardViewerComponent extends geometricNode implements AfterViewInit {
+export class DashboardCanvasComponent extends geometricNode implements OnInit {
 
   @ViewChild('container', { read: ViewContainerRef })
   container: ViewContainerRef | null = null;
@@ -26,6 +23,9 @@ export class DashboardViewerComponent extends geometricNode implements AfterView
   public dashboard: Dashboard | undefined;
 
   @Output()
+  public onDragStartEvent = new EventEmitter();
+
+  @Output()
   public onDragEndEvent = new EventEmitter();
 
   @Output()
@@ -34,19 +34,18 @@ export class DashboardViewerComponent extends geometricNode implements AfterView
   @Input('composer-mode')
   public composerMode: boolean = false;
 
-  public spawnedWidgets: WidgetBaseComponent[] = [];
 
   constructor(private _hostView: ElementRef, private dashboardService: DashboardService, private cd: ChangeDetectorRef) {
     super(_hostView);
   }
 
-  ngAfterViewInit(): void {
-    if (this.dashboard) {
+  ngOnInit(): void {
+    if (this.dashboard && this.container) {
       this.renderDashboard();
     }
   }
 
-  renderDashboard(): void {
+  renderDashboard(composerMode: boolean = false): void {
 
     if (!this.dashboard) return;
 
@@ -60,12 +59,14 @@ export class DashboardViewerComponent extends geometricNode implements AfterView
     this.container?.clear();
 
     this.dashboard.widgetsTree.subComponents?.forEach((componentNode) => {
-      this.spawnedWidgets.push(this.dashboardService.spawnWidget(this.container!, {
+      this.dashboardService.spawnWidget(this.container!, {
         widgetNode: componentNode,
-        composerMode: true,
+        composerMode: composerMode,
+        dashboardId: this.dashboard!.id!,
+        onDragStartEvent: (event) => this.onDragStartEvent.emit(event),
         onDragEndEvent: (event) => this.onDragEndEvent.emit(event),
         onClickEvent: (event) => this.onClickEvent.emit(event),
-      }).instance);
+      });
     });
   }
 }

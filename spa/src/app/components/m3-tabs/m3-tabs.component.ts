@@ -17,12 +17,14 @@ export class M3TabsComponent implements AfterViewInit {
     tabsComponents?: QueryList<M3TabComponent>;
 
     ngAfterViewInit(): void {
-        if (this.tabsComponents && this.tabsComponents.length > 0) {
-            this.tabsComponents.forEach((tab) => {
-                tab.show = false;
-            });
-            this.tabsComponents.get(0)!.show = true;
-        }
+        setTimeout(() => {
+            if (this.tabsComponents && this.tabsComponents.length > 0) {
+                this.tabsComponents.forEach((tab) => {
+                    tab.show = false;
+                });
+                this.tabsComponents.get(0)!.show = true;
+            } 
+        });
     }
 
     showTab(tab: M3TabComponent) {
