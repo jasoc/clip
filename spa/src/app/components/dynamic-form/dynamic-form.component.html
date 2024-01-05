@@ -20,8 +20,8 @@
             -->
             <div *ngSwitchCase="1" class="input-types-int">
                 <!-- <label *ngIf="level < 3 && property.value.label.length < 20" class="input-descriptor">{{property.value.label}}</label> -->
-                <m3-button BackgroundColor="transparent" Icon="remove"></m3-button>
-                <m3-button BackgroundColor="transparent" Icon="add"></m3-button>
+                <m3-button BackgroundColor="transparent" Icon="remove" (click)="onNumberSubtractClick(property.key)"></m3-button>
+                <m3-button BackgroundColor="transparent" Icon="add" (click)="onNumberAddClick(property.key)"></m3-button>
                 <div [style.margin-left.px]="12"></div>
                 <m3-input [text]="getInitialValue(property.key)" (textChange)="onValueChanged(property.key, $event)" width="60%" type="number" [left-icon]="property.value.icon ?? 'number'" [placeholder]="property.value.label"></m3-input>
             </div>

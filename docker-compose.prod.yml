@@ -22,8 +22,6 @@ services:
       network: host
     networks:
       - clip-network
-    ports:
-      - "8000:8000"
 
   clip-spa:
     container_name: clip-spa

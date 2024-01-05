@@ -1,14 +1,29 @@
 <div class="clip-widget-flex-box" [ClipWidgetRoot]="this" *ngIf="this.widgetNode">
-    <div
-        class="clip-widget-flex-box__inner"
-        [ngStyle]="{
+    <div cdkDropList [cdkDropListData]="widgetNode.subComponents" (cdkDropListDropped)="dropSubWidget($event)"
+        [cdkDropListOrientation]="(this.getProperty('flex-direction') ?? 'row') == 'row' ? 'horizontal' : 'vertical'"
+        class="clip-widget-flex-box__inner" [ngStyle]="{
             'justify-content': this.getProperty('justify-content') ?? 'center',
             'align-items': this.getProperty('align-items') ?? 'center',
             'flex-direction': this.getProperty('flex-direction') ?? 'row',
-        }"
-        [ngClass]="{
+        }" [ngClass]="{
             'composer': composerMode
         }">
-        <ng-template #container></ng-template>
+        <!-- <ng-template #container></ng-template> -->
+        <!-- <div *ngFor="let subWidget of widgetNode.subComponents" class="sub-widget">
+            <ng-template #subcontainer></ng-template>
+        </div> -->
+        <div *ngFor="let subWidget of widgetNode.subComponents"
+            class="sub-widget"
+            cdkDrag
+            [cdkDragDisabled]="!composerMode"
+            [ngStyle]="{
+                width: subWidget.className == 'FlexBoxComponent' ? 'inherit' : 'auto',
+                height: subWidget.className == 'FlexBoxComponent' ? 'inherit' : 'auto',
+            }"
+            >
+            <div class="example-handle" *ngIf="composerMode" cdkDragHandle>
+            </div>
+            <ng-template #subcontainer></ng-template>
+        </div>
     </div>
 </div>

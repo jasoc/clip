@@ -2,7 +2,7 @@
     [ngStyle]="{
         'grid-template-columns': gridTemplateColumns,
         'grid-template-rows': gridTemplateRows
-    }">
+    }" cdkDropListGroup>
     <ng-template #container></ng-template>
 </div>
 <div *ngIf="composerMode && gridTemplateColumns && gridTemplateRows" class="dashboard-workgrids"

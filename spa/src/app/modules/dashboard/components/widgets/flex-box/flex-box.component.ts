@@ -2,6 +2,8 @@ import { Component, HostBinding, QueryList, ViewChildren, ViewContainerRef } fro
 import { WidgetBaseComponent } from '../base/widget-base.component';
 import { ClipWidget } from '../base/widget-base.directive';
 import { InputTypes } from 'src/app/components/dynamic-form';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { WidgetNode } from '../../../classes/WidgetNode';
 
 @ClipWidget({
   name: "Flex box",
@@ -14,17 +16,20 @@ import { InputTypes } from 'src/app/components/dynamic-form';
       label: "Alignments",
       type: InputTypes.object,
       keys: {
-        "flex-direction": { label: "Flex Direction", icon: "arrow_range", type: InputTypes.selector,
+        "flex-direction": {
+          label: "Flex Direction", icon: "arrow_range", type: InputTypes.selector,
           props: {
             selectables: ["column", "row"]
           }
         },
-        "justify-content": { label: "Justify Content", icon: "align_justify_flex_end", type: InputTypes.selector,
+        "justify-content": {
+          label: "Justify Content", icon: "align_justify_flex_end", type: InputTypes.selector,
           props: {
             selectables: ["flex-start", "center", "space-between", "space-around", "space-evenly", "flex-end"]
           }
         },
-        "align-items": { label: "Align Items", icon: "align_end", type: InputTypes.selector,
+        "align-items": {
+          label: "Align Items", icon: "align_end", type: InputTypes.selector,
           props: {
             selectables: ["flex-start", "center", "space-between", "space-around", "space-evenly", "flex-end"]
           }
@@ -54,4 +59,38 @@ export class FlexBoxComponent extends WidgetBaseComponent {
   @ViewChildren('subcontainer', { read: ViewContainerRef })
   containers: QueryList<ViewContainerRef> | undefined = undefined;
 
+  override renderSubWidgets(): void {
+    if (this.containers && this.widgetNode!.subComponents && this.widgetNode!.subComponents.length > 0) {
+      this.containers!.forEach((container, i) => {
+        container.clear();
+        let w = this.dashboardService.spawnWidget(container, {
+          widgetNode: this.widgetNode!.subComponents![i],
+          dashboardId: this.dashboardId,
+          composerMode: this.composerMode,
+          onDragStartEvent: this.onDragStartEvent,
+          onDragEndEvent: this.onDragEndEvent,
+          onClickEvent: this.onClickEvent,
+        });
+        w.instance.forceDisableDrag = true;
+      });
+    }
+  }
+
+  dropSubWidget(event: CdkDragDrop<WidgetNode[] | undefined>) {
+    console.log(event.container.data)
+    if (!event.container.data || !event.previousContainer.data) {
+      return;
+    }
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
+    }
+    setTimeout(() => this.renderSubWidgets());
+  }
 }

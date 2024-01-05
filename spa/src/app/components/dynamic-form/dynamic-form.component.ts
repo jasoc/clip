@@ -78,7 +78,28 @@ export class DynamicFormComponent {
         }
     }
 
+    onNumberAddClick(key: string) {
+        if (!this.initialValues[key]) {
+            this.initialValues[key] = 1;
+        }
+        else {
+            this.initialValues[key] += 1;
+        }
+        this.valueChanged.emit({ key, value: this.initialValues[key] });
+    }
+
+    onNumberSubtractClick(key: string) {
+        if (!this.initialValues[key]) {
+            this.initialValues[key] = -1;
+        }
+        else {
+            this.initialValues[key] -= 1;
+        }
+        this.valueChanged.emit({ key, value: this.initialValues[key] });
+    }
+
     onValueChanged(key: string, value: any) {
+        this.initialValues[key] = value;
         this.valueChanged.emit({ key, value });
     }
 

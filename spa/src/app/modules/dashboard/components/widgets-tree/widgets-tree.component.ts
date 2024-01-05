@@ -4,14 +4,14 @@ import { widgetsMap } from '../widgets';
 import { Observable, firstValueFrom } from 'rxjs';
 import { CdkDragDrop, CdkDragEnter, CdkDragStart, moveItemInArray } from '@angular/cdk/drag-drop';
 
-export interface WidgetNode {
+export interface WidgetNodeFlat {
     className: string;
     positionStartX?: number;
     positionStartY?: number;
     width?: number;
     height?: number;
     values?: any;
-    subComponents?: WidgetNode[];
+    subComponents?: WidgetNodeFlat[];
     level?: number;
     show?: boolean;
 }
@@ -24,15 +24,15 @@ export interface WidgetNode {
 export class WidgetsTreeComponent {
 
     @Input("node")
-    public nodeObservable: Observable<WidgetNode> | undefined;                                                                                               
+    public nodeObservable: Observable<WidgetNodeFlat> | undefined;                                                                                               
 
-    private node: WidgetNode | undefined;
+    private node: WidgetNodeFlat | undefined;
 
     @Output()
-    public onWidgetTreeChanged = new EventEmitter<WidgetNode>();
+    public onWidgetTreeChanged = new EventEmitter<WidgetNodeFlat>();
 
-    public flatList: WidgetNode[] = [];
-    private dragNodes: WidgetNode[] = [];
+    public flatList: WidgetNodeFlat[] = [];
+    private dragNodes: WidgetNodeFlat[] = [];
 
     constructor() { }
 
@@ -47,7 +47,7 @@ export class WidgetsTreeComponent {
         }
     }
 
-    onNodeClick(node: WidgetNode) {
+    onNodeClick(node: WidgetNodeFlat) {
         if ((node.subComponents?.length ?? 0) > 0) {
             let nodeIndex = this.flatList.indexOf(node);
             const close: boolean = this.flatList[nodeIndex + 1].show!;
@@ -63,8 +63,8 @@ export class WidgetsTreeComponent {
         }
     }
 
-    flattenTree(node: WidgetNode, level: number): WidgetNode[] {
-        let flatList: WidgetNode[] = [];
+    flattenTree(node: WidgetNodeFlat, level: number): WidgetNodeFlat[] {
+        let flatList: WidgetNodeFlat[] = [];
         node.level = level;
         node.show = true;
         flatList.push(node);
@@ -96,7 +96,7 @@ export class WidgetsTreeComponent {
         // }
     }
 
-    drop(event: CdkDragDrop<WidgetNode[]>) {
+    drop(event: CdkDragDrop<WidgetNodeFlat[]>) {
         let index = event.currentIndex;
         const canInnest: boolean =  widgetsMap[this.flatList[index].className]
         ? widgetsMap[this.flatList[index].className].prototype.metadata.canHaveSubWidgets
@@ -151,7 +151,7 @@ export class WidgetsTreeComponent {
         this.node = this.rebuildTree();
     }
     
-    getChildrenCount(node: WidgetNode): number {
+    getChildrenCount(node: WidgetNodeFlat): number {
         let count = 0;
         let level = node.level!;
         for (let i = this.flatList.indexOf(node) + 1; i < this.flatList.length && this.flatList[i].level! > level; i++) {
@@ -169,9 +169,9 @@ export class WidgetsTreeComponent {
         // this.drop(event, 1);
     }
 
-    rebuildTree(): WidgetNode {
-        let root: WidgetNode = { ...this.flatList[0], subComponents: [] };
-        let nodeStack: WidgetNode[] = [root];
+    rebuildTree(): WidgetNodeFlat {
+        let root: WidgetNodeFlat = { ...this.flatList[0], subComponents: [] };
+        let nodeStack: WidgetNodeFlat[] = [root];
 
         for (let i = 1; i < this.flatList.length; i++) {
             let node = { ...this.flatList[i], subComponents: [] };

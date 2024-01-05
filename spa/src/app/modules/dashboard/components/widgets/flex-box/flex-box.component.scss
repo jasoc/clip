@@ -22,3 +22,45 @@
 .composer {
     background: #579aff29;
 }
+
+.cdk-drag-placeholder {
+    opacity: 0;
+}
+
+.cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.sub-widget {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    .example-handle {
+        position: absolute;
+        z-index: 10;
+        border-radius: 12px;
+        background: white;
+        cursor: move;
+        width: 12px;
+        height: 12px;
+        transition: cubic-bezier(0.2, 0, 0, 1) 150ms;
+        box-shadow: 0 0 0px 4px rgba(21, 161, 255, 0.6117647059);
+        opacity: 0;
+    }
+
+    &:hover {
+        .example-handle {
+            opacity: 1;
+        }
+    }
+}
+
+.sub-widget:last-child {
+    border: none;
+}
+
+.clip-widget-flex-box__inner.cdk-drop-list-dragging .sub-widget:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
