@@ -1,3 +1,7 @@
+include:
+  - path :
+      - docker-compose.base.yml
+
 services:
   clip-apiserver-debug:
     container_name: clip-apiserver-debug
@@ -20,8 +24,11 @@ services:
             - node_modules/
         - action: rebuild
           path: ./apiserver/pyproject.toml
+    env_file:
+      - path: .env
+        required: true
     networks:
-      - clip-network-dev
+      - clip-network
     ports:
       - "8000:8000"
       - "5678:5678"
@@ -49,43 +56,18 @@ services:
           path: ./spa/package.json
         - action: rebuild
           path: ./spa/angular.json
+    env_file:
+      - path: .env
+        required: true
     networks:
-      - clip-network-dev
+      - clip-network
     ports: 
       - "4200:4200"
       - "9222:9222"
     volumes:
       - ./spa/node_modules:/clip/spa/node_modules
 
-  # clip-spa-debug:
-  #   container_name: clip-spa-debug
-  #   image: clip/spa:debug
-  #   command: /bin/sh dev.sh spa
-  #   build:
-  #     context: .
-  #     dockerfile: ./spa/Dockerfile
-  #     target: spa-base
-  #     network: host
-  #   develop:
-  #     watch:
-  #       - action: sync
-  #         path: ./scripts
-  #         target: /clip/scripts
-  #       - action: sync
-  #         path: ./spa
-  #         target: /clip/spa
-  #         ignore:
-  #           - node_modules/
-  #       - action: rebuild
-  #         path: ./spa/package.json
-  #   networks:
-  #     - clip-network-dev
-  #   ports: 
-  #     - "4200:4200"
-  #     - "9222:9222"
-  #   volumes:
-  #     - ./spa/node_modules:/clip/spa/node_modules
-
 networks:
-  clip-network-dev:
-    name: clip-network-dev
+  clip-network:
+    external:
+      name: clip-network

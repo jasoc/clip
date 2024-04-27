@@ -3,8 +3,7 @@ RUN apt-get update \
     && apt-get install --no-install-recommends -y \
     curl \
     build-essential
-# RUN addgroup --gid 1000 user
-# RUN adduser --disabled-password --gecos '' --uid 1000 --gid 1000 user
+
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     PIP_NO_CACHE_DIR=off \
@@ -17,7 +16,6 @@ ENV PYTHONUNBUFFERED=1 \
     PYSETUP_PATH="/opt/pysetup"
 ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
 RUN curl -sSL https://install.python-poetry.org | python3 - --version 1.5.1
-# USER user
 EXPOSE 8000
 COPY ./scripts /clip/scripts
 COPY ./apiserver /clip/apiserver
