@@ -23,7 +23,7 @@ services:
       context: ./migrations
       dockerfile: ./Dockerfile
       network: host
-    entrypoint: /root/.dotnet/tools/dotnet-badgie-migrator 'Host=clip-postgres;Port=5432;Database=clip;Username=clip;Password=password;' './*.sql' -i -d:Postgres
+    entrypoint: /root/.dotnet/tools/dotnet-badgie-migrator 'Host=${POSTGRESQL_HOST};Port=${POSTGRESQL_PORT};Database=${POSTGRESQL_DATABASE_NAME};Username=${POSTGRESQL_USER};Password=${POSTGRESQL_PASSWORD};' './*.sql' -i -d:Postgres
     depends_on:
       clip-postgres:
         condition: service_healthy
