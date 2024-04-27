@@ -1,0 +1,32 @@
+services:
+  clip-postgres:
+    container_name: clip-postgres
+    image: postgres:16
+    restart: unless-stopped
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: ${POSTGRESQL_USER}
+      POSTGRES_PASSWORD: ${POSTGRESQL_PASSWORD}
+    volumes:
+      - /var/lib/postgresql/data
+    networks:
+      - clip-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d clip -U user"]
+      interval: 5s
+
+  migrations:
+    working_dir: /migrations
+    restart: on-failure
+    build:
+      context: ./migrations
+      dockerfile: ./Dockerfile
+      network: host
+    entrypoint: /root/.dotnet/tools/dotnet-badgie-migrator 'Host=clip-postgres;Port=5432;Database=clip;Username=clip;Password=password;' './*.sql' -i -d:Postgres
+    depends_on:
+      clip-postgres:
+        condition: service_healthy
+
+networks:
+  clip-network:

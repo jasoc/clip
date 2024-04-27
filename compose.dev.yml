@@ -1,7 +1,3 @@
-include:
-  - path :
-      - docker-compose.base.yml
-
 services:
   clip-apiserver-debug:
     container_name: clip-apiserver-debug
@@ -27,11 +23,11 @@ services:
     env_file:
       - path: .env
         required: true
-    networks:
-      - clip-network
     ports:
       - "8000:8000"
       - "5678:5678"
+    networks:
+      - clip-network
 
   clip-spa-debug:
     container_name: clip-spa-debug
@@ -59,15 +55,15 @@ services:
     env_file:
       - path: .env
         required: true
-    networks:
-      - clip-network
-    ports: 
+    ports:
       - "4200:4200"
       - "9222:9222"
     volumes:
       - ./spa/node_modules:/clip/spa/node_modules
+    networks:
+      - clip-network
 
 networks:
   clip-network:
-    external:
-      name: clip-network
+    name: clip_clip-network
+    external: true

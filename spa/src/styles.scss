@@ -8,7 +8,7 @@ $material-symbols-font-path: 'material-symbols/';
 @include mat.core();
 
 $clip-primary: mat.define-palette(ct.$clip-primary-palette);
-$clip-accent: mat.define-palette(ct.$clip-accent-palette, A200, A100, A400);
+$clip-accent: mat.define-palette(ct.$clip-accent-palette);
 
 $clip-warn: mat.define-palette(mat.$red-palette);
 
@@ -41,15 +41,12 @@ $clip-dark-theme: mat.define-dark-theme((
 * {
   margin: 0;
   padding: 0;
+  font-family: roboto;
 }
 
 html,
 body {
   height: 100%;
   background-color: var(--clip-background-color);
-}
-
-body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
 }

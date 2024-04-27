@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-docker compose -f docker-compose.$1.yml ${@:2}
+docker compose -f compose.base.yml -f compose.$1.yml ${@:2}

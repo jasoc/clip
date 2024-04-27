@@ -19,7 +19,6 @@
         position: absolute;
         top: 50%;
         left: 10px;
-        font-family: roboto;
         font-size: 17px;
         transform: translate(0, -50%);
         pointer-events: none;
@@ -43,7 +42,6 @@
             border: none;
             color: var(--clip-main-ui-text-color);
             font-size: 16px;
-            font-family: roboto;
         }
 
         mat-icon {
@@ -110,7 +108,6 @@
 
 #hint {
     padding-left: 10px;
-    font-family: roboto;
     font-size: 12px;
     transform: translate(0, -50%);
     pointer-events: none;

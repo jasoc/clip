@@ -1,7 +1,3 @@
-include:
-  - path :
-      - docker-compose.base.yml
-
 services:
   clip-apiserver:
     container_name: clip-apiserver
@@ -49,5 +45,5 @@ services:
 
 networks:
   clip-network:
-    external:
-      name: clip-network
+    name: clip_clip-network
+    external: true
