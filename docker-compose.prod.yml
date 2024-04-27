@@ -1,6 +1,4 @@
-version: '3'
 services:
-
   clip-apiserver:
     container_name: clip-apiserver
     image: clip/apiserver
@@ -33,9 +31,22 @@ services:
       network: host
     networks:
       - clip-network
+
+  clip-proxy:
+    container_name: clip-proxy
+    image: clip/proxy
+    restart: unless-stopped
+    build:
+      context: ./proxy
+      dockerfile: ./Dockerfile
+      network: host
+    networks:
+      - clip-network
     ports:
       - "432:80"
-      #- "443:443"
+    depends_on:
+      - clip-spa
+      - clip-apiserver
 
 networks:
   clip-network:

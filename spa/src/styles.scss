@@ -2,6 +2,7 @@
 @use 'styles/theme/maps' as ct;
 @use 'styles/fonts' as fonts;
 
+$material-symbols-font-path: 'material-symbols/';
 @import 'material-symbols';
 
 @include mat.core();

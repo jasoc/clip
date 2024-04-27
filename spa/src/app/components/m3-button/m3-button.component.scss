@@ -1,6 +1,6 @@
 // @use 'src/styles/theme/maps' as ct;
-@use 'src/styles/theme' as *;
-@use 'src/styles/fonts' as fonts;
+@use '../../../styles/theme' as *;
+@use '../../../styles/fonts' as fonts;
 @use "sass:map";
 
 $MARGIN: 16px;

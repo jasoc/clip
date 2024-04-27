@@ -26,10 +26,10 @@ dev_spa()
 
     if [ ! -d "$CLIP_PROJECT_PATH/spa/node_modules" ] || [ ! "$(ls -A $CLIP_PROJECT_PATH/spa/node_modules)" ]
     then
-        npm install
+        yarn install
     fi
 
-    npm start
+    yarn start
 }
 
 dev_all()

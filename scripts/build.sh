@@ -35,13 +35,13 @@ build_spa()
 {
     cd $CLIP_PROJECT_PATH/spa
 
-    if [ ! -d "$CLIP_PROJECT_PATH/spa/node_modules" ] 
+    if [ ! -d "$CLIP_PROJECT_PATH/spa/node_modules" ]
     then
-        npm install
+        yarn
     fi
 
-    npm run build
-    cp -r $CLIP_PROJECT_PATH/spa/dist/clip $CLIP_PROJECT_PATH/dist/spa
+    yarn build
+    cp -r $CLIP_PROJECT_PATH/spa/dist/clip-spa $CLIP_PROJECT_PATH/dist/spa
 }
 
 build_all()

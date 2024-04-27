@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "clip": {
+    "clip-spa": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -15,11 +15,11 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/clip",
+            "outputPath": "dist/clip-spa",
             "index": "src/index.html",
-            "main": "src/main.ts",
+            "browser": "src/main.ts",
             "polyfills": [
               "zone.js"
             ],
@@ -32,7 +32,17 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/styles"
+              ]
+            },
+            "scripts": [],
+            "server": "src/main.server.ts",
+            "prerender": true,
+            "ssr": {
+              "entry": "server.ts"
+            }
           },
           "configurations": {
             "docker-prod": {
@@ -52,9 +62,7 @@
               ]
             },
             "docker-debug": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true,
@@ -66,9 +74,7 @@
               ]
             },
             "local-debug": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true,
@@ -86,13 +92,13 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "docker-prod": {
-              "browserTarget": "clip:build:docker-prod"
+              "buildTarget": "clip-spa:build:docker-prod"
             },
             "docker-debug": {
-              "browserTarget": "clip:build:docker-debug"
+              "buildTarget": "clip-spa:build:docker-debug"
             },
             "local-debug": {
-              "browserTarget": "clip:build:local-debug"
+              "buildTarget": "clip-spa:build:local-debug"
             }
           },
           "defaultConfiguration": "docker-debug"
@@ -100,7 +106,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "clip:build"
+            "buildTarget": "clip-spa:build"
           }
         },
         "test": {
@@ -117,16 +123,12 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss",
-              "node_modules/material-design-icons/iconfont/material-icons.css"
+              "src/styles.scss"
             ],
             "scripts": []
           }
         }
       }
     }
-  },
-  "cli": {
-    "analytics": false
   }
 }

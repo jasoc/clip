@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
-import { environment } from 'src/environments/environment';
-import { BackendService } from "src/app/services/backend.service";
+import { BackendService } from "./backend.service";
 
 interface RegisterModelPost {
     username: string;
@@ -22,7 +21,7 @@ export class UserService extends BackendService {
         }
         return false;
     }
-    
+
     userLogged(): boolean {
         return this.cookieService.get("token") != '';
     }

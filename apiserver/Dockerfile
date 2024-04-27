@@ -31,4 +31,4 @@ FROM python:3.11.3-slim-bullseye as apiserver-prod
 WORKDIR /clip
 COPY ./scripts ./scripts
 COPY --from=apiserver-build /clip/dist/apiserver ./dist/apiserver
-CMD ["/bin/sh", "/clip/scripts/run.sh"]
+CMD ["/bin/sh", "/clip/scripts/run.sh", "apiserver"]

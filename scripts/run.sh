@@ -9,9 +9,16 @@ run_apiserver()
     python -O __main__.py
 }
 
+run_spa()
+{
+    cd $CLIP_PROJECT_PATH/dist/spa
+    node server/server.mjs
+}
+
 run_all()
 {
     run_apiserver &
+    run_spa &
     wait
 }
 
@@ -19,6 +26,7 @@ main()
 {
     case $1 in
         apiserver) run_apiserver;;
+        spa)       run_spa;;
         '')        run_all;;
     esac
 }

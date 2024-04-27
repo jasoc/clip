@@ -4,7 +4,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { M3ChipComponent } from '../../m3-chip/m3-chip.component';
 import { M3InputComponent } from '../../m3-input/m3-input.component';
 import { SearchBarComponent } from '../search-bar/search-bar.component';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   standalone: true,

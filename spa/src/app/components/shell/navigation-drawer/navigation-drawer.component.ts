@@ -5,10 +5,10 @@ import { CommonModule } from '@angular/common';
 import { MatTreeModule, MatTreeNestedDataSource } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
-import { simpleFade } from 'src/app/animations/enterAndLeave';
 import { M3ButtonComponent } from '../../m3-button/m3-button.component';
-import { ThemeService } from 'src/app/services/theme.service';
 import { M3ChipComponent } from '../../m3-chip/m3-chip.component';
+import { simpleFade } from '../../../animations/enterAndLeave';
+import { ThemeService } from '../../../services/theme.service';
 
 @Component({
   standalone: true,

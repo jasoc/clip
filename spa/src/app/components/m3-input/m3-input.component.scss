@@ -1,4 +1,4 @@
-@use 'src/styles/theme' as *;
+@use 'theme' as *;
 
 :host {
     width: fit-content;
@@ -29,7 +29,7 @@ $ICON_PADDING: 8px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        
+
         input {
             padding: 0 10px 0 10px;
             height: 50px;
@@ -42,7 +42,7 @@ $ICON_PADDING: 8px;
             font-size: 16px;
             font-family: roboto;
         }
-        
+
         .left-icon {
             padding-left: $ICON_PADDING;
         }
@@ -57,7 +57,7 @@ $ICON_PADDING: 8px;
         //     pointer-events: none;
         // }
     }
-    
+
 }
 
 #hint {
@@ -83,18 +83,18 @@ $ICON_PADDING: 8px;
 .style-search {
     border-radius: 100px !important;
     padding-right: 15px !important;
-    
+
     #main-content {
         height: 40px;
     }
-    
+
     width: auto;
     max-width: 35vw;
 
     #placeholder {
         left: 25px !important;
     }
-    
+
     input {
         margin-left: 15px;
     }

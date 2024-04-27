@@ -4,9 +4,9 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Input, O
 import { MatRipple, MatRippleModule, RippleRef } from '@angular/material/core';
 import {MatIconModule} from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
-import { simpleFade } from 'src/app/animations/enterAndLeave';
-import { Theme, ThemeService } from 'src/app/services/theme.service';
 import { M3IconComponent } from '../m3-icon/m3-icon.component';
+import { simpleFade } from '../../animations/enterAndLeave';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'm3-button',
@@ -33,7 +33,7 @@ export class M3ButtonComponent implements AfterViewInit {
 
   @Input()
   Text: string | null = null;
-  
+
   @Input()
   BackgroundColor: "primary" | "accent" | string = "primary";
 
