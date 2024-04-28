@@ -1,5 +1,5 @@
 services:
-  clip-apiserver-debug:
+  apiserver-debug:
     container_name: clip-apiserver-debug
     image: clip/apiserver:debug
     command: /bin/sh dev.sh apiserver
@@ -29,7 +29,7 @@ services:
     networks:
       - clip-network
 
-  clip-spa-debug:
+  spa-debug:
     container_name: clip-spa-debug
     image: clip/spa:debug
     command: /bin/sh dev.sh spa
@@ -62,8 +62,3 @@ services:
       - ./spa/node_modules:/clip/spa/node_modules
     networks:
       - clip-network
-
-networks:
-  clip-network:
-    name: clip_clip-network
-    external: true

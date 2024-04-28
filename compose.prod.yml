@@ -1,5 +1,5 @@
 services:
-  clip-apiserver:
+  apiserver:
     container_name: clip-apiserver
     image: clip/apiserver
     restart: unless-stopped
@@ -13,7 +13,7 @@ services:
     networks:
       - clip-network
 
-  clip-spa:
+  spa:
     container_name: clip-spa
     image: clip/spa
     restart: unless-stopped
@@ -27,7 +27,7 @@ services:
     networks:
       - clip-network
 
-  clip-proxy:
+  proxy:
     container_name: clip-proxy
     image: clip/proxy
     restart: unless-stopped

@@ -5,7 +5,7 @@ BEGIN
         WHERE schemaname = 'public' AND tablename = 'cards'
     ) THEN
         CREATE TABLE public.cards (
-            id UUID PRIMARY KEY,
+            id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             title VARCHAR NOT NULL,
             subtitle VARCHAR NOT NULL,
             url VARCHAR NOT NULL,

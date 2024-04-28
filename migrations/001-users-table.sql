@@ -5,7 +5,7 @@ BEGIN
         WHERE schemaname = 'public' AND tablename = 'users'
     ) THEN
         CREATE TABLE public.users (
-            id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+            id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             name VARCHAR NOT NULL,
             surname VARCHAR NOT NULL,
             email VARCHAR NOT NULL,
