@@ -24,11 +24,7 @@ dev_spa()
 {
     cd $CLIP_PROJECT_PATH/spa
 
-    if [ ! -d "$CLIP_PROJECT_PATH/spa/node_modules" ] || [ ! "$(ls -A $CLIP_PROJECT_PATH/spa/node_modules)" ]
-    then
-        yarn install
-    fi
-
+    yarn install
     yarn start
 }
 

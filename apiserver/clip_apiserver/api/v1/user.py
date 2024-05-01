@@ -35,10 +35,9 @@ def register_dummy(body: Annotated[RegisterModel, Body()]):
     try:
         user = get_user(body.username)
         if user:
-            raise HTTPException(
+            return JSONResponse(
                 status_code=status.HTTP_401_UNAUTHORIZED,
-                detail=f"An user with username {body.username} already exists.",
-                headers={"WWW-Authenticate": "Bearer"},
+                content={"error": f"Username '{body.username}' is already in use."},
             )
         with DBSession.disposable() as session:
             obj = User()
@@ -66,16 +65,14 @@ async def login_for_access_token(body: Annotated[LoginModel, Body()]):
     try:
         user: User = get_user(body.username)
         if not user:
-            raise HTTPException(
+            return JSONResponse(
                 status_code=status.HTTP_401_UNAUTHORIZED,
-                detail=f"No user found with username {body.username}.",
-                headers={"WWW-Authenticate": "Bearer"},
+                content={"error": f"No user found with username {body.username}."},
             )
         if not verify_password(body.password, user.hashed_password):
-            raise HTTPException(
+            return JSONResponse(
                 status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Incorrect password.",
-                headers={"WWW-Authenticate": "Bearer"},
+                content={"error": "Incorrect password."},
             )
         access_token_expires = timedelta(
             minutes=float(config.ACCESS_TOKEN_EXPIRE_MINUTES)

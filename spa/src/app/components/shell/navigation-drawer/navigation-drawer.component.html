@@ -8,7 +8,7 @@
         </m3-button>
 
     </div>
-    
+
 
     <div class="entries">
         <m3-button [Icon]="isLightTheme ? 'toggle_off' : 'toggle_on'" [icon-weight]="600" Type="sidenav-left"
@@ -31,9 +31,9 @@
 
                 <div *ngIf="!this.collapsed && element.type == 'tag'" class="navigation-separator"></div>
 
-                <m3-chip *ngIf="!this.collapsed && element.type == 'tag'"
-                    BackgroundColor="transparent">{{element.name}}</m3-chip>
-    
+                <!-- <m3-chip *ngIf="!this.collapsed && element.type == 'tag'"
+                    BackgroundColor="transparent">{{element.name}}</m3-chip> -->
+
                 <!-- 2nd level -->
                 <ng-container *ngIf="element.isExpanded">
                     <div class="navigation-entry-subelements">
@@ -42,9 +42,9 @@
                         </div>
                         <div class="navigation-entry-subelements-right">
                             <ng-container *ngFor="let element_1 of element.subElements">
-                                <m3-chip *ngIf="element_1.type == 'tag'"
+                                <!-- <m3-chip *ngIf="element_1.type == 'tag'"
                                     BackgroundColor="transparent"
-                                >{{element_1.name}}</m3-chip>
+                                >{{element_1.name}}</m3-chip> -->
 
                                 <m3-button *ngIf="element_1.type == 'button'"
                                     Type="thin"
@@ -69,8 +69,20 @@
     <div style="margin: auto 0px"></div>
 
     <div class="show-user">
-        <m3-button [Wide]="true" @showUserButton Icon="settings"></m3-button>
-        <m3-button *ngIf="!collapsed" Style="accent" @showUserButton Icon="home" Text="Home page"></m3-button>
+      @if (collapsed) {
+        <button mat-mini-fab color="accent">
+          <mat-icon class="material-symbols-rounded">settings</mat-icon>
+        </button>
+      }
+      @else {
+        <button mat-fab color="accent">
+          <mat-icon class="material-symbols-rounded">settings</mat-icon>
+        </button>
+      }
+      <button mat-fab extended *ngIf="!collapsed" @showUserButton color="primary">
+        <mat-icon class="material-symbols-rounded">home</mat-icon>
+        Home page
+      </button>
     </div>
 
 </div>

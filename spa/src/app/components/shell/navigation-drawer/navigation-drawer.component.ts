@@ -1,14 +1,12 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { animate, animateChild, group, query, state, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import { MatTreeModule, MatTreeNestedDataSource } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { M3ButtonComponent } from '../../m3-button/m3-button.component';
-import { M3ChipComponent } from '../../m3-chip/m3-chip.component';
 import { simpleFade } from '../../../animations/enterAndLeave';
 import { ThemeService } from '../../../services/theme.service';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   standalone: true,
@@ -17,7 +15,7 @@ import { ThemeService } from '../../../services/theme.service';
   styleUrls: ['./navigation-drawer.component.scss'],
   providers: [ThemeService],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, MatButtonModule, M3ButtonComponent, M3ChipComponent, MatTreeModule, MatIconModule],
+  imports: [CommonModule, M3ButtonComponent, MatIconModule, MatButtonModule],
   animations: [
     trigger('showUserButton', simpleFade('150ms')),
     trigger('openClose', [
@@ -36,7 +34,7 @@ import { ThemeService } from '../../../services/theme.service';
     ]),
   ],
 })
-export class NavigationDrawerComponent implements OnInit {
+export class NavigationDrawerComponent {
 
   public collapsed: boolean = false;
   public isLightTheme: boolean = false;
@@ -184,11 +182,6 @@ export class NavigationDrawerComponent implements OnInit {
   ];
 
   constructor(public router: Router, public themeService: ThemeService) { }
-
-  ngOnInit() {
-    let lsCollapsed = localStorage.getItem('navigation-drawer-collapsed');
-    this.collapsed = lsCollapsed == '1';
-  }
 
   public ToggleCollapse() {
     this.navigationElementsTree.forEach((element) => {

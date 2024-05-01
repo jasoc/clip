@@ -2,7 +2,8 @@ services:
   apiserver-debug:
     container_name: clip-apiserver-debug
     image: clip/apiserver:debug
-    command: /bin/sh dev.sh apiserver
+    command: /bin/sh ../scripts/dev.sh apiserver
+    working_dir: /clip/apiserver
     build:
       context: .
       dockerfile: ./apiserver/Dockerfile
@@ -32,7 +33,8 @@ services:
   spa-debug:
     container_name: clip-spa-debug
     image: clip/spa:debug
-    command: /bin/sh dev.sh spa
+    command: /bin/sh ../scripts/dev.sh spa
+    working_dir: /clip/spa
     build:
       context: .
       dockerfile: ./spa/Dockerfile
@@ -62,3 +64,6 @@ services:
       - ./spa/node_modules:/clip/spa/node_modules
     networks:
       - clip-network
+
+networks:
+  clip-network:

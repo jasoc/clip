@@ -1,41 +1,40 @@
 @use '@angular/material' as mat;
-@use 'styles/theme/maps' as ct;
+@use '@angular/material-experimental' as matx;
 @use 'styles/fonts' as fonts;
+@use 'styles/theme' as theme;
 
 $material-symbols-font-path: 'material-symbols/';
 @import 'material-symbols';
 
 @include mat.core();
 
-$clip-primary: mat.define-palette(ct.$clip-primary-palette);
-$clip-accent: mat.define-palette(ct.$clip-accent-palette);
+$primary-palette: matx.$m3-azure-palette;
+$tertiary-palette: matx.$m3-orange-palette;
 
-$clip-warn: mat.define-palette(mat.$red-palette);
+@function create-theme($primary, $tertiary, $type: light, $density: 0) {
+  @return matx.define-theme((
+    color: (
+      theme-type: $type,
+      primary: $primary,
+      tertiary: $tertiary,
+    ),
+    density: (
+      scale: $density
+    ),
+  ));
+}
 
-$clip-light-theme: mat.define-light-theme((
-  color: (
-    primary: $clip-primary,
-    accent: $clip-accent,
-    warn: $clip-warn,
-  ),
-  typography: mat.define-typography-config()
-));
-
-$clip-dark-theme: mat.define-dark-theme((
-  color: (
-    primary: $clip-primary,
-    accent: $clip-accent,
-    warn: $clip-warn,
-  ),
-  typography: mat.define-typography-config()
-));
+$clip-dark-theme: create-theme($primary-palette, $tertiary-palette, $type: dark, $density: -1);
+$clip-light-theme: create-theme($primary-palette, $tertiary-palette, $type: light, $density: -1);
 
 [data-theme="clip-dark"] {
-  @include mat.all-component-colors($clip-dark-theme);
+  @include mat.all-component-themes($clip-dark-theme);
+  @include matx.color-variants-back-compat($clip-dark-theme);
 }
 
 [data-theme="clip-light"] {
-  @include mat.all-component-colors($clip-light-theme);
+  @include mat.all-component-themes($clip-light-theme);
+  @include matx.color-variants-back-compat($clip-light-theme);
 }
 
 * {

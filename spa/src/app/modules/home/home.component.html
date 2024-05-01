@@ -1,3 +1,19 @@
+<mat-slide-toggle>Slide me!</mat-slide-toggle>
+<mat-slide-toggle labelPosition="before">...and slide me too!</mat-slide-toggle>
+
+<mat-form-field class="example-form-field">
+  <mat-label>Clearable input</mat-label>
+  <input matInput type="text" [(ngModel)]="value">
+  @if (value) {
+    <button matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+      <mat-icon class="material-symbols-rounded">close</mat-icon>
+    </button>
+  }
+</mat-form-field>
+<mat-form-field>
+<input matInput type="text" [(ngModel)]="value">
+</mat-form-field>
+
 <h3>Basic Buttons</h3>
 <div class="example-button-row">
   <button mat-button>Basic</button>
@@ -41,10 +57,10 @@
 <h3>Icon Buttons</h3>
 <div class="example-button-row">
   <button mat-icon-button matTooltip="Basic" aria-label="Example icon-button with a heart icon">
-    <mat-icon>favorite</mat-icon>
+    <mat-icon fontSet="material-symbols-outlined">breastfeeding</mat-icon>
   </button>
   <button mat-icon-button matTooltip="Primary" color="primary" aria-label="Example icon-button with a heart icon">
-    <mat-icon>favorite</mat-icon>
+    <mat-icon fontSet="material-symbols-filled">breastfeeding</mat-icon>
   </button>
   <button mat-icon-button matTooltip="Accent" color="accent" aria-label="Example icon-button with a heart icon">
     <mat-icon>favorite</mat-icon>
@@ -86,13 +102,16 @@
 <h3>Mini Fab Buttons</h3>
 <div class="example-button-row">
   <button mat-mini-fab matTooltip="Primary" color="primary" aria-label="Example mini fab with a heart icon">
-    <mat-icon>favorite</mat-icon>
+    <mat-icon class="material-symbols-sharp" style="font-variation-settings: 'FILL' 1">home</mat-icon>
   </button>
   <button mat-mini-fab matTooltip="Accent" color="accent" aria-label="Example mini fab with a heart icon">
-    <mat-icon>favorite</mat-icon>
+    <mat-icon class="material-symbols-rounded" style="font-variation-settings: 'FILL' 0">pending_actions</mat-icon>
   </button>
   <button mat-mini-fab matTooltip="Warn" color="warn" aria-label="Example mini fab with a heart icon">
-    <mat-icon>favorite</mat-icon>
+    <mat-icon class="material-symbols-outlined"
+              style="font-variation-settings: 'FILL' 1">
+      pending_actions
+    </mat-icon>
   </button>
   <div matTooltip="Disabled" class="example-disabled">
     <button mat-mini-fab disabled aria-label="Example mini fab with a heart icon">
@@ -107,15 +126,15 @@
 <h3>Extended Fab</h3>
 <div class="example-button-row">
   <button mat-fab extended color="primary">
-    <mat-icon>favorite</mat-icon>
+    <mat-icon>home</mat-icon>
     Primary
   </button>
   <button mat-fab extended color="accent">
-    <mat-icon>favorite</mat-icon>
+    <mat-icon class="material-symbols-outlined">home</mat-icon>
     Accent
   </button>
   <button mat-fab extended color="warn">
-    <mat-icon>favorite</mat-icon>
+    <mat-icon class="material-symbols-rounded">home</mat-icon>
     Warn
   </button>
   <button mat-fab extended disabled>

@@ -1,9 +1,11 @@
 from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy import create_engine, Engine
 from sqlalchemy.engine import URL
+from utils import get_logger
 
 from .models import Base
 
+logger = get_logger(__name__)
 
 class DBSession:
 
@@ -19,6 +21,3 @@ class DBSession:
     def disposable() -> Session:
         session = sessionmaker(DBSession._base_engine)
         return session()
-
-    def init_database():
-        Base.metadata.create_all(DBSession._base_engine)

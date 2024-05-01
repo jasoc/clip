@@ -45,5 +45,3 @@ services:
 
 networks:
   clip-network:
-    name: clip_clip-network
-    external: true

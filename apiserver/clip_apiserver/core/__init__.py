@@ -11,7 +11,7 @@ def main():
 
     from utils import config
     from core.server import clip_server_app
-    
+
     if __debug__:
         for route in clip_server_app.routes:
             if hasattr(route, "methods"):

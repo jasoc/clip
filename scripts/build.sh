@@ -27,7 +27,6 @@ build_apiserver()
     poetry export --without-hashes --format=requirements.txt > requirements.txt
 
     cp $CLIP_PROJECT_PATH/apiserver/requirements.txt $CLIP_PROJECT_PATH/dist/apiserver/requirements.txt
-    # cp -r $CLIP_PROJECT_PATH/apiserver/dist/* $CLIP_PROJECT_PATH/dist/apiserver
     cp -r $CLIP_PROJECT_PATH/apiserver/clip_apiserver/* $CLIP_PROJECT_PATH/dist/apiserver
 }
 

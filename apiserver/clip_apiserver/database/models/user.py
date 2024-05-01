@@ -11,6 +11,7 @@ class User(Base):
     name = Column(String, nullable=False)
     surname = Column(String, nullable=False)
     email = Column(String, nullable=False)
+    coppa = Column(String, nullable=False)
     username = Column(String, nullable=False)
     hashed_password = Column(String, nullable=False)
 

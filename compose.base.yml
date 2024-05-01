@@ -4,7 +4,7 @@ services:
     image: postgres:16
     restart: unless-stopped
     ports:
-      - 5432:5432
+      - ${POSTGRESQL_PORT}:${POSTGRESQL_PORT}
     environment:
       POSTGRES_USER: ${POSTGRESQL_USER}
       POSTGRES_PASSWORD: ${POSTGRESQL_PASSWORD}
@@ -14,7 +14,7 @@ services:
     networks:
       - clip-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -d clip -U user"]
+      test: ["CMD-SHELL", "pg_isready -d clip -U clip"]
       interval: 5s
 
   migrations:
@@ -34,3 +34,5 @@ services:
 
 networks:
   clip-network:
+    name: clip_clip-network
+    external: true

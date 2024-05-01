@@ -2,7 +2,11 @@ import { Component } from '@angular/core';
 import { M3ButtonComponent } from '../../components/m3-button/m3-button.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { M3IconComponent } from "../../components/m3-icon/m3-icon.component";
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
     selector: 'clip-home',
@@ -13,9 +17,11 @@ import { M3IconComponent } from "../../components/m3-icon/m3-icon.component";
         M3ButtonComponent,
         MatButtonModule,
         MatIconModule,
-        M3IconComponent
+        M3IconComponent,
+        MatSlideToggleModule,
+        MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, MatIconModule
     ]
 })
 export class HomeMainComponent {
-
+  value = 'Clear me';
 }

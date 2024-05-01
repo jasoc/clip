@@ -1,7 +1,6 @@
 FROM node:20-alpine as spa-base
 COPY ./scripts /clip/scripts
 COPY ./spa /clip/spa
-WORKDIR /clip/scripts
 EXPOSE 4200
 
 FROM spa-base as spa-build
