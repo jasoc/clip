@@ -4,19 +4,17 @@ RUN apt-get update \
     curl \
     build-essential
 
-ENV PYTHONUNBUFFERED=1 \
-    PYTHONDONTWRITEBYTECODE=1 \
-    PIP_NO_CACHE_DIR=off \
-    PIP_DISABLE_PIP_VERSION_CHECK=on \
-    PIP_DEFAULT_TIMEOUT=100 \
-    POETRY_VERSION=1.0.3 \
-    POETRY_HOME="/clip/apiserver" \
-    POETRY_VIRTUALENVS_IN_PROJECT=true \
-    POETRY_NO_INTERACTION=1 \
-    PYSETUP_PATH="/opt/pysetup"
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PIP_NO_CACHE_DIR=off
+ENV PIP_DISABLE_PIP_VERSION_CHECK=on
+ENV PIP_DEFAULT_TIMEOUT=100
+ENV POETRY_VIRTUALENVS_IN_PROJECT=true
+ENV POETRY_VIRTUALENVS_OPTIONS_ALWAYS_COPY=true
+ENV POETRY_NO_INTERACTION=1
 
-ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
-RUN curl -sSL https://install.python-poetry.org | python3 - --version 1.5.1
+RUN curl -sSL https://install.python-poetry.org | python3 - --version 1.8.2
+
 EXPOSE 8000
 COPY ./scripts /clip/scripts
 COPY ./apiserver /clip/apiserver

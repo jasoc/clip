@@ -1,25 +1,20 @@
-from http.client import HTTPException
-import os
-from fastapi import FastAPI, Request
-from fastapi.responses import RedirectResponse
-from fastapi.staticfiles import StaticFiles
+from api import api_v1_router
+from database import init_clip_database
+from fastapi import FastAPI
 from fastapi.templating import Jinja2Templates
 from starlette.middleware.cors import CORSMiddleware
 
-from database import init_clip_database
-from api import api_v1_router
-from utils import config
-
-from .errors_handler import http_exception_handler
+from .errors_handler import add_exception_handlers
 
 templates = Jinja2Templates(directory="templates")
 
+
 def create_app() -> FastAPI:
 
-    app = FastAPI(debug=True, title="Clip Server")
-    
+    app = FastAPI(debug=False, title="Clip Server")
+
     app.include_router(api_v1_router)
-    app.add_exception_handler(HTTPException, http_exception_handler)
+    add_exception_handlers(app)
     app.add_middleware(
         CORSMiddleware,
         allow_origins=["*"],
