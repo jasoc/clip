@@ -8,8 +8,8 @@ $material-symbols-font-path: 'material-symbols/';
 
 @include mat.core();
 
-$primary-palette: matx.$m3-azure-palette;
-$tertiary-palette: matx.$m3-orange-palette;
+$primary-palette: matx.$m3-cyan-palette;
+$tertiary-palette: matx.$m3-azure-palette;
 
 @function create-theme($primary, $tertiary, $type: light, $density: 0) {
   @return matx.define-theme((
@@ -24,17 +24,21 @@ $tertiary-palette: matx.$m3-orange-palette;
   ));
 }
 
-$clip-dark-theme: create-theme($primary-palette, $tertiary-palette, $type: dark, $density: -1);
-$clip-light-theme: create-theme($primary-palette, $tertiary-palette, $type: light, $density: -1);
-
 [data-theme="clip-dark"] {
+  $clip-dark-theme: create-theme($primary-palette, $tertiary-palette, $type: dark, $density: -1);
   @include mat.all-component-themes($clip-dark-theme);
   @include matx.color-variants-back-compat($clip-dark-theme);
 }
 
 [data-theme="clip-light"] {
+  $clip-light-theme: create-theme($primary-palette, $tertiary-palette, $type: light, $density: -1);
   @include mat.all-component-themes($clip-light-theme);
   @include matx.color-variants-back-compat($clip-light-theme);
+}
+
+.mat-mdc-card-title {
+  // ISSUE: mat-card-title is always black???
+  color: var(--clip-main-ui-text-color);
 }
 
 * {

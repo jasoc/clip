@@ -1,21 +1,34 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../../../services/user.service';
-import { M3InputComponent } from "../../../../components/m3-input/m3-input.component";
-import { M3ButtonComponent } from "../../../../components/m3-button/m3-button.component";
+import { MatButtonModule } from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
+import { ThemeService } from '../../../../services/theme.service';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FloatBackgroundComponent } from '../../../../components/float-background/float-background.component';
 
 @Component({
+  standalone: true,
     selector: 'clip-login',
-    standalone: true,
+    providers: [ThemeService],
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
-    imports: [M3InputComponent, M3ButtonComponent]
+    imports: [
+      MatButtonModule,
+      MatIconModule,
+      FloatBackgroundComponent,
+      MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatCardModule, FormsModule,MatIcon]
 })
 export class LoginComponent {
+  emailFormControl = new FormControl('', [Validators.required]);
 
   constructor(
     private userService: UserService,
     private router: Router,
+    public themeService: ThemeService
     ) { }
 
   Username: string = "";

@@ -5,6 +5,7 @@ import { UserService } from "./user.service";
 export class PermissionsService {
 
     static CanActivateFn(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+      return true;
       let userService = inject(UserService);
       let routerService = inject(Router);
 

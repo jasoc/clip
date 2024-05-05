@@ -7,6 +7,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { M3IconComponent } from "../../components/m3-icon/m3-icon.component";
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
     selector: 'clip-home',
@@ -19,7 +20,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
         MatIconModule,
         M3IconComponent,
         MatSlideToggleModule,
-        MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, MatIconModule
+        MatFormFieldModule, MatInputModule, MatCardModule, FormsModule, MatButtonModule, MatIconModule
     ]
 })
 export class HomeMainComponent {

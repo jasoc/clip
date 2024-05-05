@@ -1,9 +1,32 @@
-<div id="login">
-    <div class="login-card">
-        <m3-input id="username-input" [(text)]="Username" [hint]="UsernameMessage" placeholder="Username"></m3-input>
-        <div style="margin-top: 30px"></div>
-        <m3-input id="password-input" [(text)]="Password" placeholder="Password"></m3-input>
-        <div style="margin-top: 50px"></div>
-        <m3-button Text="Login" Icon="login" (click)="Login()"></m3-button>
-    </div>
-</div>
+<float-background style="position: absolute; top: 0; left: 0"></float-background>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Login to Clip</mat-card-title>
+    <mat-card-subtitle>Type in your credentials</mat-card-subtitle>
+  </mat-card-header>
+  <form class="example-form">
+    <mat-form-field>
+      <mat-label>Username</mat-label>
+      <input matInput type="text" [formControl]="emailFormControl" />
+      @if (emailFormControl.hasError('required')) {
+      <mat-error><strong>Username</strong> is required</mat-error>
+      }
+    </mat-form-field>
+    <br />
+    <div style="margin-top: 16px"></div>
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input matInput type="password" [formControl]="emailFormControl" />
+      @if (emailFormControl.hasError('required')) {
+      <mat-error><strong>Password</strong> is required</mat-error>
+      }
+    </mat-form-field>
+  </form>
+  <mat-card-actions>
+    <button class="login-button" mat-fab extended color="primary">
+      <mat-icon class="material-symbols-outlined">login</mat-icon>
+      Login
+    </button>
+  </mat-card-actions>
+</mat-card>
+<button mat-button color="accent">Create an account</button>

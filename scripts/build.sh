@@ -9,18 +9,17 @@ build_apiserver()
         mkdir $CLIP_PROJECT_PATH/dist/apiserver
     fi
 
-    cd $CLIP_PROJECT_PATH/apiserver
-    
+    export PATH="/root/.local/bin:$PATH"
     export PYTHONUNBUFFERED=1
     export PYTHONDONTWRITEBYTECODE=1
     export PIP_NO_CACHE_DIR=off
     export PIP_DISABLE_PIP_VERSION_CHECK=on
     export PIP_DEFAULT_TIMEOUT=100
-    export POETRY_VERSION=1.0.3
     export POETRY_VIRTUALENVS_IN_PROJECT=true
+    export POETRY_VIRTUALENVS_OPTIONS_ALWAYS_COPY=true
     export POETRY_NO_INTERACTION=1
-    export PYSETUP_PATH="/opt/pysetup"
-    export PATH="$POETRY_HOME/bin:$PATH"
+
+    cd $CLIP_PROJECT_PATH/apiserver
 
     poetry install
     poetry build
@@ -51,7 +50,7 @@ build_all()
 
 main()
 {
-    if [ ! -d "$CLIP_PROJECT_PATH/dist" ] 
+    if [ ! -d "$CLIP_PROJECT_PATH/dist" ]
     then
         mkdir $CLIP_PROJECT_PATH/dist
     fi

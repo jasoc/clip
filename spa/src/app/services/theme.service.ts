@@ -1,5 +1,6 @@
 import { isPlatformBrowser } from "@angular/common";
 import { Inject, Injectable, PLATFORM_ID } from "@angular/core";
+import { debug } from "console";
 
 export enum Theme {
     Light = 'clip-light',
@@ -43,6 +44,7 @@ export class ThemeService {
 
     private setDataTheme() {
       if (isPlatformBrowser(this.platformId)) {
+        console.debug("suca")
         document.body.setAttribute('data-theme', this.currentTheme.toString());
       }
     }

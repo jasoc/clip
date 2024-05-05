@@ -1,17 +1,24 @@
-#login {
+:host {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     height: 100%;
-    width: auto;
-
-    .login-card {
-        background-color: rgb(218, 218, 218);
-        padding: 100px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        color: var(--clip-main-ui-text-color);
+    mat-card {
+        padding: 16px;
+        mat-card-title {
+            margin-bottom: 16px;
+            font-size: 2em;
+        }
+        form {
+            mat-form-field {
+                width: 270px;
+            }
+           margin: auto;
+           padding: 36px 8px;
+        }
+        .login-button {
+            margin-left: auto;
+        }
     }
 }
