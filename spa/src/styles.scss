@@ -1,55 +1,149 @@
-@use '@angular/material' as mat;
-@use '@angular/material-experimental' as matx;
-@use 'styles/fonts' as fonts;
-@use 'styles/theme' as theme;
+@use "sass:map";
+@use "@angular/material" as mat;
+@use "styles/theme" as theme;
+@use "styles/typography" as typography;
 
-$material-symbols-font-path: 'material-symbols/';
-@import 'material-symbols';
+@import "@fontsource/roboto/index.css";
+@import "@fontsource-variable/roboto-flex/full.css";
+
+$material-symbols-font-path: "material-symbols/";
+@import "material-symbols";
 
 @include mat.core();
 
-$primary-palette: matx.$m3-cyan-palette;
-$tertiary-palette: matx.$m3-azure-palette;
+// $my-typography: mat.m2-define-typography-config(
+//   $font-family: "Roboto Flex Variable",
+//   $display-large: (
+//     font-size: 3.56rem,
+//     line-height: 4rem,
+//     font-weight: 400,
+//   ),
+//   $headline-large: (
+//     font-size: 2.75rem,
+//     line-height: 3.125rem,
+//     font-weight: 400,
+//   ),
+//   // Aggiungi altre configurazioni come necessario
+// );
 
-@function create-theme($primary, $tertiary, $type: light, $density: 0) {
-  @return matx.define-theme((
+// @include matx.typography-hierarchy($my-typography);
+
+// $primary-palette: mat.$cyan-palette;
+// $tertiary-palette: mat.$azure-palette;
+
+// @function create-theme($primary, $tertiary, $type: light, $density: 0) {
+//   @return mat.define-theme(
+//     (
+//       color: (
+//         theme-type: $type,
+//         primary: $primary,
+//         tertiary: $tertiary,
+//       ),
+//       typography:(
+//         brand-family: 'Roboto Flex Variable',
+//       ),
+//       density: (
+//         scale: $density,
+//       ),
+//     )
+//   );
+// }
+
+$my-theme: mat.define-theme(
+  (
     color: (
-      theme-type: $type,
-      primary: $primary,
-      tertiary: $tertiary,
+      theme-type: light,
+      primary: mat.$violet-palette,
     ),
-    density: (
-      scale: $density
-    ),
-  ));
-}
-
-[data-theme="clip-dark"] {
-  $clip-dark-theme: create-theme($primary-palette, $tertiary-palette, $type: dark, $density: -1);
-  @include mat.all-component-themes($clip-dark-theme);
-  @include matx.color-variants-back-compat($clip-dark-theme);
-}
-
-[data-theme="clip-light"] {
-  $clip-light-theme: create-theme($primary-palette, $tertiary-palette, $type: light, $density: -1);
-  @include mat.all-component-themes($clip-light-theme);
-  @include matx.color-variants-back-compat($clip-light-theme);
-}
+  )
+);
 
 .mat-mdc-card-title {
   // ISSUE: mat-card-title is always black???
   color: var(--clip-main-ui-text-color);
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  font-family: roboto;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  color: var(--clip-main-ui-text-color);
 }
+
+button {
+  font-family: inherit !important;
+  font-variation-settings: inherit !important;
+}
+
+// body, html {
+//   font-family: "Roboto Flex Variable";
+//   margin: 0;
+//   padding: 0;
+//   font-variation-settings: "wght" 500, "wdth" 100, "opsz" 50, "GRAD" 0, "slnt" 0, "XTRA" 500, "YTLC" 500, "YOPQ" 80,
+//     "YTAS" 750, "YTDE" -230, "YTLC" 500, "XOPQ" 92;
+// }
 
 html,
 body {
-  height: 100%;
-  background-color: var(--clip-background-color);
   margin: 0;
+  height: 100%;
+  font-family: "Roboto Flex Variable";
+  background-color: var(--clip-background-color);
+
+  @include mat.core-theme(theme.$dark-theme);
+  @include mat.all-component-themes(theme.$dark-theme);
+  @include mat.color-variants-backwards-compatibility(theme.$dark-theme);
+
+  // [data-theme="clip-dark"] {
+  //   // $clip-dark-theme: create-theme($primary-palette, $tertiary-palette, $type: dark, $density: -1);
+  //   @include mat.core-theme(theme.$dark-theme);
+  //   @include mat.all-component-themes(theme.$dark-theme);
+  //   @include mat.color-variants-backwards-compatibility(theme.$dark-theme);
+  // }
+
+  [data-theme="clip-light"] {
+    @include mat.all-component-colors(theme.$light-theme);
+  }
+
+  // @include mat.typography($custom-typography);
+}
+
+h1 {
+  font-size: typography.$huge-header-font-size;
+}
+h2 {
+  font-size: typography.$large-header-font-size;
+}
+h3 {
+  font-size: typography.$medium-header-font-size;
+}
+h4 {
+  font-size: typography.$normal-header-font-size;
+}
+h5 {
+  font-size: typography.$normal-title-font-size;
+}
+h6 {
+  font-size: typography.$tiny-title-font-size;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+ul,
+ol {
+  margin: 0 0 1rem 1.5rem;
+  padding: 0;
+}
+
+code {
+  font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
 }

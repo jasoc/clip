@@ -38,6 +38,7 @@ main()
 {
     case $1 in
         spa)       dev_spa;;
+        deps)      yarn_install;;
         apiserver) dev_apiserver;;
         '')        dev_all;;
     esac

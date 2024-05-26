@@ -195,7 +195,6 @@ export class NavigationDrawerComponent {
 
   onThemeSwitchChange() {
     this.themeService.switchDarkLight();
-    window.location.reload();
   }
 
   navigate(navigationElement: NavigationElement, parentElement: NavigationElement | null = null) {

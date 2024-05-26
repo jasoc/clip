@@ -14,7 +14,6 @@ $ICON_PADDING: 8px;
     .placeholder {
         position: absolute;
         top: 50%;
-        font-family: roboto;
         font-size: 17px;
         transform: translate(0, -50%);
         pointer-events: none;
@@ -40,7 +39,6 @@ $ICON_PADDING: 8px;
             border: none;
             color: var(--clip-main-ui-text-color);
             font-size: 16px;
-            font-family: roboto;
         }
 
         .left-icon {
@@ -62,7 +60,6 @@ $ICON_PADDING: 8px;
 
 #hint {
     padding-left: 10px;
-    font-family: roboto;
     font-size: 12px;
     transform: translate(0, -50%);
     pointer-events: none;

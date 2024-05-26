@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta, timezone
-from jose import jwt
 
-from utils import get_logger, config
+from jose import jwt
+from utils import config, get_logger
 
 logger = get_logger("clip")
 

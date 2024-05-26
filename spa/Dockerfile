@@ -13,3 +13,6 @@ COPY ./scripts scripts
 COPY --from=spa-build /clip/dist ./dist
 CMD ["/bin/sh", "/clip/scripts/run.sh", "spa"]
 
+FROM spa-base as spa-ng
+WORKDIR /clip/spa
+ENTRYPOINT [ "npm", "run", "ng" ]

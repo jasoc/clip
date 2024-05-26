@@ -34,6 +34,7 @@ export class ThemeService {
         }
         this.saveTheme();
         this.setDataTheme();
+        // window.location.reload();
     }
 
     private saveTheme() {

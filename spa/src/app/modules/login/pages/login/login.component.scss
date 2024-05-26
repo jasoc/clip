@@ -1,24 +1,58 @@
 :host {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 100%;
-    mat-card {
-        padding: 16px;
-        mat-card-title {
-            margin-bottom: 16px;
-            font-size: 2em;
-        }
-        form {
-            mat-form-field {
-                width: 270px;
-            }
-           margin: auto;
-           padding: 36px 8px;
-        }
-        .login-button {
-            margin-left: auto;
-        }
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  flex-direction: row;
+  height: 100%;
+
+    .theme-switcher {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 10px;
     }
+
+  .register {
+    display: flex;
+    gap: 64px;
+    flex-direction: row;
+    h1 {
+      margin-top: 32px;
+    }
+    .register-form {
+      display: flex;
+      gap: 32px;
+      flex-direction: column;
+    }
+  }
+  form {
+    margin: auto;
+    padding: 36px 8px;
+
+    mat-card {
+      padding: 16px;
+
+      mat-card-subtitle {
+        margin-bottom: 16px;
+      }
+
+      mat-form-field {
+        width: 270px;
+      }
+
+      .mat-form-field-couple {
+        display: flex;
+        flex-direction: row;
+
+        mat-form-field {
+          flex-direction: column;
+          width: 192px;
+        }
+      }
+      .login-button {
+        margin-left: auto;
+      }
+    }
+  }
 }

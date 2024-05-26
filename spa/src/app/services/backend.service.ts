@@ -5,6 +5,12 @@ import { CookieService } from "ngx-cookie-service";
 import { Inject, Injectable, PLATFORM_ID } from "@angular/core";
 import { isPlatformBrowser } from "@angular/common";
 
+interface HttpBody<T> {
+    success: boolean;
+    message: string;
+    data: T;
+}
+
 @Injectable()
 export class BackendService {
 
@@ -21,19 +27,19 @@ export class BackendService {
         }
     }
 
-    public async post<ReturnType>(relativeUrl: string, body: any, callback: (response: HttpResponse<ReturnType>) => void = () => {}): Promise<HttpResponse<ReturnType>> {
+    public async post<ReturnType>(relativeUrl: string, body: any, callback: (response: HttpResponse<HttpBody<ReturnType>>) => void = () => {}): Promise<HttpResponse<HttpBody<ReturnType>>> {
         if (relativeUrl.startsWith('/')) {
             relativeUrl = relativeUrl.slice(1);
         }
         let response = await firstValueFrom(
-            this.httpClient.post<ReturnType>(this.baseUrl + relativeUrl, body,
+            this.httpClient.post<HttpBody<ReturnType>>(this.baseUrl + relativeUrl, body,
                 { observe: 'response', headers: this.headers })
         );
         callback(response);
         return response;
     }
 
-    public async get<ReturnType>(relativeUrl: string, callback: (response: HttpResponse<ReturnType>) => void = () => {}): Promise<HttpResponse<ReturnType>> {
+    public async get<ReturnType>(relativeUrl: string, callback: (response: HttpResponse<HttpBody<ReturnType>>) => void = () => {}): Promise<HttpResponse<HttpBody<ReturnType>>> {
         if (relativeUrl.startsWith('/')) {
             relativeUrl = relativeUrl.slice(1);
         }
@@ -41,7 +47,7 @@ export class BackendService {
             relativeUrl = relativeUrl + '/';
         }
         let response = await firstValueFrom(
-            this.httpClient.get<ReturnType>(this.baseUrl + relativeUrl,
+            this.httpClient.get<HttpBody<ReturnType>>(this.baseUrl + relativeUrl,
                 { observe: 'response', headers: this.headers })
         );
         callback(response);

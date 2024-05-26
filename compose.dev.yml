@@ -1,6 +1,7 @@
 services:
-  apiserver-debug:
-    container_name: clip-apiserver-debug
+
+  apiserver:
+    container_name: clip-apiserver-dev
     image: clip/apiserver:debug
     command: /bin/sh ../scripts/dev.sh apiserver
     working_dir: /clip/apiserver
@@ -32,8 +33,8 @@ services:
     networks:
       - clip-network
 
-  spa-debug:
-    container_name: clip-spa-debug
+  spa:
+    container_name: clip-spa-dev
     image: clip/spa:debug
     command: /bin/sh ../scripts/dev.sh spa
     working_dir: /clip/spa
@@ -44,14 +45,6 @@ services:
       network: host
     develop:
       watch:
-        - action: sync
-          path: ./scripts
-          target: /clip/scripts
-        - action: sync
-          path: ./spa
-          target: /clip/spa
-          ignore:
-            - node_modules/
         - action: rebuild
           path: ./spa/package.json
         - action: rebuild
@@ -63,7 +56,7 @@ services:
       - "4200:4200"
       - "9222:9222"
     volumes:
-      - ./spa/node_modules:/clip/spa/node_modules
+      - ./spa:/clip/spa
     networks:
       - clip-network
 

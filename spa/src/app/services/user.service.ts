@@ -16,6 +16,7 @@ export class UserService extends BackendService {
 
     async RegisterUser(userInfo: RegisterModelPost): Promise<boolean> {
         let res = await this.post('/user/register', userInfo);
+        console.log(res)
         if (res.status === 201) {
             return await this.LoginUser(userInfo.username, userInfo.password);
         }
@@ -34,7 +35,7 @@ export class UserService extends BackendService {
         if (res.status != 200) {
             return false;
         }
-        this.cookieService.set("token", res.body!.access_token);
+        this.cookieService.set("token", res.body!.data.access_token);
         return true;
     }
 }

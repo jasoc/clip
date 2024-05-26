@@ -1,4 +1,95 @@
-<div id="about">
-    
-    <p>about-page works!</p>
+<float-background style="position: absolute; top: 0; left: 0"></float-background>
+<div class="register">
+
+  <div class="header">
+    <h1>Create a <b>Clip</b> user</h1>
+    <h2>Type in your credentials for the first time</h2>
+  </div>
+
+  <div class="register-form">
+    <form class="example-form" [formGroup]="registerFormGroup" (ngSubmit)="register()">
+      <mat-card>
+
+        <div class="mat-form-field-couple">
+          <mat-form-field class="mat-form-field-couple">
+            <mat-label>First name</mat-label>
+            <input matInput type="text" formControlName="firstName" />
+            <mat-error *ngIf="registerFormGroup.controls.firstName.hasError('required')">
+              <strong>First name</strong> is required
+            </mat-error>
+          </mat-form-field>
+
+          <div style="margin-left: 16px"></div>
+
+          <mat-form-field>
+            <mat-label>Second name</mat-label>
+            <input matInput type="text" formControlName="secondName" />
+            <mat-error *ngIf="registerFormGroup.controls.secondName.hasError('required')">
+              <strong>Second name</strong> is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <br />
+
+        <mat-form-field>
+          <mat-label>Username</mat-label>
+          <input matInput type="text" formControlName="username" />
+          <mat-error *ngIf="registerFormGroup.controls.username.hasError('required')">
+            Please provide a valid and unique <strong>Username</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <div style="margin-top: 16px"></div>
+
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input matInput type="email" placeholder="ex. it@acme.org" formControlName="email" />
+          <mat-error *ngIf="registerFormGroup.controls.email.hasError('email')">
+            The field should be a valid <strong>email</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <div style="margin-top: 16px"></div>
+
+        <div class="mat-form-field-couple">
+          <mat-form-field class="mat-form-field-couple">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" formControlName="password" />
+            <mat-error *ngIf="registerFormGroup.controls.password.hasError('required')">
+              A <strong>password</strong> is required
+            </mat-error>
+          </mat-form-field>
+
+          <div style="margin-left: 16px"></div>
+
+          <mat-form-field class="mat-form-field-couple">
+            <mat-label>Confirm password</mat-label>
+            <input matInput type="password" formControlName="password2" />
+            <mat-error *ngIf="registerFormGroup.controls.password2.hasError('required')">
+              Retype <strong>password</strong> to confirm
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </mat-card>
+      <div class="form-buttons">
+        <button mat-button color="accent" (click)="goToLogin()">Go to login</button>
+        <button mat-fab extended class="login-button" type="submit" [disabled]="!registerFormGroup.valid" color="primary">
+          <mat-icon class="material-symbols-outlined">person_add</mat-icon>
+          Create an account
+        </button>
+      </div>
+    </form>
+
+  </div>
+
+  <button mat-button matTooltip="Switch theme" class="theme-switcher" (click)="themeService.switchDarkLight()">
+    @if (themeService.currentTheme == Theme.Light) {
+      <mat-icon class="material-symbols-rounded">nights_stay</mat-icon>
+    }
+    @if (themeService.currentTheme == Theme.Dark) {
+      <mat-icon class="material-symbols-rounded">sunny</mat-icon>
+    }
+    Switch theme
+  </button>
 </div>

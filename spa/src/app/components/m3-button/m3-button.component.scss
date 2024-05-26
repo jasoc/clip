@@ -1,6 +1,4 @@
 // @use 'src/styles/theme/maps' as ct;
-@use '../../../styles/theme' as *;
-@use '../../../styles/fonts' as fonts;
 @use "sass:map";
 
 $MARGIN: 16px;
@@ -11,10 +9,9 @@ $TRANSLUCENT_COLOR: #ffffffc9;
 }
 
 .m3-button {
-    background: map.get($clip-accent-palette, 500);
+    // TODO: background: map.get($clip-accent-palette, 500);
     width: auto;
     border: none;
-    font-family: 'Roboto';
     min-width: 38px;
     font-weight: 500;
     font-size: 14px;
@@ -46,7 +43,7 @@ $TRANSLUCENT_COLOR: #ffffffc9;
 }
 
 .elevation-1 {
-    box-shadow: $box-shadow;
+    // TODO box-shadow: $box-shadow;
 }
 
 .round {
@@ -87,14 +84,14 @@ $TRANSLUCENT_COLOR: #ffffffc9;
 }
 
 .primary {
-    background: map.get($clip-primary-palette, 500);
-    color: map.get($clip-primary-palette, 'contrast', 500);
+    // TODO background: map.get($clip-primary-palette, 500);
+    // TODO color: map.get($clip-primary-palette, 'contrast', 500);
 }
 
 
 .accent {
-    background: map.get($clip-accent-palette, 500);
-    color: map.get($clip-accent-palette, 'contrast', 500);
+    // TODO background: map.get($clip-accent-palette, 500);
+    // TODO color: map.get($clip-accent-palette, 'contrast', 500);
 }
 
 .transparent {

@@ -30,11 +30,13 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/styles/theme/m3-theme.scss"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
-                "src/styles"
+                "src/styles",
+                "node_modules"
               ]
             },
             "scripts": [],
@@ -45,7 +47,7 @@
             }
           },
           "configurations": {
-            "docker-prod": {
+            "prod": {
               "budgets": [
                 {
                   "type": "initial",
@@ -57,11 +59,11 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.docker.prod.ts"
+                  "with": "src/environments/environment.prod.ts"
                 }
               ]
             },
-            "docker-debug": {
+            "debug": {
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true,
@@ -69,39 +71,24 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.docker.debug.ts"
-                }
-              ]
-            },
-            "local-debug": {
-              "optimization": false,
-              "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true,
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.local.debug.ts"
+                  "with": "src/environments/environment.debug.ts"
                 }
               ]
             }
           },
-          "defaultConfiguration": "docker-prod"
+          "defaultConfiguration": "prod"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
-            "docker-prod": {
-              "buildTarget": "clip-spa:build:docker-prod"
+            "prod": {
+              "buildTarget": "clip-spa:build:prod"
             },
-            "docker-debug": {
-              "buildTarget": "clip-spa:build:docker-debug"
-            },
-            "local-debug": {
-              "buildTarget": "clip-spa:build:local-debug"
+            "debug": {
+              "buildTarget": "clip-spa:build:debug"
             }
           },
-          "defaultConfiguration": "docker-debug"
+          "defaultConfiguration": "debug"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -130,5 +117,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }
