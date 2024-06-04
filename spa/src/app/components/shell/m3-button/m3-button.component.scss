@@ -1,0 +1,57 @@
+$MARGIN: 16px;
+$TRANSLUCENT_COLOR: #ffffffc9;
+
+:host {
+    min-width: 38px;
+}
+
+.m3-button {
+    border: none;
+    background: transparent;
+    color: var(--clip-main-ui-text-color);
+    min-width: 38px;
+    font-weight: 500;
+    font-size: 14px;
+    text-wrap: nowrap;
+    user-select: none;
+    cursor: pointer;
+    width: 100%;
+    transition: cubic-bezier(0.2, 0.0, 0, 1.0) 200ms;
+
+    &:hover {
+        border-radius: 10px !important;
+    }
+
+    .m3-button__inner {
+        cursor: pointer;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        height: 24px;
+
+        .m3-icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}
+
+.thin {
+    border-radius: 100px;
+    height: 40px;
+    .m3-button__inner {
+        justify-content: flex-start !important;
+    }
+}
+
+.sidenav-left {
+    height: 49px;
+    border-radius: 16px;
+    justify-content: flex-start;
+}
+
+.fab {
+    height: 56px;
+    border-radius: 16px;
+}

@@ -45,7 +45,6 @@ export class ThemeService {
 
     private setDataTheme() {
       if (isPlatformBrowser(this.platformId)) {
-        console.debug("suca")
         document.body.setAttribute('data-theme', this.currentTheme.toString());
       }
     }

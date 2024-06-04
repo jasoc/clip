@@ -1,9 +1,8 @@
-@use 'theme' as *;
-@use "sass:map";
+@use "tokens" as tokens;
 
 :host {
     width: 40%;
-    height: calc(100% - $clip-shell-margin);
+    height: calc(100% - tokens.$clip-shell-margin);
 }
 
 #flat-input {
@@ -45,7 +44,7 @@
         }
 
         mat-icon {
-            color: map.get($clip-accent-palette, 500);
+            // color: map.get($clip-accent-palette, 500);
             padding: 0 10px 0 0px;
             pointer-events: none;
         }
@@ -101,10 +100,10 @@
     }
 }
 
-.bordered {
-    box-shadow: inset 0 0 0 2px map.get($clip-accent-palette, 500) !important;
-    background: var(--clip-background-color) !important;
-}
+// .bordered {
+//     box-shadow: inset 0 0 0 2px map.get($clip-accent-palette, 500) !important;
+//     background: var(--clip-background-color) !important;
+// }
 
 #hint {
     padding-left: 10px;

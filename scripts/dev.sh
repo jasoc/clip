@@ -34,11 +34,20 @@ dev_all()
     wait
 }
 
+generate_m3_theme()
+{
+    cd $CLIP_PROJECT_PATH
+    ./clip dev exec spa npm run ng generate @angular/material:m3-theme
+    chown $USER:$USER $CLIP_PROJECT_PATH/spa/src/styles/themem3-theme.scss
+    chmod 755 $CLIP_PROJECT_PATH/spa/src/styles/themem3-theme.scss
+    mv $CLIP_PROJECT_PATH/spa/src/styles/themem3-theme.scss $CLIP_PROJECT_PATH/spa/src/styles/theme/m3-theme.scss
+}
+
 main()
 {
     case $1 in
         spa)       dev_spa;;
-        deps)      yarn_install;;
+        generate-m3-theme)      generate_m3_theme;;
         apiserver) dev_apiserver;;
         '')        dev_all;;
     esac

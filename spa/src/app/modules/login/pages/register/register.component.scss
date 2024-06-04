@@ -1,3 +1,5 @@
+@use 'tokens' as tokens;
+
 :host {
   display: flex;
   justify-content: space-evenly;
@@ -5,24 +7,27 @@
   flex-direction: column;
   flex-direction: row;
   height: 100%;
-  .theme-switcher {
+
+  .top-right-buttons {
     position: absolute;
     top: 0;
     right: 0;
     margin: 10px;
   }
+  
+  float-background {
+    z-index: 1;
+  }
+
   .register {
+    z-index: 2;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
-    .header {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      margin-bottom: 32px;
-      gap: 24px;
+
+    h1 {
+      margin-bottom: tokens.$clip-shell-margin * 3;
     }
 
     form {
@@ -33,13 +38,16 @@
       .form-buttons {
         margin-top: 24px;
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-end;
         align-items: center;
         flex-direction: row;
       }
   
       mat-card {
-        padding: 16px 16px 0px 16px;
+        padding-top: tokens.$clip-shell-margin * 2;
+        padding-left: tokens.$clip-shell-margin;
+        padding-right: tokens.$clip-shell-margin;
+        padding-bottom: tokens.$clip-shell-margin;
   
         .mat-form-field-couple {
           display: flex;

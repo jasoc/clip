@@ -1,4 +1,4 @@
-@use '../../../../styles/theme' as *;
+@use 'tokens' as tokens;
 
 #navigation-drawer {
     height: 100vh;
@@ -10,7 +10,9 @@
         display: flex;
         align-items: center;
         flex-direction: row;
+        justify-content: flex-start;
         height: 7vh;
+        padding: 0 tokens.$clip-shell-margin;
         cursor: pointer;
         * {
             cursor: pointer;
@@ -61,15 +63,14 @@
             width: 100%;
             transition: cubic-bezier(0.2, 0.0, 0, 1.0) 150ms;
 
-            m3-chip {
-                margin-right: auto;
-                margin: 10px auto 5px 5%;
+            mat-chip {
+                scale: 0.75;
+                margin: 0 auto 0 16px;
             }
 
             .navigation-separator {
                 width: 85%;
                 height: 2px;
-                margin: 10px 0;
                 background-color: var(--clip-background-shader-lighter);
             }
 

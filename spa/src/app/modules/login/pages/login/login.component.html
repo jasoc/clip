@@ -1,48 +1,47 @@
-<float-background style="position: absolute; top: 0; left: 0"></float-background>
 <div class="register">
-  <h1 style="font-size: 3em">Login to <b>Clip</b></h1>
-  <div class="register-form">
-    <form [formGroup]="loginFormGroup" (ngSubmit)="login()">
-      <mat-card>
-        <mat-card-header>
-          <!-- <mat-card-title>Create a Clip account</mat-card-title> -->
-          <mat-card-subtitle>Type in your credentials</mat-card-subtitle>
-        </mat-card-header>
-        <div class="form">
-          <mat-form-field>
-            <mat-label>Username</mat-label>
-            <input matInput type="text" formControlName="username" />
-            <mat-error *ngIf="loginFormGroup.controls.username.hasError('required')">
-              <strong>Username</strong> is required
-            </mat-error>
-          </mat-form-field>
-          <br />
-          <div style="margin-left: 16px"></div>
-          <mat-form-field>
-            <mat-label>Password</mat-label>
-            <input matInput type="password" formControlName="password" />
-            <mat-error *ngIf="loginFormGroup.controls.password.hasError('required')">
-              <strong>Password</strong> is required
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <mat-card-actions>
-          <button class="login-button" type="submit" [disabled]="!loginFormGroup.valid" mat-fab extended color="primary">
-            <mat-icon class="material-symbols-rounded">login</mat-icon>
-            Login
-          </button>
-        </mat-card-actions>
-      </mat-card>
-    </form>
-    <button mat-button color="accent" (click)="goToRegister()">Create an account</button>
+  <h1 class="branded-font">Login</h1>
+
+  <form [formGroup]="loginFormGroup" (ngSubmit)="login()">
+    <mat-card>
+      <mat-form-field>
+        <mat-label>Username</mat-label>
+        <input matInput type="text" formControlName="username" />
+        <mat-error *ngIf="loginFormGroup.controls.username.hasError('required')">
+          Please provide a valid and unique <strong>Username</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <div style="margin-top: 16px"></div>
+
+      <div class="mat-form-field-couple">
+        <mat-form-field class="mat-form-field-couple">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" formControlName="password" />
+          <mat-error *ngIf="loginFormGroup.controls.password.hasError('required')">
+            <strong>Password</strong> is required
+          </mat-error>
+          <mat-error *ngIf="loginFormGroup.controls.password.hasError('minLength')">
+            A password should be minimum 8 characters
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </mat-card>
+    <div class="form-buttons">
+      <button mat-fab extended class="login-button" type="submit" [disabled]="!loginFormGroup.valid" color="primary">
+        <mat-icon class="material-symbols-outlined">login</mat-icon>
+        Login
+      </button>
+    </div>
+  </form>
+  
+  <div class="top-right-buttons">
+    <button mat-button matTooltip="Switch theme" class="theme-switcher" (click)="themeService.switchDarkLight()">
+      @if (themeService.currentTheme == Theme.Light) {
+        <mat-icon class="material-symbols-rounded">nights_stay</mat-icon>
+      } @if (themeService.currentTheme == Theme.Dark) {
+        <mat-icon class="material-symbols-rounded">sunny</mat-icon>
+      } Switch theme
+    </button>
+    <button mat-button color="accent" (click)="goToRegister()">Create a user</button>
   </div>
-  <button mat-button matTooltip="Switch theme" class="theme-switcher" (click)="themeService.switchDarkLight()">
-    @if (themeService.currentTheme == Theme.Light) {
-      <mat-icon class="material-symbols-rounded">nights_stay</mat-icon>
-    }
-    @if (themeService.currentTheme == Theme.Dark) {
-      <mat-icon class="material-symbols-rounded">sunny</mat-icon>
-    }
-    Switch theme
-  </button>
 </div>
