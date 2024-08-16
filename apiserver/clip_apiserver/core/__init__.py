@@ -5,6 +5,7 @@ logger = get_logger(__name__)
 
 
 def main():
+    logger.info("Starting Clip API Server...")
     load_dotenv()
 
     from core.server import clip_server_app

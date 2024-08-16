@@ -7,41 +7,27 @@ services:
       context: ./proxy
       dockerfile: ./Dockerfile
       network: host
-    networks:
-      - clip-network
     ports:
-      - "432:80"
-    depends_on:
-      - spa
-      - apiserver
+      - 432:80
 
   apiserver:
     container_name: clip-apiserver
     image: clip/apiserver
     restart: unless-stopped
+    build:
+      context: ./apiserver
+      network: host
     env_file:
       - path: .env
         required: true
-    build:
-      context: .
-      dockerfile: ./apiserver/Dockerfile
-      network: host
-    networks:
-      - clip-network
 
   spa:
     container_name: clip-spa
     image: clip/spa
     restart: unless-stopped
     build:
-      context: ./
-      dockerfile: ./spa/Dockerfile
+      context: ./spa
       network: host
     env_file:
       - path: .env
         required: true
-    networks:
-      - clip-network
-
-networks:
-  clip-network:

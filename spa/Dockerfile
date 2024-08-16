@@ -1,14 +1,14 @@
-FROM node:20-alpine as spa-base
-COPY ./scripts /clip/scripts
-COPY ./spa /clip/spa
+FROM node:20-alpine AS spa-base
+COPY . /spa
+WORKDIR /spa
 EXPOSE 4200
 
-FROM spa-base as spa-build
-WORKDIR /clip
-RUN /bin/sh /clip/scripts/build.sh spa
+FROM spa-base AS spa-build
+WORKDIR /spa
+RUN /bin/sh ./spa.sh build
 
-FROM node:20-alpine as spa-prod
-WORKDIR /clip
-COPY ./scripts scripts
-COPY --from=spa-build /clip/dist ./dist
-CMD ["/bin/sh", "/clip/scripts/run.sh", "spa"]
+FROM node:20-alpine AS spa-prod
+COPY --from=spa-build /spa/dist /spa/dist
+COPY --from=spa-build /spa/spa.sh /spa
+WORKDIR /spa
+CMD ["/bin/sh", "./spa.sh", "run"]

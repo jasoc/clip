@@ -11,8 +11,6 @@ services:
       POSTGRES_DB: ${POSTGRESQL_DATABASE_NAME}
     volumes:
       - /var/lib/postgresql/data
-    networks:
-      - clip-network
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d clip -U clip"]
       interval: 5s
@@ -29,10 +27,3 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    networks:
-      - clip-network
-
-networks:
-  clip-network:
-    name: clip_clip-network
-    external: true

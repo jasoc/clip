@@ -3,8 +3,8 @@ services:
   apiserver:
     container_name: clip-apiserver-dev
     image: clip/apiserver:debug
-    command: /bin/sh ../scripts/dev.sh apiserver
-    working_dir: /clip/apiserver
+    command: /bin/sh ./apiserver.sh dev
+    working_dir: /apiserver
     build:
       context: .
       dockerfile: ./apiserver/Dockerfile
@@ -12,34 +12,27 @@ services:
       network: host
     develop:
       watch:
-        - action: sync
-          path: ./scripts
-          target: /clip/scripts
-        - action: sync
-          path: ./apiserver
-          target: /clip/apiserver
-          ignore:
-            - node_modules/
         - action: rebuild
           path: ./apiserver/pyproject.toml
     env_file:
       - path: .env
         required: true
     volumes:
-      - ./apiserver/.venv:/clip/apiserver/.venv
+      # - ./apiserver/.venv:/apiserver/.venv
+      # - ./apiserver/clip_apiserver:/apiserver/clip_apiserver
+      # - ./apiserver/dist:/apiserver/dist
+      - ./apiserver:/apiserver
     ports:
-      - "8000:8000"
-      - "5678:5678"
-    networks:
-      - clip-network
+      - 8000:8000
+      - 5678:5678
 
   spa:
     container_name: clip-spa-dev
     image: clip/spa:debug
-    command: /bin/sh ../scripts/dev.sh spa
-    working_dir: /clip/spa
+    command: /bin/sh ./spa.sh dev
+    working_dir: /spa
     build:
-      context: .
+      context: ./spa
       dockerfile: ./spa/Dockerfile
       target: spa-base
       network: host
@@ -53,12 +46,9 @@ services:
       - path: .env
         required: true
     ports:
-      - "4200:4200"
-      - "9222:9222"
+      - 4200:4200
+      - 9222:9222
     volumes:
-      - ./spa:/clip/spa
-    networks:
-      - clip-network
-
-networks:
-  clip-network:
+      - ./spa/node_modules:/spa/node_modules
+      - ./spa/src:/spa/src
+      - ./spa/dist:/spa/dist

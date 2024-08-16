@@ -8,6 +8,7 @@ $directories = @(
     "$CLIP_PROJECT_PATH\dist",
     "$CLIP_PROJECT_PATH\spa\dist",
     "$CLIP_PROJECT_PATH\spa\node_modules",
+    "$CLIP_PROJECT_PATH\spa\src\node_modules",
     "$CLIP_PROJECT_PATH\spa\.angular",
     "$CLIP_PROJECT_PATH\apiserver\.venv",
     "$CLIP_PROJECT_PATH\apiserver\dist"
