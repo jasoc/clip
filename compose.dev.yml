@@ -6,8 +6,7 @@ services:
     command: /bin/sh ./apiserver.sh dev
     working_dir: /apiserver
     build:
-      context: .
-      dockerfile: ./apiserver/Dockerfile
+      context: ./apiserver
       target: apiserver-base
       network: host
     develop:
@@ -18,12 +17,11 @@ services:
       - path: .env
         required: true
     volumes:
-      # - ./apiserver/.venv:/apiserver/.venv
-      # - ./apiserver/clip_apiserver:/apiserver/clip_apiserver
-      # - ./apiserver/dist:/apiserver/dist
-      - ./apiserver:/apiserver
+      - ./apiserver/.venv:/apiserver/.venv
+      - ./apiserver/dist:/apiserver/dist
+      - ./apiserver/clip_apiserver:/apiserver/clip_apiserver
     ports:
-      - 8000:8000
+      - ${CLIP_APISERVER_PORT}:${CLIP_APISERVER_PORT}
       - 5678:5678
 
   spa:
@@ -33,7 +31,6 @@ services:
     working_dir: /spa
     build:
       context: ./spa
-      dockerfile: ./spa/Dockerfile
       target: spa-base
       network: host
     develop:

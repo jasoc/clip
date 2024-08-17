@@ -1,6 +1,7 @@
 FROM node:20-alpine AS spa-base
 COPY . /spa
 WORKDIR /spa
+
 EXPOSE 4200
 
 FROM spa-base AS spa-build

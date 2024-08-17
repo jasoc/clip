@@ -44,7 +44,7 @@ export function app(): express.Express {
 }
 
 function run(): void {
-  const port: number = parseInt(process.env['PORT']!) || 4000;
+  const port: number = parseInt(process.env['CLIP_SPA_PORT']!) || 4000;
 
   // Start up the Node server
   const server = app();

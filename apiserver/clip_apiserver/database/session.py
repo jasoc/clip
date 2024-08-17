@@ -3,15 +3,15 @@ from sqlalchemy import create_engine, Engine
 from sqlalchemy.engine import URL
 from utils import get_logger
 
-from .models import Base
 
 logger = get_logger(__name__)
+
 
 class DBSession:
 
     url: URL = None
     _base_engine: Engine = None
-    
+
     @staticmethod
     def start(url: URL) -> None:
         DBSession.url = url

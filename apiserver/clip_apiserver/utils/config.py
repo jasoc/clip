@@ -17,8 +17,8 @@ class Config:
 
     def __init__(self):
         self.CLIP_REMOTE_ADDRESS = os.getenv("CLIP_REMOTE_ADDRESS")
-        self.CLIP_APISERVER_HOST= os.getenv("CLIP_APISERVER_HOST") or "0.0.0.0"
-        self.CLIP_APISERVER_PORT= int(os.getenv("CLIP_APISERVER_PORT") or (8000 if __debug__ else 80))
+        self.CLIP_APISERVER_HOST = os.getenv("CLIP_APISERVER_HOST") or "0.0.0.0"
+        self.CLIP_APISERVER_PORT = int(os.getenv("CLIP_APISERVER_PORT") or 8008)
         self.POSTGRESQL_USER = os.getenv("POSTGRESQL_USER")
         self.POSTGRESQL_PASSWORD = os.getenv("POSTGRESQL_PASSWORD")
         self.POSTGRESQL_HOST = os.getenv("POSTGRESQL_HOST")

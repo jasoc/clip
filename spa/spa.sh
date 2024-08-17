@@ -1,8 +1,11 @@
-#!/bin/bash
+#!/bin/sh
 
 develop_spa()
 {
-    yarn install
+    if [ ! -d "./node_modules" ] || [ -z "$(ls -A ./node_modules)" ]
+    then
+        yarn install
+    fi
     yarn start
 }
 

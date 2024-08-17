@@ -4,8 +4,7 @@ import { UserService } from "./user.service";
 
 export class PermissionsService {
 
-    static CanActivateFn(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-      return true;
+    static isUserLoggedFn(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
       let userService = inject(UserService);
       let routerService = inject(Router);
 

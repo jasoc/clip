@@ -4,19 +4,31 @@ import { PermissionsService } from './services/permissions.service';
 export const routes: Routes = [
   {
     path: '',
-    canActivate: [PermissionsService.CanActivateFn],
+    canActivate: [PermissionsService.isUserLoggedFn],
     loadComponent: () => import('./shell/shell.component').then((m) => m.ShellComponent),
     children: [
       {
         path: 'home',
-        canActivate: [PermissionsService.CanActivateFn],
+        canActivate: [PermissionsService.isUserLoggedFn],
         loadComponent: () => import('./modules/home/home.component').then((m) => m.HomeMainComponent),
       },
       {
         path: 'home/about',
-        canActivate: [PermissionsService.CanActivateFn],
+        canActivate: [PermissionsService.isUserLoggedFn],
         loadComponent: () => import('./modules/home/pages/about/home-about.component').then((m) => m.HomeAboutComponent)
       }
+    ]
+  },
+  {
+    path: 'dashboards',
+    canActivate: [PermissionsService.isUserLoggedFn],
+    loadComponent: () => import('./modules/dashboards/dashboards.component').then((m) => m.DashboardsComponent),
+    children: [
+      {
+        path: 'composer',
+        canActivate: [PermissionsService.isUserLoggedFn],
+        loadComponent: () => import('./modules/dashboards/pages/composer/dashboards-composer.component').then((m) => m.DashboardsComposerComponent),
+      },
     ]
   },
   {
