@@ -1,3 +1,26 @@
-@forward './clip-dark';
-@forward './clip-light';
-@forward './m3-theme';
+@use "@angular/material" as mat;
+
+@forward "./clip-dark";
+@forward "./clip-light";
+@forward "./m3-theme";
+
+@use "./m3-theme" as t;
+
+@mixin background-themed($density) {
+  background: mat.get-theme-color(t.$dark-theme, primary, $density);
+}
+
+@mixin color-themed($density) {
+  color: mat.get-theme-color(t.$dark-theme, primary, $density);
+}
+
+// Light Theme
+[data-theme="clip-light"] {
+  @mixin background-themed($density) {
+    background: mat.get-theme-color(t.$light-theme, primary, $density);
+  }
+
+  @mixin color-themed($density) {
+    color: mat.get-theme-color(t.$light-theme, primary, $density);
+  }
+}

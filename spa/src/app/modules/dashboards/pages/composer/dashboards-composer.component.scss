@@ -1,0 +1,42 @@
+@use "tokens" as tokens;
+
+#dashboards-composer {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+
+  gridstack {
+    width: 100%;
+  }
+
+  #dashboards-composer-sider {
+    display: block;
+    background: var(--clip-background-color);
+    border-radius: 8px;
+    margin-left: tokens.$clip-shell-margin;
+    position: relative;
+
+    #dashboards-composer-sider-handle {
+      position: absolute;
+      top: 50%;
+      transform: translate(0, -50%);
+      left: 6px;
+      height: 200px;
+      border-radius: 20px;
+      width: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: cubic-bezier(0.2, 0, 0, 1) 200ms;
+      cursor: pointer;
+      &:hover {
+        background: var(--clip-background-shader-lighter);
+      }
+
+      m3-icon {
+        color: var(--clip-main-ui-text-color);
+      }
+    }
+  }
+}

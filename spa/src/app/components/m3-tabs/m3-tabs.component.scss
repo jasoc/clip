@@ -1,3 +1,5 @@
+@use "theme" as theme;
+
 :host {
   height: 100%;
   width: 100%;
@@ -53,13 +55,17 @@
         width: 30%;
         border-top-right-radius: 100px;
         border-top-left-radius: 100px;
-        background: var(--clip-accent-color-400);
+        // background: map.get($clip-accent-palette, 400);
+        @include theme.background-themed(50);
+        // background: var(--clip-accent-color-400);
         bottom: 0;
       }
     }
 
     .showed {
-      color: var(--clip-accent-color-400);
+        // background: map.get($clip-accent-palette, 400);
+        @include theme.color-themed(50);
+        // color: var(--clip-accent-color-400);
     }
   }
 

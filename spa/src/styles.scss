@@ -32,6 +32,7 @@ html, body {
   [data-theme="clip-light"] {
     @include mat.all-component-colors(theme.$light-theme);
   }
+
 }
 
 // Material Card Title Adjustment
@@ -39,6 +40,7 @@ html, body {
 .mat-mdc-card-title {
   color: var(--clip-main-ui-text-color);
 }
+
 
 .branded-font {
   font-variation-settings: (
