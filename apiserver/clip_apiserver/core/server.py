@@ -1,12 +1,9 @@
 from api import api_v1_router
 from database import init_clip_database
 from fastapi import FastAPI
-from fastapi.templating import Jinja2Templates
 from starlette.middleware.cors import CORSMiddleware
 
 from .errors_handler import add_exception_handlers
-
-templates = Jinja2Templates(directory="templates")
 
 
 def create_app() -> FastAPI:
@@ -15,13 +12,13 @@ def create_app() -> FastAPI:
 
     app.include_router(api_v1_router)
     add_exception_handlers(app)
-    # app.add_middleware(
-    #     CORSMiddleware,
-    #     allow_origins=["*"],
-    #     allow_credentials=True,
-    #     allow_methods=["*"],
-    #     allow_headers=["*"],
-    # )
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
 
     @app.on_event("startup")
     async def init_connect():

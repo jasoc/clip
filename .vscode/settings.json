@@ -1,0 +1,5 @@
+{
+  "python.analysis.extraPaths": [
+    "./apiserver/.venv/lib/python3.11/site-packages"
+  ]
+}

@@ -15,7 +15,6 @@ interface RegisterModelPost {
 export class UserService extends BackendService {
 
     async RegisterUser(userInfo: RegisterModelPost): Promise<boolean> {
-        console.log("w0000")
         let res = await this.post('/user/register', userInfo);
         if (res.status === 201) {
             return await this.LoginUser(userInfo.username, userInfo.password);

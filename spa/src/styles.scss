@@ -2,6 +2,9 @@
 @use "@angular/material" as mat;
 @use "theme" as theme;
 
+@import "gridstack/dist/src/gridstack.scss";
+@import "gridstack/dist/src/gridstack-extra.scss";
+
 @import "@fontsource/roboto/index.css";
 @import "@fontsource-variable/roboto-flex/full.css";
 

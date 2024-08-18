@@ -16,16 +16,14 @@ export const routes: Routes = [
         path: 'home/about',
         canActivate: [PermissionsService.isUserLoggedFn],
         loadComponent: () => import('./modules/home/pages/about/home-about.component').then((m) => m.HomeAboutComponent)
-      }
-    ]
-  },
-  {
-    path: 'dashboards',
-    canActivate: [PermissionsService.isUserLoggedFn],
-    loadComponent: () => import('./modules/dashboards/dashboards.component').then((m) => m.DashboardsComponent),
-    children: [
+      },
       {
-        path: 'composer',
+        path: 'dashboards',
+        canActivate: [PermissionsService.isUserLoggedFn],
+        loadComponent: () => import('./modules/dashboards/dashboards.component').then((m) => m.DashboardsComponent),
+      },
+      {
+        path: 'dashboards/composer',
         canActivate: [PermissionsService.isUserLoggedFn],
         loadComponent: () => import('./modules/dashboards/pages/composer/dashboards-composer.component').then((m) => m.DashboardsComposerComponent),
       },
