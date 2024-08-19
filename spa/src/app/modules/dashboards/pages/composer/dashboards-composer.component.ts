@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, reflectComponentType, ViewChild } from '@angular/core';
 import {
   GridstackComponent,
   gsCreateNgComponents,
@@ -15,6 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { M3IconComponent } from '../../../../components/m3-icon/m3-icon.component';
 import { animate, animateChild, group, query, state, style, transition, trigger } from '@angular/animations';
 import { simpleFade } from '../../../../animations/enterAndLeave';
+import { getAllWidgetsSelector } from '../../utils';
 
 @Component({
   selector: 'clip-dashboards-composer',
@@ -28,15 +29,15 @@ import { simpleFade } from '../../../../animations/enterAndLeave';
       state(
         'true',
         style({
-          width: "20px",
-          padding: "0px",
+          width: '20px',
+          padding: '0px',
         })
       ),
       state(
         'false',
         style({
-          width: "340px",
-          padding: "16px",
+          width: '340px',
+          padding: '16px',
         })
       ),
       transition('true <=> false', [
@@ -51,30 +52,32 @@ export class DashboardsComposerComponent implements OnInit {
   public ids: number = 0;
   public siderCollapsed: boolean = false;
 
-  // public children: NgGridStackWidget[] = [{selector:'clip-dashboards-widget-card'}, {selector:'clip-dashboards-widget-card'}, {selector:'clip-dashboards-widget-card'}, {selector:'clip-dashboards-widget-card'}];
-
   public gridOptions: NgGridStackOptions = {
     margin: 5,
-    // float: true,
     minRow: 1,
+    acceptWidgets: true,
     cellHeight: 40,
-    // columnOpts: { breakpoints: [{ w: 768, c: 1 }] },
-    // children: this.children
   };
 
-  constructor() {
-    GridstackComponent.addComponentToSelectorType([DashboardsWidgetCardComponent]);
-  }
+  allWidgetsSelector = getAllWidgetsSelector();
 
   ngOnInit(): void {
     GridStack.addRemoveCB = gsCreateNgComponents;
   }
 
+  public getSelectorGridOptions(selector: string): NgGridStackOptions {
+    return {
+      margin: 5,
+      minRow: 1,
+      cellHeight: 40,
+      acceptWidgets: false,
+      children: [{ h: 3, w: 3, selector }]
+    }
+  }
+
   public add() {
     if (!this.gridComp?.el) return;
     this.gridComp?.grid?.addWidget({
-      x: 1,
-      y: 1,
       h: 3,
       w: 3,
       selector: 'clip-dashboards-widget-card',

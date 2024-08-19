@@ -1,13 +1,19 @@
 
 <div id="dashboards-composer">
-    <gridstack [options]="gridOptions">
-        <div empty-content>Add items here or reload the grid</div>
-    </gridstack>
+    <div id="dashboards-composer-canvas">
+        <gridstack [options]="gridOptions">
+            <div empty-content>Add items here or reload the grid</div>
+        </gridstack>
+    </div>
     <div id="dashboards-composer-sider" [@collapseSider]="siderCollapsed">
         @if (!siderCollapsed) {
             <m3-tabs @showSiderContent>
                 <m3-tab icon="list" label="Widgets">
-                    <button mat-button (click)="add()">Add</button>
+                    @for (selector of allWidgetsSelector; track selector) {
+                        <gridstack [options]="getSelectorGridOptions(selector)" (droppedCB)="this">
+                            <div empty-content>Add items here or reload the grid</div>
+                        </gridstack>
+                    }
                 </m3-tab>
                 <m3-tab icon="settings" label="Options">
                     <button mat-button (click)="add()">Add</button>
