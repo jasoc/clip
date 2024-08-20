@@ -10,7 +10,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRESQL_PASSWORD}
       POSTGRES_DB: ${POSTGRESQL_DATABASE_NAME}
     volumes:
-      - /var/lib/postgresql/data
+      - clip_postgres_volume:/var/lib/postgresql/data:Z
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d clip -U clip"]
       interval: 5s
@@ -27,3 +27,6 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+
+volumes:
+  clip_postgres_volume:

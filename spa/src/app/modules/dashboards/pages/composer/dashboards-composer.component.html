@@ -1,27 +1,32 @@
-
 <div id="dashboards-composer">
-    <div id="dashboards-composer-canvas">
-        <gridstack [options]="gridOptions">
+  <div id="dashboards-composer-canvas">
+    <gridstack id="main-gridstack-element" [options]="gridOptions">
+      <div empty-content>Add items here or reload the grid</div>
+    </gridstack>
+  </div>
+  <div id="dashboards-composer-sider" [@collapseSider]="siderCollapsed">
+    @if (!siderCollapsed) {
+    <m3-tabs @showSiderContent>
+      <m3-tab icon="list" label="Widgets">
+        @for (selector of allWidgetsSelector; track selector) {
+          <div class="widget-preview-title">
+            <m3-icon>{{ dashboardService.getClipWidgetBySelector(selector).metadata.icon ?? "widgets" }}</m3-icon>
+            <p>{{ dashboardService.getClipWidgetBySelector(selector).metadata.name }}</p>
+            <button mat-flat-button color="primary" class="density-minus-3" (click)="addToDashboard(selector)">Add</button>
+          </div>
+          <gridstack [options]="getSelectorGridOptions(selector)">
             <div empty-content>Add items here or reload the grid</div>
-        </gridstack>
-    </div>
-    <div id="dashboards-composer-sider" [@collapseSider]="siderCollapsed">
-        @if (!siderCollapsed) {
-            <m3-tabs @showSiderContent>
-                <m3-tab icon="list" label="Widgets">
-                    @for (selector of allWidgetsSelector; track selector) {
-                        <gridstack [options]="getSelectorGridOptions(selector)" (droppedCB)="this">
-                            <div empty-content>Add items here or reload the grid</div>
-                        </gridstack>
-                    }
-                </m3-tab>
-                <m3-tab icon="settings" label="Options">
-                    <button mat-button (click)="add()">Add</button>
-                </m3-tab>
-            </m3-tabs>
+          </gridstack>
+          <div class="separator"></div>
         }
-        <div id=dashboards-composer-sider-handle (click)="toggleSiderCollapse()">
-            <m3-icon>{{ siderCollapsed ? "keyboard_arrow_left" : "keyboard_arrow_right" }}</m3-icon>
-        </div>
+      </m3-tab>
+      <m3-tab icon="settings" label="Options">
+        <button mat-flat-button color="primary" >Add</button>
+      </m3-tab>
+    </m3-tabs>
+    }
+    <div id="dashboards-composer-sider-handle" (click)="toggleSiderCollapse()">
+      <m3-icon>{{ siderCollapsed ? "keyboard_arrow_left" : "keyboard_arrow_right" }}</m3-icon>
     </div>
+  </div>
 </div>

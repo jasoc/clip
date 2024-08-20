@@ -1,7 +1,7 @@
 from .session import DBSession
 from sqlalchemy.engine import URL
 
-from utils import config, get_logger
+from utils import config, get_logger, context
 
 logger = get_logger(__name__)
 
@@ -15,4 +15,4 @@ def init_clip_database():
         password=config.POSTGRESQL_PASSWORD,
         database=config.POSTGRESQL_DATABASE_NAME
     )
-    DBSession.start(url)
+    context.initialize_database(url)

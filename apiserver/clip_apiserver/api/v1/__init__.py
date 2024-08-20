@@ -1,2 +1,3 @@
 from .sys import sys_router
-from .user import user_router
+from .users import users_router
+from .dashboards import dashboards_router

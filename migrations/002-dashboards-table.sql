@@ -2,14 +2,12 @@ DO $$
 BEGIN
     IF NOT EXISTS (
         SELECT FROM pg_tables
-        WHERE schemaname = 'public' AND tablename = 'cards'
+        WHERE schemaname = 'public' AND tablename = 'dashboards'
     ) THEN
-        CREATE TABLE public.cards (
+        CREATE TABLE public.dashboards (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-            title VARCHAR NOT NULL,
-            subtitle VARCHAR NOT NULL,
-            url VARCHAR NOT NULL,
-            icon VARCHAR,
+            name VARCHAR NOT NULL,
+            json_grid VARCHAR NOT NULL,
             owner_id UUID NOT NULL,
             FOREIGN KEY (owner_id) REFERENCES public.users(id)
         );

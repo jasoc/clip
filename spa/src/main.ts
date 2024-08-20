@@ -1,9 +1,14 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { appConfig } from './app/app.config';
 import { AppComponent } from './app/app.component';
-import { InitGridstackWidgets } from './app/modules/dashboards/init-widgets';
+import { GridstackComponent } from 'gridstack/dist/angular';
+import { DashboardsWidgetCardComponent } from './app/modules/dashboards/widgets/card/dashboards-widget-card.component';
+import { DashboardsWidgetSpacerComponent } from './app/modules/dashboards/widgets/spacer/dashboards-widget-spacer.component';
+
+GridstackComponent.addComponentToSelectorType([
+  DashboardsWidgetCardComponent,
+  DashboardsWidgetSpacerComponent,
+]);
 
 bootstrapApplication(AppComponent, appConfig)
   .catch((err) => console.error(err));
-
-InitGridstackWidgets();

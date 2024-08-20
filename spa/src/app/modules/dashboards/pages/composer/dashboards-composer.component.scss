@@ -29,6 +29,38 @@
     margin-left: tokens.$clip-shell-margin;
     position: relative;
 
+    m3-tab {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+
+      .widget-preview-title {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: 16px;
+
+        p {
+          margin-left: 8px;
+          margin-right: auto;
+          margin-top: 0;
+          margin-bottom: 0;
+        }
+
+        m3-icon {
+          color: var(--clip-main-ui-text-color);
+        }
+      }
+
+      .separator {
+        background: var(--clip-background-shader);
+        height: 1px;
+        width: 100%;
+        border-radius: 10px;
+        margin: 32px 0;
+      }
+    }
+
     #dashboards-composer-sider-handle {
       position: absolute;
       top: 50%;

@@ -92,3 +92,15 @@ ul, ol {
 code {
   font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
 }
+
+.density-minus-1 {
+  @include mat.button-density(-1);
+}
+
+.density-minus-2 {
+  @include mat.button-density(-2);
+}
+
+.density-minus-3 {
+  @include mat.button-density(-3);
+}

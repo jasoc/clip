@@ -3,6 +3,7 @@ $CLIP_PROJECT_PATH = (Resolve-Path "$ScriptPath\..").Path
 
 docker container rm clip-spa:debug clip-apiserver-debug clip-apiserver clip-spa --force
 docker image rm clip/spa:debug clip/apiserver:debug clip/spa clip/apiserver
+docker volume rm clip_postgres_volume
 
 $directories = @(
     "$CLIP_PROJECT_PATH\dist",
@@ -11,6 +12,8 @@ $directories = @(
     "$CLIP_PROJECT_PATH\spa\.angular",
     "$CLIP_PROJECT_PATH\apiserver\.venv",
     "$CLIP_PROJECT_PATH\apiserver\dist"
+    "$CLIP_PROJECT_PATH\devenv"
+
 )
 
 foreach ($dir in $directories) {

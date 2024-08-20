@@ -8,7 +8,7 @@ BEGIN
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             name VARCHAR NOT NULL,
             surname VARCHAR NOT NULL,
-            email VARCHAR NOT NULL,
+            email VARCHAR NULL,
             username VARCHAR NOT NULL,
             hashed_password VARCHAR NOT NULL
         );

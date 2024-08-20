@@ -1,4 +1,12 @@
-import { Component, OnInit, reflectComponentType, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnInit,
+  QueryList,
+  reflectComponentType,
+  ViewChild,
+  ViewChildren,
+} from '@angular/core';
 import {
   GridstackComponent,
   gsCreateNgComponents,
@@ -7,7 +15,6 @@ import {
   GridstackModule,
 } from 'gridstack/dist/angular';
 import { MatButtonModule } from '@angular/material/button';
-import { DashboardsWidgetCardComponent } from '../../widgets/card/dashboards-widget-card.component';
 import { GridStack } from 'gridstack';
 import { M3TabsComponent } from '../../../../components/m3-tabs/m3-tabs.component';
 import { M3TabComponent } from '../../../../components/m3-tabs/m3-tab/m3-tab.component';
@@ -15,7 +22,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { M3IconComponent } from '../../../../components/m3-icon/m3-icon.component';
 import { animate, animateChild, group, query, state, style, transition, trigger } from '@angular/animations';
 import { simpleFade } from '../../../../animations/enterAndLeave';
-import { getAllWidgetsSelector } from '../../utils';
+import { DashboardService } from '../../../../services/dashboard.service';
 
 @Component({
   selector: 'clip-dashboards-composer',
@@ -23,6 +30,7 @@ import { getAllWidgetsSelector } from '../../utils';
   templateUrl: './dashboards-composer.component.html',
   styleUrls: ['./dashboards-composer.component.scss'],
   imports: [GridstackModule, MatButtonModule, MatIconModule, M3TabsComponent, M3TabComponent, M3IconComponent],
+  providers: [DashboardService],
   animations: [
     trigger('showSiderContent', simpleFade('200ms')),
     trigger('collapseSider', [
@@ -47,10 +55,12 @@ import { getAllWidgetsSelector } from '../../utils';
   ],
 })
 export class DashboardsComposerComponent implements OnInit {
-  @ViewChild(GridstackComponent) gridComp?: GridstackComponent;
+  @ViewChildren(GridstackComponent) gridComps?: QueryList<GridstackComponent>;
 
   public ids: number = 0;
   public siderCollapsed: boolean = false;
+
+  public gsWidgetGridBySelector: { [id: string]: GridstackComponent } = {};
 
   public gridOptions: NgGridStackOptions = {
     margin: 5,
@@ -59,34 +69,48 @@ export class DashboardsComposerComponent implements OnInit {
     cellHeight: 40,
   };
 
-  allWidgetsSelector = getAllWidgetsSelector();
+  public allWidgetsSelector: Array<string> = [];
+
+  constructor(public dashboardService: DashboardService) {
+    this.allWidgetsSelector = this.dashboardService.getAllWidgetsSelector();
+  }
 
   ngOnInit(): void {
     GridStack.addRemoveCB = gsCreateNgComponents;
   }
 
-  public getSelectorGridOptions(selector: string): NgGridStackOptions {
-    return {
-      margin: 5,
-      minRow: 1,
-      cellHeight: 40,
-      acceptWidgets: false,
-      children: [{ h: 3, w: 3, selector }]
+  getMainGridComponent(): GridstackComponent | undefined {
+    if (!this.gridComps || this.gridComps.length < 0) {
+      return;
     }
+    return this.gridComps.get(0);
   }
 
-  public add() {
-    if (!this.gridComp?.el) return;
-    this.gridComp?.grid?.addWidget({
+  public getSelectorGridOptions(selector: string): NgGridStackOptions {
+    const widgetInfo = this.dashboardService.getClipWidgetBySelector(selector);
+    const minH = widgetInfo.metadata.minH ?? 1;
+    const minW = widgetInfo.metadata.minW ?? 1;
+    return {
+      margin: 5,
+      minRow: minH,
+      column: minW,
+      acceptWidgets: false,
+      cellHeight: 40,
+      children: [{ w: minW, h: minH, noMove: true, noResize: true, selector }],
+    };
+  }
+
+  public addToDashboard(selector: string) {
+    if (!this.getMainGridComponent()?.el) return;
+    this.getMainGridComponent()?.grid?.addWidget({
       h: 3,
       w: 3,
-      selector: 'clip-dashboards-widget-card',
+      selector,
     } as NgGridStackWidget);
-    this.gridComp?.grid?.save();
+    this.getMainGridComponent()?.grid?.save();
   }
 
   toggleSiderCollapse() {
     this.siderCollapsed = !this.siderCollapsed;
-    console.log(this.siderCollapsed);
   }
 }

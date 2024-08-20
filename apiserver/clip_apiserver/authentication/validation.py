@@ -8,17 +8,11 @@ from jose import jwt
 from schemas import TokenDataModel
 from schemas.user import UserModel
 from sqlalchemy import select
-from utils import config, get_logger
+from utils import config, context, get_logger
 
 logger = get_logger("clip")
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
-
-
-def get_user(username: str) -> User:
-    with DBSession.disposable() as session:
-        statement = select(User).filter_by(username=username)
-        return session.scalars(statement).one_or_none()
 
 
 async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]) -> UserModel:
@@ -28,7 +22,7 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]) -> Use
     if username is None:
         raise HTTPException(status_code=401, detail="Could not validate credentials")
     token_data = TokenDataModel(username=username)
-    user = get_user(username=token_data.username)
+    user = context.db_session.scalars(select(User).filter_by(username=token_data.username)).one_or_none()
     if user is None:
         raise HTTPException(status_code=401, detail=f"Could not validate credentials")
     return UserModel.from_model(user)

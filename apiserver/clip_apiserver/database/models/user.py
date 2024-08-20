@@ -12,8 +12,6 @@ class User(Base):
     id = Column(Uuid, primary_key=True, default=uuid.uuid4)
     name = Column(String, nullable=False)
     surname = Column(String, nullable=False)
-    email = Column(String, nullable=False)
+    email = Column(String, nullable=True)
     username = Column(String, nullable=False)
     hashed_password = Column(String, nullable=False)
-
-    cards = relationship("Card", back_populates="owner")

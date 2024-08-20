@@ -5,7 +5,7 @@ from fastapi.responses import JSONResponse
 
 
 def http_response(
-    data: any = None, message: str = "", success: bool = True, status_code: int = 200
+    data: any = {}, message: str = "", success: bool = True, status_code: int = 200
 ):
     content = {}
     if success is not None:

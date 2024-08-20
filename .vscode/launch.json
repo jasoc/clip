@@ -5,6 +5,15 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "firefox",
+            "request": "launch",
+            "reAttach": true,
+            "name": "Launch SPA (Firefox)",
+            "url": "http://localhost:4200",
+            "webRoot": "${workspaceFolder}/spa"
+        },
+        
+        {
             "type": "chrome",
             "request": "launch",
             "name": "Launch SPA (Chrome)",

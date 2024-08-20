@@ -4,6 +4,7 @@ from pydantic import BaseModel
 
 from .token import *
 from .user import *
+from .dashboard import *
 
 T = TypeVar("T")
 

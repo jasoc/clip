@@ -3,6 +3,7 @@ from pydantic import BaseModel
 
 
 class UserModel(BaseModel):
+    id: str = None
     name: str = None
     surname: str = None
     email: str = None
@@ -15,6 +16,7 @@ class UserModel(BaseModel):
         user.surname = user_model.surname
         user.email = user_model.email
         user.username = user_model.username
+        user.id = str(user_model.id)
         return user
 
 
