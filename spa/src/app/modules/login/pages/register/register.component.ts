@@ -52,8 +52,9 @@ export class RegisterComponent {
       Validators.required,
       // TODO: workaround, for some reasons min() or minLength() just color
       // the input component and doesen't emit the minLength error???
-      (control) => control.value.length == 0 || control.value.length > 8 ? null : { minLength: true }]),
-    }, this.passwordValidator);
+      // (control) => control.value.length == 0 || control.value.length > 8 ? null : { minLength: true }
+    ]),
+  }, this.passwordValidator);
 
   constructor(
     private userService: UserService,

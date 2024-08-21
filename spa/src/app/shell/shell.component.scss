@@ -36,7 +36,7 @@
         #router__inner {
             width: calc(100% - tokens.$clip-shell-margin * 2);
             height: calc(100% - tokens.$clip-shell-margin * 2);
-            background: #ffffff12;
+            background: var(--clip-background-shader-lighter);
             border-radius: tokens.$clip-shell-rounding;
             grid-column: 1 / 3;
             grid-row: 2;

@@ -1,17 +1,13 @@
-import json
-
-import pydantic
+from fastapi import status
 from fastapi.responses import JSONResponse
 
-
 def http_response(
-    data: any = {}, message: str = "", success: bool = True, status_code: int = 200
+    success: bool = True, status_code: int = status.HTTP_200_OK, message: str = None, data: any = None
 ):
     content = {}
-    if success is not None:
-        content["success"] = success
+    content["success"] = success
     if data is not None:
         content["data"] = data
-    if message:
+    if message is not None:
         content["message"] = message
     return JSONResponse(content=content, status_code=status_code)

@@ -49,3 +49,41 @@ services:
       - ./spa/node_modules:/spa/node_modules
       - ./spa/src:/spa/src
       - ./spa/dist:/spa/dist
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: clip-dev-pgadmin4
+    ports:
+      - 8888:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${POSTGRESQL_USER}@clip.dev
+      PGADMIN_DEFAULT_PASSWORD: ${POSTGRESQL_PASSWORD}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'False'
+    entrypoint: /bin/sh -c "chmod 600 /pgpass; /entrypoint.sh;"
+    user: root
+    configs:
+      - source: servers.json
+        target: /pgadmin4/servers.json
+      - source: pgpass
+        target: /pgpass
+
+configs:
+  pgpass:
+    content: ${POSTGRESQL_HOST}:${POSTGRESQL_PORT}:*:${POSTGRESQL_USER}:${POSTGRESQL_PASSWORD}
+  servers.json:
+    content: |
+      {
+        "Servers": {
+          "1": {
+            "Group": "Servers",
+            "Name": "My Local Postgres 16.1",
+            "Host": "${POSTGRESQL_HOST}",
+            "Port": ${POSTGRESQL_PORT},
+            "MaintenanceDB": "clip",
+            "Username": "${POSTGRESQL_USER}",
+            "PassFile": "/pgpass",
+            "SSLMode": "prefer"
+          }
+        }
+      }

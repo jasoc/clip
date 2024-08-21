@@ -28,7 +28,8 @@ async def create_user(body_user: RegisterModel):
     context.db_session.commit()
     context.db_session.refresh(new_user)
     logger.info(f"Registered user with username {body_user.username} and email {body_user.email}")
-    return http_response(status_code=201)
+    return http_response(status_code=201, data=UserModel.from_db_model(new_user).model_dump())
+
 
 @users_router.post("/token", response_model=HttpResponseModel[TokenModel])
 async def post_login(body_user: LoginModel):
@@ -46,18 +47,21 @@ async def post_login(body_user: LoginModel):
         status_code=200,
     )
 
+
 @users_router.get("/", response_model=HttpResponseModel[List[UserModel]], status_code=status.HTTP_200_OK)
 async def read_users(current_user: Annotated[UserModel, Depends(get_current_user)], skip: int = 0, limit: int = 100):
     print(context.db_session)
     users = context.db_session.query(User).offset(skip).limit(limit).all()
-    return http_response(data=[UserModel.from_model(user).model_dump() for user in users])
+    return http_response(data=[UserModel.from_db_model(user).model_dump() for user in users])
+
 
 @users_router.get("/{user_id}", response_model=HttpResponseModel[UserModel])
 async def read_user(current_user: Annotated[UserModel, Depends(get_current_user)], user_id: str):
     user = context.db_session.query(User).filter(User.id == user_id).first()
     if user is None:
         raise HTTPException(status_code=404, detail="User not found")
-    return http_response(data=UserModel.from_model(user).model_dump())
+    return http_response(data=UserModel.from_db_model(user).model_dump())
+
 
 @users_router.put("/{user_id}", response_model=HttpResponseModel[UserModel])
 async def update_user(current_user: Annotated[UserModel, Depends(get_current_user)], user_id: str, body_user: UserModel):
@@ -67,10 +71,10 @@ async def update_user(current_user: Annotated[UserModel, Depends(get_current_use
     db_user.email = body_user.email
     db_user.name = body_user.name
     db_user.surname = body_user.surname
-    db_user.username = body_user.username
     context.db_session.commit()
     context.db_session.refresh(db_user)
-    return http_response(data=db_user)
+    return http_response(data=UserModel.from_db_model(db_user).model_dump())
+
 
 @users_router.delete("/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_user(current_user: Annotated[UserModel, Depends(get_current_user)], user_id: str):
@@ -79,4 +83,4 @@ async def delete_user(current_user: Annotated[UserModel, Depends(get_current_use
         raise HTTPException(status_code=404, detail="User not found")
     context.db_session.delete(db_user)
     context.db_session.commit()
-    return http_response(status_code=204)
+    return http_response(status_code=200)

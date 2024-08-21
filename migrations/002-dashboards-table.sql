@@ -8,8 +8,8 @@ BEGIN
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             name VARCHAR NOT NULL,
             json_grid VARCHAR NOT NULL,
-            owner_id UUID NOT NULL,
-            FOREIGN KEY (owner_id) REFERENCES public.users(id)
+            user_id UUID NOT NULL,
+            FOREIGN KEY (user_id) REFERENCES public.users(id)
         );
     END IF;
 END

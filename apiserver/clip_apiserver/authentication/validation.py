@@ -25,4 +25,4 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]) -> Use
     user = context.db_session.scalars(select(User).filter_by(username=token_data.username)).one_or_none()
     if user is None:
         raise HTTPException(status_code=401, detail=f"Could not validate credentials")
-    return UserModel.from_model(user)
+    return UserModel.from_db_model(user)
