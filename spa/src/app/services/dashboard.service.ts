@@ -2,22 +2,23 @@ import { reflectComponentType, Type } from '@angular/core';
 import { BaseWidget, GridstackComponent } from 'gridstack/dist/angular';
 import { WidgetMetadata } from '../modules/dashboards/widgets/base-widget.directive';
 import { BackendService } from './backend.service';
+import { GridStackOptions } from 'gridstack';
 
 export type ClipWidgetInfo = {
   widgetType: Type<BaseWidget>;
   metadata: WidgetMetadata;
 };
 
-interface DashboardModel {
-  id: string;
-  name: string;
-  json_grid: string;
-  user_id: string;
+export interface DashboardModel {
+  id?: string;
+  name?: string;
+  json_grid?: string;
+  user_id?: string;
 }
 
-interface DashboardUpdateModel {
-  name: string | undefined;
-  json_grid: string | undefined;
+export interface DashboardUpdateModel {
+  name?: string;
+  json_grid?: string;
 }
 
 export class DashboardService extends BackendService {
@@ -37,6 +38,11 @@ export class DashboardService extends BackendService {
     return DashboardService.clipWidgetsMapBySelector[selector];
   }
 
+  async CreateDashboard(dashboard: DashboardModel): Promise<DashboardModel> {
+    let res = await this.post<DashboardModel>("/dashboards", dashboard);
+    return res.body!.data;
+  }
+
   async GetDashboards(skip: number = 0, limit: number = 100): Promise<DashboardModel[]> {
     let res = await this.get<DashboardModel[]>('/dashboards/', { skip, limit });
     return res.body!.data;
@@ -47,8 +53,8 @@ export class DashboardService extends BackendService {
     return res.body!.data;
   }
 
-  async UpdateDashboard(dashboardId: string, userInfo: DashboardUpdateModel): Promise<DashboardModel> {
-    let res = await this.put<DashboardModel>('/dashboards/' + dashboardId, userInfo);
+  async UpdateDashboard(dashboardId: string, dashboard: DashboardModel): Promise<DashboardModel> {
+    let res = await this.put<DashboardModel>('/dashboards/' + dashboardId, dashboard);
     return res.body!.data;
   }
 

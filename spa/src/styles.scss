@@ -104,3 +104,9 @@ code {
 .density-minus-3 {
   @include mat.button-density(-3);
 }
+
+table {
+  th, td {
+    border-bottom-color: var(--clip-background-shader) !important;
+  }
+}

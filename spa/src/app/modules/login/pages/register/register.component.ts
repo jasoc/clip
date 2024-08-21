@@ -73,7 +73,6 @@ export class RegisterComponent {
   }
 
   async register() {
-      console.log("registerings")
       await this.userService
       .RegisterUser({
         username: this.registerFormGroup.controls.username.value!,
@@ -88,7 +87,6 @@ export class RegisterComponent {
         }
       })
       .catch((err) => {
-        console.log(err)
         this.snackBar.open(err.error.message, 'Dismiss');
       });
   }

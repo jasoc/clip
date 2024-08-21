@@ -1,12 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  OnInit,
-  QueryList,
-  reflectComponentType,
-  ViewChild,
-  ViewChildren,
-} from '@angular/core';
+import { AfterViewInit, Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import {
   GridstackComponent,
   gsCreateNgComponents,
@@ -15,14 +7,15 @@ import {
   GridstackModule,
 } from 'gridstack/dist/angular';
 import { MatButtonModule } from '@angular/material/button';
-import { GridStack } from 'gridstack';
+import { GridStack, GridStackOptions } from 'gridstack';
 import { M3TabsComponent } from '../../../../components/m3-tabs/m3-tabs.component';
 import { M3TabComponent } from '../../../../components/m3-tabs/m3-tab/m3-tab.component';
 import { MatIconModule } from '@angular/material/icon';
 import { M3IconComponent } from '../../../../components/m3-icon/m3-icon.component';
 import { animate, animateChild, group, query, state, style, transition, trigger } from '@angular/animations';
 import { simpleFade } from '../../../../animations/enterAndLeave';
-import { DashboardService } from '../../../../services/dashboard.service';
+import { DashboardModel, DashboardService } from '../../../../services/dashboard.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'clip-dashboards-composer',
@@ -54,13 +47,13 @@ import { DashboardService } from '../../../../services/dashboard.service';
     ]),
   ],
 })
-export class DashboardsComposerComponent implements OnInit {
+export class DashboardsComposerComponent implements OnInit, AfterViewInit {
   @ViewChildren(GridstackComponent) gridComps?: QueryList<GridstackComponent>;
 
-  public ids: number = 0;
   public siderCollapsed: boolean = false;
-
+  public dashboard: DashboardModel | undefined;
   public gsWidgetGridBySelector: { [id: string]: GridstackComponent } = {};
+  public allWidgetsSelector: Array<string> = [];
 
   public gridOptions: NgGridStackOptions = {
     margin: 5,
@@ -69,14 +62,23 @@ export class DashboardsComposerComponent implements OnInit {
     cellHeight: 40,
   };
 
-  public allWidgetsSelector: Array<string> = [];
-
-  constructor(public dashboardService: DashboardService) {
+  constructor(public dashboardService: DashboardService, private route: ActivatedRoute) {
     this.allWidgetsSelector = this.dashboardService.getAllWidgetsSelector();
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     GridStack.addRemoveCB = gsCreateNgComponents;
+  }
+
+  async ngAfterViewInit(): Promise<void> {
+    let id = this.route.snapshot.params["id"];
+    if (id) {
+      this.dashboard = await this.dashboardService.GetDashboard(id);
+    }
+    if (this.dashboard && this.getMainGridComponent()) {
+      console.log(this.dashboard.json_grid)
+      GridStack.addGrid(this.getMainGridComponent()!.el, JSON.parse(this.dashboard.json_grid!));
+    }
   }
 
   getMainGridComponent(): GridstackComponent | undefined {
@@ -86,7 +88,7 @@ export class DashboardsComposerComponent implements OnInit {
     return this.gridComps.get(0);
   }
 
-  public getSelectorGridOptions(selector: string): NgGridStackOptions {
+  getSelectorGridOptions(selector: string): NgGridStackOptions {
     const widgetInfo = this.dashboardService.getClipWidgetBySelector(selector);
     const minH = widgetInfo.metadata.minH ?? 1;
     const minW = widgetInfo.metadata.minW ?? 1;
@@ -100,11 +102,22 @@ export class DashboardsComposerComponent implements OnInit {
     };
   }
 
-  public addToDashboard(selector: string) {
+  addSubGridToDashboard() {
     if (!this.getMainGridComponent()?.el) return;
     this.getMainGridComponent()?.grid?.addWidget({
-      h: 3,
-      w: 3,
+      h: 2,
+      w: 2,
+      subGridOpts: this.gridOptions,
+    } as NgGridStackWidget);
+    this.getMainGridComponent()?.grid?.save();
+  }
+
+  addToDashboard(selector: string) {
+    if (!this.getMainGridComponent()?.el) return;
+    const widgetInfo = this.dashboardService.getClipWidgetBySelector(selector);
+    this.getMainGridComponent()?.grid?.addWidget({
+      h: widgetInfo.metadata.minH,
+      w: widgetInfo.metadata.minW,
       selector,
     } as NgGridStackWidget);
     this.getMainGridComponent()?.grid?.save();
@@ -112,5 +125,11 @@ export class DashboardsComposerComponent implements OnInit {
 
   toggleSiderCollapse() {
     this.siderCollapsed = !this.siderCollapsed;
+  }
+
+  public saveDashboard() {
+    const serializedData = this.getMainGridComponent()?.grid?.save(false, true) as GridStackOptions;
+    this.dashboard!.json_grid = JSON.stringify(serializedData);
+    this.dashboardService.UpdateDashboard(this.dashboard!.id!, this.dashboard!);
   }
 }

@@ -1,0 +1,24 @@
+@use "tokens" as tokens;
+
+#dashboards-composer {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+
+  #dashboards-composer-canvas {
+    overflow: auto;
+    width: 100%;
+    gridstack {
+      width: 100%;
+    }
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--clip-background-shader);
+      border-radius: 20px;
+    }
+  }
+}

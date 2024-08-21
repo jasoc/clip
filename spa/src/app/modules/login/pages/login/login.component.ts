@@ -74,7 +74,6 @@ export class LoginComponent {
         }
       })
       .catch((err) => {
-        console.log(err)
         this.snackBar.open(err.error.message, 'Dismiss');
       });
   }
