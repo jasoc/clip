@@ -5,6 +5,7 @@ import {
   NgGridStackOptions,
   NgGridStackWidget,
   GridstackModule,
+  nodesCB,
 } from 'gridstack/dist/angular';
 import { MatButtonModule } from '@angular/material/button';
 import { GridStack, GridStackOptions } from 'gridstack';
@@ -16,6 +17,7 @@ import { animate, animateChild, group, query, state, style, transition, trigger 
 import { simpleFade } from '../../../../animations/enterAndLeave';
 import { DashboardModel, DashboardService } from '../../../../services/dashboard.service';
 import { ActivatedRoute } from '@angular/router';
+import e from 'express';
 
 @Component({
   selector: 'clip-dashboards-composer',
@@ -55,11 +57,20 @@ export class DashboardsComposerComponent implements OnInit, AfterViewInit {
   public gsWidgetGridBySelector: { [id: string]: GridstackComponent } = {};
   public allWidgetsSelector: Array<string> = [];
 
-  public gridOptions: NgGridStackOptions = {
-    margin: 5,
-    minRow: 1,
+  public subOptions: NgGridStackOptions = {
+    cellHeight: 50,
+    column: "auto",
     acceptWidgets: true,
-    cellHeight: 40,
+    margin: 5,
+  };
+
+  public gridOptions: NgGridStackOptions = {
+    cellHeight: 50,
+    margin: 4,
+    minRow: 2,
+    acceptWidgets: true,
+    subGridDynamic: false,
+    subGridOpts: this.subOptions,
   };
 
   constructor(public dashboardService: DashboardService, private route: ActivatedRoute) {
@@ -79,6 +90,12 @@ export class DashboardsComposerComponent implements OnInit, AfterViewInit {
       console.log(this.dashboard.json_grid)
       GridStack.addGrid(this.getMainGridComponent()!.el, JSON.parse(this.dashboard.json_grid!));
     }
+  }
+
+  onGridChangeEvent(event: nodesCB) {
+    console.log(event)
+    // TODO use session blocks
+    this.saveDashboard();
   }
 
   getMainGridComponent(): GridstackComponent | undefined {
@@ -106,7 +123,6 @@ export class DashboardsComposerComponent implements OnInit, AfterViewInit {
     if (!this.getMainGridComponent()?.el) return;
     this.getMainGridComponent()?.grid?.addWidget({
       h: 2,
-      w: 2,
       subGridOpts: this.gridOptions,
     } as NgGridStackWidget);
     this.getMainGridComponent()?.grid?.save();

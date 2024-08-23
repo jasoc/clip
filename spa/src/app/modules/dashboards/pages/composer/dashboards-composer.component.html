@@ -1,6 +1,6 @@
 <div id="dashboards-composer">
   <div id="dashboards-composer-canvas">
-    <gridstack id="main-gridstack-element" [options]="gridOptions">
+    <gridstack (changeCB)="onGridChangeEvent($event)" id="main-gridstack-element" class="grid-stack-edit-mode" [options]="gridOptions">
       <div empty-content>Add items here or reload the grid</div>
     </gridstack>
   </div>
@@ -27,6 +27,7 @@
           </gridstack>
           <div class="separator"></div>
         }
+
       </m3-tab>
       <m3-tab icon="settings" label="Options">
         <button mat-fab extended color="primary" (click)="saveDashboard()">

@@ -1,4 +1,4 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import {
   GridstackComponent,
   gsCreateNgComponents,
@@ -18,36 +18,38 @@ import { DashboardModel, DashboardService } from '../../../../services/dashboard
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'clip-dashboards-composer',
+  selector: 'clip-dashboards-viewer',
   standalone: true,
-  templateUrl: './dashboards-composer.component.html',
-  styleUrls: ['./dashboards-composer.component.scss'],
+  templateUrl: './dashboards-viewer.component.html',
+  styleUrls: ['./dashboards-viewer.component.scss'],
   imports: [GridstackModule, MatButtonModule, MatIconModule, M3TabsComponent, M3TabComponent, M3IconComponent],
   providers: [DashboardService],
 })
-export class DashboardsComposerComponent implements OnInit {
+export class DashboardsViewerComponent implements AfterViewInit {
+  @ViewChild(GridstackComponent) gridComp?: GridstackComponent;
 
   public dashboard: DashboardModel | undefined;
 
   public gridOptions: NgGridStackOptions = {
+    cellHeight: 50,
     margin: 5,
-    minRow: 1,
-    acceptWidgets: true,
-    cellHeight: 40,
+    minRow: 2,
   };
-
   public allWidgetsSelector: Array<string> = [];
 
   constructor(public dashboardService: DashboardService, private route: ActivatedRoute) {
     this.allWidgetsSelector = this.dashboardService.getAllWidgetsSelector();
   }
 
-  async ngOnInit(): Promise<void> {
-    GridStack.addRemoveCB = gsCreateNgComponents;
-
-    let id = this.route.snapshot.paramMap.get('id');
+  async ngAfterViewInit(): Promise<void> {
+    let id = this.route.snapshot.params["id"];
     if (id) {
       this.dashboard = await this.dashboardService.GetDashboard(id);
+    }
+    if (this.dashboard && this.gridComp) {
+      console.log(this.dashboard.json_grid)
+      GridStack.addGrid(this.gridComp!.el, JSON.parse(this.dashboard.json_grid!));
+      this.gridComp.grid?.setStatic(true, false, true);
     }
   }
 }

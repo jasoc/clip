@@ -8,8 +8,8 @@ const selector = "clip-dashboards-widget-card";
   id: selector,
   name: "Card",
   description: "Card",
-  minH: 2,
-  minW: 4,
+  minH: 1,
+  minW: 1,
 })
 @Component({
   selector: selector,

@@ -110,3 +110,19 @@ table {
     border-bottom-color: var(--clip-background-shader) !important;
   }
 }
+
+.grid-stack-edit-mode {
+  .grid-stack-item.grid-stack-sub-grid {
+    .grid-stack-item-content {
+      background: var(--clip-background-shader);
+    }
+  }
+}
+
+.grid-stack {
+  .grid-stack-nested {
+    background: none;
+    position: absolute;
+    inset: 0;
+  }
+}

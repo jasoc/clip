@@ -23,9 +23,9 @@ export const routes: Routes = [
         loadComponent: () => import('./modules/dashboards/dashboards.component').then((m) => m.DashboardsComponent),
       },
       {
-        path: 'dashboards:id',
+        path: 'dashboards/:id',
         canActivate: [PermissionsService.isUserLoggedFn],
-        loadComponent: () => import('./modules/dashboards/pages/composer/dashboards-composer.component').then((m) => m.DashboardsComposerComponent),
+        loadComponent: () => import('./modules/dashboards/pages/viewer/dashboards-viewer.component').then((m) => m.DashboardsViewerComponent),
       },
       {
         path: 'dashboards/composer/:id',
