@@ -14,32 +14,34 @@ logger = get_logger("users_router")
 
 @users_router.post("/new", response_model=HttpResponseModel[UserModel], status_code=status.HTTP_201_CREATED)
 async def create_user(body_user: RegisterModel):
-    if context.db_session.query(User).filter(User.username == body_user.username).first():
-        raise HTTPException(status_code=400, detail=f"An user with username {body_user.username} already exists")
-    if context.db_session.query(User).filter(User.email == body_user.email).first():
-        raise HTTPException(status_code=400, detail=f"An user with email {body_user.email} already exists")
+    with context.db_session() as db:
+        if db.query(User).filter(User.username == body_user.username).first():
+            raise HTTPException(status_code=400, detail=f"An user with username {body_user.username} already exists")
+        if db.query(User).filter(User.email == body_user.email).first():
+            raise HTTPException(status_code=400, detail=f"An user with email {body_user.email} already exists")
     new_user = User()
     new_user.email = body_user.email
     new_user.name = body_user.name
     new_user.surname = body_user.surname
     new_user.username = body_user.username
     new_user.hashed_password = get_password_hash(body_user.password)
-    context.db_session.add(new_user)
-    context.db_session.commit()
-    context.db_session.refresh(new_user)
+    with context.db_session() as db:
+        db.add(new_user)
+        db.commit()
+        db.refresh(new_user)
     logger.info(f"Registered user with username {body_user.username} and email {body_user.email}")
     return http_response(status_code=201, data=UserModel.from_db_model(new_user).model_dump())
 
 
 @users_router.post("/token", response_model=HttpResponseModel[TokenModel])
 async def post_login(body_user: LoginModel):
-    db_user = context.db_session.query(User).filter(User.username == body_user.username).first()
+    db_user = None
+    with context.db_session() as db:
+        db_user = db.query(User).filter(User.username == body_user.username).first()
     if not db_user:
         raise HTTPException(status_code=401, detail=f"No user found with username {body_user.username}.")
-
     if not verify_password(body_user.password, db_user.hashed_password):
         raise HTTPException(status_code=401, detail="Incorrect password")
-
     access_token_expires = timedelta(minutes=float(config.ACCESS_TOKEN_EXPIRE_MINUTES))
     access_token = create_access_token(body_user.username, expires_delta=access_token_expires)
     return http_response(
@@ -49,38 +51,45 @@ async def post_login(body_user: LoginModel):
 
 
 @users_router.get("/", response_model=HttpResponseModel[List[UserModel]], status_code=status.HTTP_200_OK)
-async def read_users(current_user: Annotated[UserModel, Depends(get_current_user)], skip: int = 0, limit: int = 100):
-    print(context.db_session)
-    users = context.db_session.query(User).offset(skip).limit(limit).all()
+async def read_users(_: Annotated[UserModel, Depends(get_current_user)], skip: int = 0, limit: int = 100):
+    users = []
+    with context.db_session() as db:
+        users = db.query(User).offset(skip).limit(limit).all()
     return http_response(data=[UserModel.from_db_model(user).model_dump() for user in users])
 
 
 @users_router.get("/{user_id}", response_model=HttpResponseModel[UserModel])
-async def read_user(current_user: Annotated[UserModel, Depends(get_current_user)], user_id: str):
-    user = context.db_session.query(User).filter(User.id == user_id).first()
-    if user is None:
-        raise HTTPException(status_code=404, detail="User not found")
+async def read_user(_: Annotated[UserModel, Depends(get_current_user)], user_id: str):
+    user = None
+    with context.db_session() as db:
+        user = db.query(User).filter(User.id == user_id).first()
+        if user is None:
+            raise HTTPException(status_code=404, detail="User not found")
     return http_response(data=UserModel.from_db_model(user).model_dump())
 
 
 @users_router.put("/{user_id}", response_model=HttpResponseModel[UserModel])
-async def update_user(current_user: Annotated[UserModel, Depends(get_current_user)], user_id: str, body_user: UserModel):
-    db_user = context.db_session.query(User).filter(User.id == user_id).first()
-    if db_user is None:
-        raise HTTPException(status_code=404, detail="User not found")
-    db_user.email = body_user.email
-    db_user.name = body_user.name
-    db_user.surname = body_user.surname
-    context.db_session.commit()
-    context.db_session.refresh(db_user)
+async def update_user(_: Annotated[UserModel, Depends(get_current_user)], user_id: str, body_user: UserModel):
+    db_user = None
+    with context.db_session() as db:
+        db_user = db.query(User).filter(User.id == user_id).first()
+        if db_user is None:
+            raise HTTPException(status_code=404, detail="User not found")
+        db_user.email = body_user.email
+        db_user.name = body_user.name
+        db_user.surname = body_user.surname
+        db.commit()
+        db.refresh(db_user)
     return http_response(data=UserModel.from_db_model(db_user).model_dump())
 
 
 @users_router.delete("/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_user(current_user: Annotated[UserModel, Depends(get_current_user)], user_id: str):
-    db_user = context.db_session.query(User).filter(User.id == user_id).first()
-    if db_user is None:
-        raise HTTPException(status_code=404, detail="User not found")
-    context.db_session.delete(db_user)
-    context.db_session.commit()
+async def delete_user(_: Annotated[UserModel, Depends(get_current_user)], user_id: str):
+    db_user = None
+    with context.db_session() as db:
+        db_user = db.query(User).filter(User.id == user_id).first()
+        if db_user is None:
+            raise HTTPException(status_code=404, detail="User not found")
+        db.delete(db_user)
+        db.commit()
     return http_response(status_code=200)
