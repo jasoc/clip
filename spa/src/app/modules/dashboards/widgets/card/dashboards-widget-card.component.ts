@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
-import { BaseWidget, NgCompInputs } from 'gridstack/dist/angular';
-import { ClipWidget } from '../base-widget.directive';
+import { ClipWidget } from '../base-widget.decorator';
+import { BaseClipWidget } from '../BaseClipWidget';
 
 const selector = "clip-dashboards-widget-card";
 
@@ -17,8 +17,8 @@ const selector = "clip-dashboards-widget-card";
   templateUrl: './dashboards-widget-card.component.html',
   styleUrls: ['./dashboards-widget-card.component.scss'],
 })
-export class DashboardsWidgetCardComponent extends BaseWidget {
-
-  public metadata: object = {};
-
+export class DashboardsWidgetCardComponent extends BaseClipWidget<any> {
+  public override getSelector(): string {
+    return selector;
+  }
 }

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, OnInit, QueryList, TemplateRef, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
 import {
   GridstackComponent,
   gsCreateNgComponents,
@@ -17,14 +17,30 @@ import { animate, animateChild, group, query, state, style, transition, trigger 
 import { simpleFade } from '../../../../animations/enterAndLeave';
 import { DashboardModel, DashboardService } from '../../../../services/dashboard.service';
 import { ActivatedRoute } from '@angular/router';
-import e from 'express';
+import { BaseClipWidget } from '../../widgets/BaseClipWidget';
+import { DynamicFormComponent } from '../../../../components/dynamic-form/dynamic-form.component';
+import { DynamicFormElement } from '../../../../components/dynamic-form/types/dynamic-form-element';
+import { DropdownElement } from '../../../../components/dynamic-form/types/dynamic-form-element-dropdown';
+import { TextboxElement } from '../../../../components/dynamic-form/types/dynamic-form-element-textbox';
+import { DynamicFormRoot } from '../../../../components/dynamic-form/types/dynamic-form';
+import { CommonModule } from '@angular/common';
+import { QuestionControlService } from '../../../../services/question-control.service';
 
 @Component({
   selector: 'clip-dashboards-composer',
   standalone: true,
   templateUrl: './dashboards-composer.component.html',
   styleUrls: ['./dashboards-composer.component.scss'],
-  imports: [GridstackModule, MatButtonModule, MatIconModule, M3TabsComponent, M3TabComponent, M3IconComponent],
+  imports: [
+    CommonModule,
+    GridstackModule,
+    MatButtonModule,
+    MatIconModule,
+    M3TabsComponent,
+    M3TabComponent,
+    M3IconComponent,
+    DynamicFormComponent,
+  ],
   providers: [DashboardService],
   animations: [
     trigger('showSiderContent', simpleFade('200ms')),
@@ -51,6 +67,10 @@ import e from 'express';
 })
 export class DashboardsComposerComponent implements OnInit, AfterViewInit {
   @ViewChildren(GridstackComponent) gridComps?: QueryList<GridstackComponent>;
+  @ViewChildren(BaseClipWidget) widgets?: QueryList<BaseClipWidget<any>>;
+
+  @ViewChild('currentOptionFormOutlet', { read: ViewContainerRef }) currentOptionFormOutlet?: ViewContainerRef;
+  @ViewChild('currentOptionFormContent', { read: TemplateRef }) currentOptionFormContent?: TemplateRef<any>;
 
   public siderCollapsed: boolean = false;
   public dashboard: DashboardModel | undefined;
@@ -59,9 +79,8 @@ export class DashboardsComposerComponent implements OnInit, AfterViewInit {
 
   public subOptions: NgGridStackOptions = {
     cellHeight: 50,
-    column: "auto",
+    column: 'auto',
     acceptWidgets: true,
-    margin: 5,
   };
 
   public gridOptions: NgGridStackOptions = {
@@ -73,8 +92,12 @@ export class DashboardsComposerComponent implements OnInit, AfterViewInit {
     subGridOpts: this.subOptions,
   };
 
-  constructor(public dashboardService: DashboardService, private route: ActivatedRoute) {
+  public currentOptionForm?: DynamicFormRoot;
+  public currentOptionDefaultValues?: object;
+
+  constructor(public dashboardService: DashboardService, private route: ActivatedRoute, private qcs: QuestionControlService) {
     this.allWidgetsSelector = this.dashboardService.getAllWidgetsSelector();
+    this.dashboardService.onWidgetClickInComposerCallback = (w) => ( this.onWidgetSelectedCallBack(w) );
   }
 
   async ngOnInit(): Promise<void> {
@@ -82,20 +105,24 @@ export class DashboardsComposerComponent implements OnInit, AfterViewInit {
   }
 
   async ngAfterViewInit(): Promise<void> {
-    let id = this.route.snapshot.params["id"];
+    let id = this.route.snapshot.params['id'];
     if (id) {
       this.dashboard = await this.dashboardService.GetDashboard(id);
     }
     if (this.dashboard && this.getMainGridComponent()) {
-      console.log(this.dashboard.json_grid)
       GridStack.addGrid(this.getMainGridComponent()!.el, JSON.parse(this.dashboard.json_grid!));
     }
   }
 
   onGridChangeEvent(event: nodesCB) {
-    console.log(event)
     // TODO use session blocks
     this.saveDashboard();
+  }
+
+  onWidgetOptionChanges(widgetOptions: object) {
+    if (BaseClipWidget.currentlyHighlighted) {
+      BaseClipWidget.currentlyHighlighted.options = widgetOptions;
+    }
   }
 
   getMainGridComponent(): GridstackComponent | undefined {
@@ -137,6 +164,17 @@ export class DashboardsComposerComponent implements OnInit, AfterViewInit {
       selector,
     } as NgGridStackWidget);
     this.getMainGridComponent()?.grid?.save();
+  }
+
+  onWidgetSelectedCallBack(widget: BaseClipWidget<any>) {
+    widget.highlight();
+    const widgetInfo = this.dashboardService.getClipWidgetBySelector(widget.getSelector());
+    this.currentOptionForm = widgetInfo.metadata.optionsForm;
+    this.currentOptionDefaultValues = widget.options;
+    if (this.currentOptionFormOutlet && this.currentOptionFormContent) {
+      this.currentOptionFormOutlet.clear();
+      this.currentOptionFormOutlet.createEmbeddedView(this.currentOptionFormContent);
+    }
   }
 
   toggleSiderCollapse() {

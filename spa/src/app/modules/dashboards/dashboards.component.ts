@@ -58,7 +58,6 @@ export class DashboardsComponent implements OnInit, AfterViewInit {
   newDashboard() {
     this.dialog.open(NewDashboardDialogComponent)
       .afterClosed().subscribe(result => {
-        console.log(result);
         if (result !== undefined) {
           this.dashboardService.CreateDashboard({ name: result, json_grid: '' });
         }

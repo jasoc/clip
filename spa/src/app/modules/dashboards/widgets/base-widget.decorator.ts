@@ -1,6 +1,7 @@
 import { inject, Type } from "@angular/core";
 import { BaseWidget } from "gridstack/dist/angular";
 import { DashboardService } from "../../../services/dashboard.service";
+import { DynamicFormRoot } from "../../../components/dynamic-form/types/dynamic-form";
 
 export function ClipWidget(metadata: WidgetMetadata) {
   return function decorator(target: Type<BaseWidget>) {
@@ -15,4 +16,5 @@ export type WidgetMetadata = {
     icon?: string | undefined;
     minH?: number | undefined;
     minW?: number | undefined;
+    optionsForm?: DynamicFormRoot;
 }

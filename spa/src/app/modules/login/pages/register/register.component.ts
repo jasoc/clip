@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { Theme, ThemeService } from '../../../../services/theme.service';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {
   AbstractControl,
@@ -23,7 +23,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   standalone: true,
   selector: 'clip-register',
-  providers: [ThemeService],
+  providers: [ThemeService, { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } }],
   changeDetection: ChangeDetectionStrategy.Default,
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],

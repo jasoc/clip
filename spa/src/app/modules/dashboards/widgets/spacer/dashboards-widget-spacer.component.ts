@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
-import { BaseWidget } from 'gridstack/dist/angular';
-import { ClipWidget } from '../base-widget.directive';
+import { ClipWidget } from '../base-widget.decorator';
+import { BaseClipWidget } from '../BaseClipWidget';
 
 const selector = "clip-dashboards-widget-spacer";
 
@@ -17,6 +17,8 @@ const selector = "clip-dashboards-widget-spacer";
   templateUrl: './dashboards-widget-spacer.component.html',
   styleUrls: ['./dashboards-widget-spacer.component.scss'],
 })
-export class DashboardsWidgetSpacerComponent extends BaseWidget {
-
+export class DashboardsWidgetSpacerComponent extends BaseClipWidget<any> {
+  public override getSelector(): string {
+    return selector;
+  }
 }

@@ -6,36 +6,46 @@
   </div>
   <div id="dashboards-composer-sider" [@collapseSider]="siderCollapsed">
     @if (!siderCollapsed) {
-    <m3-tabs @showSiderContent>
-      <m3-tab icon="list" label="Widgets">
+      <m3-tabs @showSiderContent>
+        <m3-tab icon="list" label="Widgets">
 
-        <div class="widget-preview-title">
-          <m3-icon>grid_on</m3-icon>
-          <p>Sub grid</p>
-          <button mat-flat-button color="primary" class="density-minus-3" (click)="addSubGridToDashboard()">Add</button>
-        </div>
-        <div class="separator"></div>
-
-        @for (selector of allWidgetsSelector; track selector) {
           <div class="widget-preview-title">
-            <m3-icon>{{ dashboardService.getClipWidgetBySelector(selector).metadata.icon ?? "widgets" }}</m3-icon>
-            <p>{{ dashboardService.getClipWidgetBySelector(selector).metadata.name }}</p>
-            <button mat-flat-button color="primary" class="density-minus-3" (click)="addToDashboard(selector)">Add</button>
+            <m3-icon>grid_on</m3-icon>
+            <p>Sub grid</p>
+            <button mat-flat-button color="primary" (click)="addSubGridToDashboard()">Add</button>
           </div>
-          <gridstack [options]="getSelectorGridOptions(selector)">
-            <div empty-content>Add items here or reload the grid</div>
-          </gridstack>
           <div class="separator"></div>
-        }
 
-      </m3-tab>
-      <m3-tab icon="settings" label="Options">
-        <button mat-fab extended color="primary" (click)="saveDashboard()">
-          <mat-icon fontSet="material-symbols-outlined">save</mat-icon>
-          Save
-        </button>
-      </m3-tab>
-    </m3-tabs>
+          @for (selector of allWidgetsSelector; track selector) {
+            <div class="widget-preview-title">
+              <m3-icon>{{ dashboardService.getClipWidgetBySelector(selector).metadata.icon ?? "widgets" }}</m3-icon>
+              <p>{{ dashboardService.getClipWidgetBySelector(selector).metadata.name }}</p>
+              <button mat-flat-button color="primary" (click)="addToDashboard(selector)">Add</button>
+            </div>
+            <gridstack [options]="getSelectorGridOptions(selector)">
+              <div empty-content>Add items here or reload the grid</div>
+            </gridstack>
+            <div class="separator"></div>
+          }
+
+        </m3-tab>
+        <m3-tab icon="settings" label="Options">
+          <button mat-fab extended color="primary" (click)="saveDashboard()">
+            <mat-icon fontSet="material-symbols-outlined">save</mat-icon>
+            Save
+          </button>
+        </m3-tab>
+
+        <m3-tab icon="widgets" label="Selected widget">
+          @if (currentOptionForm && currentOptionDefaultValues) {
+            <ng-container #currentOptionFormOutlet [ngTemplateOutlet]="currentOptionFormContent">
+            </ng-container>
+            <ng-template #currentOptionFormContent>
+              <app-dynamic-form [questions]="currentOptionForm" [overrideValues]="currentOptionDefaultValues" (valuesChange)="onWidgetOptionChanges($event)"></app-dynamic-form>
+            </ng-template>
+          }
+        </m3-tab>
+      </m3-tabs>
     }
     <div id="dashboards-composer-sider-handle" (click)="toggleSiderCollapse()">
       <m3-icon>{{ siderCollapsed ? "keyboard_arrow_left" : "keyboard_arrow_right" }}</m3-icon>

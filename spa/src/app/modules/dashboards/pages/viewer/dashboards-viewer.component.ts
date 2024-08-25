@@ -47,7 +47,6 @@ export class DashboardsViewerComponent implements AfterViewInit {
       this.dashboard = await this.dashboardService.GetDashboard(id);
     }
     if (this.dashboard && this.gridComp) {
-      console.log(this.dashboard.json_grid)
       GridStack.addGrid(this.gridComp!.el, JSON.parse(this.dashboard.json_grid!));
       this.gridComp.grid?.setStatic(true, false, true);
     }

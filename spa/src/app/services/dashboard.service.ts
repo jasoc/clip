@@ -1,8 +1,8 @@
-import { reflectComponentType, Type } from '@angular/core';
+import { Injectable, reflectComponentType, Type } from '@angular/core';
 import { BaseWidget, GridstackComponent } from 'gridstack/dist/angular';
-import { WidgetMetadata } from '../modules/dashboards/widgets/base-widget.directive';
+import { WidgetMetadata } from '../modules/dashboards/widgets/base-widget.decorator';
 import { BackendService } from './backend.service';
-import { GridStackOptions } from 'gridstack';
+import { BaseClipWidget } from '../modules/dashboards/widgets/BaseClipWidget';
 
 export type ClipWidgetInfo = {
   widgetType: Type<BaseWidget>;
@@ -21,7 +21,10 @@ export interface DashboardUpdateModel {
   json_grid?: string;
 }
 
+@Injectable({ providedIn: 'root' })
 export class DashboardService extends BackendService {
+  public onWidgetClickInComposerCallback?: (component: BaseClipWidget<any>) => void;
+
   private static clipWidgetsMapBySelector: { [id: string]: ClipWidgetInfo } = {};
 
   getAllWidgetsSelector(): Array<string> {

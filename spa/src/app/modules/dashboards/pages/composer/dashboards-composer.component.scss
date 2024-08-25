@@ -1,4 +1,5 @@
 @use "tokens" as tokens;
+@use "@angular/material" as mat;
 
 #dashboards-composer {
   display: flex;
@@ -49,6 +50,10 @@
 
         m3-icon {
           color: var(--clip-main-ui-text-color);
+        }
+
+        button {
+          @include mat.button-density(-5);
         }
       }
 

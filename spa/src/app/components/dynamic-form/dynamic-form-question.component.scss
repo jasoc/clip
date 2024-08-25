@@ -1,0 +1,25 @@
+@use "@angular/material" as mat;
+
+.dynamic-form {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  
+  label {
+    color: var(--clip-main-ui-text-color);
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+  
+  mat-form-field {
+    width: 100%;
+
+    * {
+      @include mat.input-density(-5);
+      @include mat.select-density(-5);
+      @include mat.button-density(-5);
+    }
+  }
+}

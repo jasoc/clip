@@ -1,4 +1,5 @@
 @use 'tokens' as tokens;
+@use "@angular/material" as mat;
 
 #navigation-drawer {
     height: 100vh;
@@ -62,9 +63,9 @@
             justify-content: center;
             width: 100%;
             transition: cubic-bezier(0.2, 0.0, 0, 1.0) 150ms;
-
+            
+            @include mat.chips-density(-5);
             mat-chip {
-                scale: 0.75;
                 margin: 0 auto 0 16px;
             }
 

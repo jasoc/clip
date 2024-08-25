@@ -70,7 +70,7 @@ h2, h3 {
   font-weight: 500 !important;
 }
 
-button {
+button, input {
   font-family: inherit !important;
   font-variation-settings: inherit !important;
 }
@@ -124,5 +124,21 @@ table {
     background: none;
     position: absolute;
     inset: 0;
+  }
+}
+
+.highlighted {
+  &::after {
+    background: #ececec;
+    border-radius: 100px;
+    height: 20px;
+    width: 20px;
+    content: '';
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    $box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.726),
+             1px 1px 4px 0px rgba(0, 0, 0, 0.15);
   }
 }

@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { Theme, ThemeService } from '../../../../services/theme.service';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {
   AbstractControl,
@@ -23,7 +23,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   standalone: true,
   selector: 'clip-login',
-  providers: [ThemeService],
+  providers: [ThemeService, { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } }],
   changeDetection: ChangeDetectionStrategy.Default,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
@@ -41,17 +41,15 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   ],
 })
 export class LoginComponent {
-  loginFormGroup = new FormGroup(
-    {
-      username: new FormControl<string>('', [Validators.required]),
-      password: new FormControl<string>('', [
-        Validators.required,
-        // TODO: workaround, for some reasons min() or minLength() just color
-        // the input component and doesen't emit the minLength error???
-        // (control) => (control.value.length == 0 || control.value.length > 8 ? null : { minLength: true }),
-      ]),
-    }
-  );
+  loginFormGroup = new FormGroup({
+    username: new FormControl<string>('', [Validators.required]),
+    password: new FormControl<string>('', [
+      Validators.required,
+      // TODO: workaround, for some reasons min() or minLength() just color
+      // the input component and doesen't emit the minLength error???
+      // (control) => (control.value.length == 0 || control.value.length > 8 ? null : { minLength: true }),
+    ]),
+  });
 
   constructor(
     private userService: UserService,
@@ -64,10 +62,7 @@ export class LoginComponent {
 
   async login() {
     await this.userService
-      .LoginUser(
-        this.loginFormGroup.controls.username.value!,
-        this.loginFormGroup.controls.password.value!,
-      )
+      .LoginUser(this.loginFormGroup.controls.username.value!, this.loginFormGroup.controls.password.value!)
       .then((res) => {
         if (res) {
           this.router.navigate(['/home']);

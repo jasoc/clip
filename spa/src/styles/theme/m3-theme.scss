@@ -146,7 +146,7 @@ $light-theme: mat.define-theme((
     plain-family: 'Roboto Flex Variable',
   ),
   density: (
-    scale: 0
+    scale: -1
   ),
 ));
 $dark-theme: mat.define-theme((
@@ -160,6 +160,6 @@ $dark-theme: mat.define-theme((
     plain-family: 'Roboto Flex Variable',
   ),
   density: (
-    scale: 0
+    scale: -1
   ),
 ));
