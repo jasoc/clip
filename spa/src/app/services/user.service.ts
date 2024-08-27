@@ -35,7 +35,7 @@ interface TokenModel {
 export class UserService extends BackendService {
 
     async RegisterUser(userInfo: RegisterModelPost): Promise<boolean> {
-        let res = await this.post('/users/new', userInfo);
+        let res = await this.post('/auth/register', userInfo);
         if (res.status === 201) {
             return await this.LoginUser(userInfo.username, userInfo.password);
         }
@@ -47,7 +47,7 @@ export class UserService extends BackendService {
     }
 
     async LoginUser(username: string, password: string): Promise<boolean> {
-        let res = await this.post<TokenModel>('/users/token', {
+        let res = await this.post<TokenModel>('/auth', {
             username: username,
             password: password,
         });
