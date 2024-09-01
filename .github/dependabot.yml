@@ -9,7 +9,7 @@ updates:
     directory: "/spa"
     schedule:
       interval: "daily"
-    open-pull-requests-limit: 3
+    open-pull-requests-limit: 10
     groups:
       angular:
         patterns:
