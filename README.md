@@ -13,22 +13,22 @@ A simple remote web gui for a glorious System Administration!
 ### Local environment
 
 How to start (both on Linux and Windows (PoweShell/WSL)):
-```powershell
+```console
 $: ./clip dev up --build
 ```
 or any parameter of `docker compose` you prefer after `dev`.
 
 Prod configuration
-```powershell
+```console
 $: ./clip prod up -d --build
 ```
 
 Everything is auto contained in Docker. You can interact with the environment's toolchain using `docker compose run`. For example:
-```powershell
+```console
 $: ./clip dev run --rm spa yarn add @package
 ```
 or
-```powershell
+```console
 $: ./clip dev run --rm apiserver poetry add @package
 ```
 
