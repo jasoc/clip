@@ -1,12 +1,23 @@
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import (
+    FastAPI,
+    HTTPException,
+    Request,
+)
 
-from .responses import http_response
+from .responses import (
+    http_response,
+)
 
 
-def add_exception_handlers(app: FastAPI) -> None:
+def add_exception_handlers(
+    app: FastAPI,
+) -> None:
 
     @app.exception_handler(HTTPException)
-    def http_exception_handler(_: Request, exc: HTTPException):
+    def http_exception_handler(
+        _: Request,
+        exc: HTTPException,
+    ):
         return http_response(
             success=False,
             message=exc.detail,
@@ -14,7 +25,10 @@ def add_exception_handlers(app: FastAPI) -> None:
         )
 
     @app.exception_handler(Exception)
-    def http_generic_exception_handler(_: Request, exc: Exception):
+    def http_generic_exception_handler(
+        _: Request,
+        exc: Exception,
+    ):
         return http_response(
             success=False,
             message=str(exc),

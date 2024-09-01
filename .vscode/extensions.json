@@ -5,7 +5,8 @@
     "dbaeumer.vscode-eslint",
     "EditorConfig.EditorConfig",
     "esbenp.prettier-vscode",
-    "mike-co.import-sorter"
+    "mike-co.import-sorter",
+    "ms-python.black-formatter"
   ],
   "unwantedRecommendations": []
 }

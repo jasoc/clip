@@ -1,5 +1,6 @@
 import os
 
+
 class Config:
 
     CLIP_REMOTE_ADDRESS: str | None = None
@@ -12,10 +13,12 @@ class Config:
     POSTGRESQL_DATABASE_NAME: str | None = None
     ACCESS_TOKEN_EXPIRE_MINUTES: str | None = None
     SECRET_KEY: str
-    
+
     ALGORITHM: str = "HS256"
 
-    def __init__(self):
+    def __init__(
+        self,
+    ):
         self.CLIP_REMOTE_ADDRESS = os.getenv("CLIP_REMOTE_ADDRESS")
         self.CLIP_APISERVER_HOST = os.getenv("CLIP_APISERVER_HOST") or "0.0.0.0"
         self.CLIP_APISERVER_PORT = int(os.getenv("CLIP_APISERVER_PORT") or 8008)
@@ -26,5 +29,6 @@ class Config:
         self.POSTGRESQL_DATABASE_NAME = os.getenv("POSTGRESQL_DATABASE_NAME")
         self.ACCESS_TOKEN_EXPIRE_MINUTES = os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES") or 1440
         self.SECRET_KEY = os.getenv("SECRET_KEY")
+
 
 config = Config()

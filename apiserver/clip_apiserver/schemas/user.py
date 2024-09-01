@@ -1,5 +1,9 @@
-from database.models.user import User
-from pydantic import BaseModel
+from database.models.user import (
+    User,
+)
+from pydantic import (
+    BaseModel,
+)
 
 
 class UserModel(BaseModel):
@@ -10,7 +14,9 @@ class UserModel(BaseModel):
     username: str = None
 
     @staticmethod
-    def from_db_model(user_model: User):
+    def from_db_model(
+        user_model: User,
+    ):
         user = UserModel()
         user.name = user_model.name
         user.surname = user_model.surname

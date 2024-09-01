@@ -32,13 +32,22 @@ build_apiserver()
     cp -r ./clip_apiserver/* ./dist/
 }
 
+prettify()
+{
+    poetry run black clip_apiserver
+    poetry run autoflake clip_apiserver
+}
+
+
 main()
 {
     case $1 in
-        '')    develop_apiserver;;
-        dev)   develop_apiserver;;
-        run)   run_apiserver;;
-        build) build_apiserver;;
+        '')       develop_apiserver;;
+        dev)      develop_apiserver;;
+        run)      run_apiserver;;
+        build)    build_apiserver;;
+        prettify) prettify;;
+        *) $@
     esac
 }
 

@@ -31,8 +31,8 @@ generate_m3_theme()
 
 prettify()
 {
-    yarn run prettier . --write
-    yarn run eslint . --fix
+    yarn run prettier src --write
+    yarn run eslint src --fix
 }
 
 main()

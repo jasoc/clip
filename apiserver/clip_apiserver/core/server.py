@@ -1,14 +1,27 @@
-from api import api_v1_router
-from database import init_clip_database
-from fastapi import FastAPI
-from starlette.middleware.cors import CORSMiddleware
+from api import (
+    api_v1_router,
+)
+from database import (
+    init_clip_database,
+)
+from fastapi import (
+    FastAPI,
+)
+from starlette.middleware.cors import (
+    CORSMiddleware,
+)
 
-from .errors_handler import add_exception_handlers
+from .errors_handler import (
+    add_exception_handlers,
+)
 
 
 def create_app() -> FastAPI:
 
-    app = FastAPI(debug=False, title="Clip Server")
+    app = FastAPI(
+        debug=False,
+        title="Clip Server",
+    )
 
     app.include_router(api_v1_router)
     add_exception_handlers(app)

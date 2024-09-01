@@ -1,5 +1,9 @@
-from database.models import Dashboard
-from pydantic import BaseModel
+from database.models import (
+    Dashboard,
+)
+from pydantic import (
+    BaseModel,
+)
 
 
 class DashboardModel(BaseModel):
@@ -9,7 +13,9 @@ class DashboardModel(BaseModel):
     user_id: str = None
 
     @staticmethod
-    def from_db_model(dashboard_model: Dashboard):
+    def from_db_model(
+        dashboard_model: Dashboard,
+    ):
         dashboard = DashboardModel()
         dashboard.id = str(dashboard_model.id)
         dashboard.name = dashboard_model.name

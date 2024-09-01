@@ -2,7 +2,8 @@ services:
   apiserver:
     container_name: clip-apiserver-dev
     image: clip/apiserver:debug
-    command: /bin/sh ./apiserver.sh dev
+    entrypoint: /bin/sh ./apiserver.sh
+    command: dev
     working_dir: /apiserver
     build:
       context: ./apiserver
