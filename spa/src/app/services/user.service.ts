@@ -57,7 +57,10 @@ export class UserService extends BackendService {
   }
 
   async GetUsers(skip: number = 0, limit: number = 100): Promise<UserModel[]> {
-    let res = await this.get<UserModel[]>('/users/', { skip, limit });
+    let res = await this.get<UserModel[]>('/users/', {
+      skip,
+      limit,
+    });
     return res.body!.data;
   }
 

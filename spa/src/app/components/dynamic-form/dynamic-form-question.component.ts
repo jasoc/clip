@@ -13,12 +13,21 @@ import { TextboxElement } from './types/dynamic-form-element-textbox';
   selector: 'app-question',
   templateUrl: './dynamic-form-question.component.html',
   styleUrl: './dynamic-form-question.component.scss',
-  providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } }],
+  providers: [
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: {
+        appearance: 'outline',
+      },
+    },
+  ],
   imports: [CommonModule, MatSelectModule, MatIconModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
 })
 export class DynamicFormQuestionComponent {
-  @Input() question!: DynamicFormElement<string>;
-  @Input() form!: FormGroup;
+  @Input()
+  question!: DynamicFormElement<string>;
+  @Input()
+  form!: FormGroup;
 
   get isValid() {
     return this.form.controls[this.question.key].valid;

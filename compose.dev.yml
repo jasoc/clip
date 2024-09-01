@@ -26,7 +26,8 @@ services:
   spa:
     container_name: clip-spa-dev
     image: clip/spa:debug
-    command: /bin/sh ./spa.sh dev
+    entrypoint: /bin/sh ./spa.sh
+    command: dev
     working_dir: /spa
     build:
       context: ./spa
@@ -45,9 +46,7 @@ services:
       - 4200:4200
       - 9222:9222
     volumes:
-      - ./spa/node_modules:/spa/node_modules
-      - ./spa/src:/spa/src
-      - ./spa/dist:/spa/dist
+      - ./spa:/spa
 
   pgadmin:
     image: dpage/pgadmin4

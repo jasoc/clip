@@ -7,7 +7,8 @@
         <mat-label>Username</mat-label>
         <input matInput type="text" formControlName="username" />
         <mat-error *ngIf="loginFormGroup.controls.username.hasError('required')">
-          Please provide a valid and unique <strong>Username</strong>
+          Please provide a valid and unique
+          <strong>Username</strong>
         </mat-error>
       </mat-form-field>
 
@@ -18,7 +19,8 @@
           <mat-label>Password</mat-label>
           <input matInput type="password" formControlName="password" />
           <mat-error *ngIf="loginFormGroup.controls.password.hasError('required')">
-            <strong>Password</strong> is required
+            <strong>Password</strong>
+            is required
           </mat-error>
           <mat-error *ngIf="loginFormGroup.controls.password.hasError('minLength')">
             A password should be minimum 8 characters

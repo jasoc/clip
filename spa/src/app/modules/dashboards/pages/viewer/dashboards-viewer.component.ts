@@ -26,7 +26,8 @@ import { ActivatedRoute } from '@angular/router';
   providers: [DashboardService],
 })
 export class DashboardsViewerComponent implements AfterViewInit {
-  @ViewChild(GridstackComponent) gridComp?: GridstackComponent;
+  @ViewChild(GridstackComponent)
+  gridComp?: GridstackComponent;
 
   public dashboard: DashboardModel | undefined;
 

@@ -21,20 +21,27 @@ export interface DashboardUpdateModel {
   json_grid?: string;
 }
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root',
+})
 export class DashboardService extends BackendService {
   public onWidgetClickInComposerCallback?: (component: BaseClipWidget<any>) => void;
 
-  private static clipWidgetsMapBySelector: { [id: string]: ClipWidgetInfo } = {};
+  private static clipWidgetsMapBySelector: {
+    [id: string]: ClipWidgetInfo;
+  } = {};
 
   getAllWidgetsSelector(): Array<string> {
     return Object.keys(GridstackComponent.selectorToType)
-      .map(x => reflectComponentType(GridstackComponent.selectorToType[x])?.selector)
-      .filter(x => x != undefined) as Array<string>;
+      .map((x) => reflectComponentType(GridstackComponent.selectorToType[x])?.selector)
+      .filter((x) => x != undefined) as Array<string>;
   }
 
   static InitiateClipWidget(widgetType: Type<BaseWidget>, metadata: WidgetMetadata) {
-    DashboardService.clipWidgetsMapBySelector[metadata.id] = { widgetType, metadata };
+    DashboardService.clipWidgetsMapBySelector[metadata.id] = {
+      widgetType,
+      metadata,
+    };
   }
 
   getClipWidgetBySelector(selector: string): ClipWidgetInfo {
@@ -47,7 +54,10 @@ export class DashboardService extends BackendService {
   }
 
   async GetDashboards(skip: number = 0, limit: number = 100): Promise<DashboardModel[]> {
-    let res = await this.get<DashboardModel[]>('/dashboards/', { skip, limit });
+    let res = await this.get<DashboardModel[]>('/dashboards/', {
+      skip,
+      limit,
+    });
     return res.body!.data;
   }
 

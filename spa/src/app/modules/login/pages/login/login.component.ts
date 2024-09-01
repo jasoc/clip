@@ -23,7 +23,15 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   standalone: true,
   selector: 'clip-login',
-  providers: [ThemeService, { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } }],
+  providers: [
+    ThemeService,
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: {
+        appearance: 'outline',
+      },
+    },
+  ],
   changeDetection: ChangeDetectionStrategy.Default,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
@@ -63,12 +71,12 @@ export class LoginComponent {
   async login() {
     await this.userService
       .LoginUser(this.loginFormGroup.controls.username.value!, this.loginFormGroup.controls.password.value!)
-      .then(res => {
+      .then((res) => {
         if (res) {
           this.router.navigate(['/home']);
         }
       })
-      .catch(err => {
+      .catch((err) => {
         this.snackBar.open(err.error.message, 'Dismiss');
       });
   }

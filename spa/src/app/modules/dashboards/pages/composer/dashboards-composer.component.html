@@ -23,7 +23,9 @@
           @for (selector of allWidgetsSelector; track selector) {
             <div class="widget-preview-title">
               <m3-icon>{{ dashboardService.getClipWidgetBySelector(selector).metadata.icon ?? 'widgets' }}</m3-icon>
-              <p>{{ dashboardService.getClipWidgetBySelector(selector).metadata.name }}</p>
+              <p>
+                {{ dashboardService.getClipWidgetBySelector(selector).metadata.name }}
+              </p>
               <button mat-flat-button color="primary" (click)="addToDashboard(selector)">Add</button>
             </div>
             <gridstack [options]="getSelectorGridOptions(selector)">

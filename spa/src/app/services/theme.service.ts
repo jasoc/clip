@@ -14,7 +14,10 @@ export class ThemeService {
   public defaultTheme: Theme = Theme.Dark;
   public currentTheme: Theme = this.defaultTheme;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+  constructor(
+    @Inject(PLATFORM_ID)
+    private platformId: Object
+  ) {
     if (isPlatformBrowser(this.platformId)) {
       let localValue = localStorage.getItem('theme');
       if (localValue != null) {

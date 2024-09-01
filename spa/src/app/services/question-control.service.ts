@@ -3,7 +3,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DynamicFormElement } from '../components/dynamic-form/types/dynamic-form-element';
 import { DashboardService } from './dashboard.service';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root',
+})
 export class QuestionControlService {
   readonly dashboardService: DashboardService;
 
@@ -11,9 +13,14 @@ export class QuestionControlService {
     this.dashboardService = inject(DashboardService);
   }
 
-  toFormGroup(questions: DynamicFormElement<any>[], overrideValues: { [key: string]: any } = {}) {
+  toFormGroup(
+    questions: DynamicFormElement<any>[],
+    overrideValues: {
+      [key: string]: any;
+    } = {}
+  ) {
     const group: any = {};
-    questions.forEach(question => {
+    questions.forEach((question) => {
       const defaultValues = overrideValues[question.key] ?? question.defaultValue;
       group[question.key] = question.required
         ? new FormControl(defaultValues, Validators.required)

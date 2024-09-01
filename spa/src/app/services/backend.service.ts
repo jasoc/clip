@@ -15,12 +15,15 @@ interface HttpBody<T> {
 export class BackendService {
   private baseUrl: string;
 
-  private headers: { [header: string]: string } = {
+  private headers: {
+    [header: string]: string;
+  } = {
     Authorization: `Bearer ${this.cookieService.get('token')}`,
   };
 
   constructor(
-    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(PLATFORM_ID)
+    private platformId: Object,
     protected httpClient: HttpClient,
     protected cookieService: CookieService
   ) {
@@ -46,7 +49,7 @@ export class BackendService {
 
     let httpPar = new HttpParams();
     if (params) {
-      Object.keys(params).forEach(key => {
+      Object.keys(params).forEach((key) => {
         httpPar = httpPar.append(key, params[key]);
       });
     }

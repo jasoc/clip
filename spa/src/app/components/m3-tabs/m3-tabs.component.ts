@@ -18,7 +18,7 @@ export class M3TabsComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     setTimeout(() => {
       if (this.tabsComponents && this.tabsComponents.length > 0) {
-        this.tabsComponents.forEach(tab => {
+        this.tabsComponents.forEach((tab) => {
           tab.show = false;
         });
         this.tabsComponents.get(0)!.show = true;
@@ -28,7 +28,7 @@ export class M3TabsComponent implements AfterViewInit {
 
   showTab(tab: M3TabComponent) {
     if (this.tabsComponents && this.tabsComponents.length > 0) {
-      this.tabsComponents.forEach(tab => {
+      this.tabsComponents.forEach((tab) => {
         tab.show = false;
       });
     }

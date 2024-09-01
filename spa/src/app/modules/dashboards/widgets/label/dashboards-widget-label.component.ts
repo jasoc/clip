@@ -39,9 +39,18 @@ interface LabelOptions {
       required: true,
       order: 1,
       options: [
-        { key: 'small', label: 'Small' },
-        { key: 'medium', label: 'Medium' },
-        { key: 'big', label: 'Big' },
+        {
+          key: 'small',
+          label: 'Small',
+        },
+        {
+          key: 'medium',
+          label: 'Medium',
+        },
+        {
+          key: 'big',
+          label: 'Big',
+        },
       ],
     }),
   ],

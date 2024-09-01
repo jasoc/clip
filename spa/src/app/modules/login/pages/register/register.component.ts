@@ -23,7 +23,15 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   standalone: true,
   selector: 'clip-register',
-  providers: [ThemeService, { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } }],
+  providers: [
+    ThemeService,
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: {
+        appearance: 'outline',
+      },
+    },
+  ],
   changeDetection: ChangeDetectionStrategy.Default,
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
@@ -71,7 +79,11 @@ export class RegisterComponent {
     const password = control.value.password;
     const password2 = control.value.password2;
     if (!password || !password2) return null;
-    return password == password2 ? null : { passwordEquals: true };
+    return password == password2
+      ? null
+      : {
+          passwordEquals: true,
+        };
   }
 
   async register() {
@@ -83,12 +95,12 @@ export class RegisterComponent {
         name: this.registerFormGroup.controls.firstName.value!,
         surname: this.registerFormGroup.controls.secondName.value!,
       })
-      .then(res => {
+      .then((res) => {
         if (res) {
           this.router.navigate(['/home']);
         }
       })
-      .catch(err => {
+      .catch((err) => {
         this.snackBar.open(err.error.message, 'Dismiss');
       });
   }

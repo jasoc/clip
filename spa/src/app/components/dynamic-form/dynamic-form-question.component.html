@@ -11,7 +11,10 @@
           }}</mat-icon>
         }
         @if (!isValid) {
-          <mat-error> {{ question.label }} is required </mat-error>
+          <mat-error>
+            {{ question.label }}
+            is required
+          </mat-error>
         }
       </mat-form-field>
     }
@@ -24,7 +27,10 @@
           }
         </mat-select>
         @if (!isValid) {
-          <mat-error> {{ question.label }} is required </mat-error>
+          <mat-error>
+            {{ question.label }}
+            is required
+          </mat-error>
         }
       </mat-form-field>
     }

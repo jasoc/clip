@@ -69,7 +69,7 @@ export class NavigationDrawerComponent {
   }
 
   public ToggleCollapse() {
-    this.navigationElementsTree.forEach(element => {
+    this.navigationElementsTree.forEach((element) => {
       element.isExpanded = false;
       if (this.collapsed) element.rippled = false;
     });
@@ -83,18 +83,18 @@ export class NavigationDrawerComponent {
 
   navigate(navigationElement: NavigationElement, parentElement: NavigationElement | null = null) {
     if (this.collapsed && parentElement == null) {
-      this.router.navigateByUrl(navigationElement.subElements.filter(subel => subel.name == 'Overview')[0].redirect);
+      this.router.navigateByUrl(navigationElement.subElements.filter((subel) => subel.name == 'Overview')[0].redirect);
     }
     if (navigationElement.subElements.length == 0) {
       this.router.navigateByUrl(navigationElement.redirect);
     }
-    this.navigationElementsTree.forEach(element => {
+    this.navigationElementsTree.forEach((element) => {
       if (element != parentElement) {
         element.rippled = false;
       } else {
         element.rippled = true;
       }
-      element.subElements.forEach(subElement => {
+      element.subElements.forEach((subElement) => {
         subElement.rippled = false;
       });
     });

@@ -120,7 +120,7 @@ export class DashboardsComposerComponent implements OnInit, AfterViewInit {
     private qcs: QuestionControlService
   ) {
     this.allWidgetsSelector = this.dashboardService.getAllWidgetsSelector();
-    this.dashboardService.onWidgetClickInComposerCallback = w => this.onWidgetSelectedCallBack(w);
+    this.dashboardService.onWidgetClickInComposerCallback = (w) => this.onWidgetSelectedCallBack(w);
   }
 
   async ngOnInit(): Promise<void> {
