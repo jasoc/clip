@@ -35,7 +35,7 @@ build_apiserver()
 prettify()
 {
     poetry run black clip_apiserver
-    poetry run autoflake clip_apiserver
+    poetry run autoflake --recursive --in-place --remove-unused-variables --remove-all-unused-imports clip_apiserver
 }
 
 
