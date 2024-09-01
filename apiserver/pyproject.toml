@@ -17,7 +17,7 @@ passlib = "^1.7.4"
 python-multipart = "^0.0.9"
 jinja2 = "^3.1.2"
 black = "^24.8.0"
-autoflake = "^2.3.1"
+flake8 = "^7.1.1"
 
 [build-system]
 requires = ["poetry-core"]
@@ -26,8 +26,3 @@ build-backend = "poetry.core.masonry.api"
 [tool.black]
 line-length = 120
 target-version = ['py311']
-indent-size = 8
-
-[tool.autoflake]
-check = true
-imports = ["fastapi"]

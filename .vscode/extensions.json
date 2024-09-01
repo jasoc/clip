@@ -6,7 +6,8 @@
     "EditorConfig.EditorConfig",
     "esbenp.prettier-vscode",
     "mike-co.import-sorter",
-    "ms-python.black-formatter"
+    "ms-python.black-formatter",
+    "ms-python.flake8"
   ],
   "unwantedRecommendations": []
 }

@@ -26,7 +26,6 @@ generate_m3_theme()
     yarn run ng generate @angular/material:m3-theme
     chown $USER:$USER ./src/styles/themem3-theme.scss
     chmod 755 ./src/styles/themem3-theme.scss
-    mv ./spa/src/styles/themem3-theme.scss ./src/styles/theme/m3-theme.scss
 }
 
 prettify()
