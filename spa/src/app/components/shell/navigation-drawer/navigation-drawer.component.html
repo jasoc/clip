@@ -6,10 +6,10 @@
       (click)="ToggleCollapse()"
       aria-label="Example icon-button with a heart icon"
     >
-      <mat-icon fontSet="material-symbols-outlined">{{ collapsed ? "menu" : "chevron_left" }}</mat-icon>
+      <mat-icon fontSet="material-symbols-outlined">{{ collapsed ? 'menu' : 'chevron_left' }}</mat-icon>
     </button>
     @if (!this.collapsed) {
-    <p @showUserButton>Clip</p>
+      <p @showUserButton>Clip</p>
     }
   </div>
 
@@ -30,7 +30,7 @@
         class="navigation-entry"
         [ngClass]="{
           'navigation-entry-wide': this.collapsed,
-          'navigation-entry-expanded': element.isExpanded
+          'navigation-entry-expanded': element.isExpanded,
         }"
       >
         <m3-button
@@ -82,13 +82,13 @@
 
   <div class="show-user">
     @if (collapsed) {
-    <button mat-mini-fab color="accent">
-      <mat-icon class="material-symbols-rounded">settings</mat-icon>
-    </button>
+      <button mat-mini-fab color="accent">
+        <mat-icon class="material-symbols-rounded">settings</mat-icon>
+      </button>
     } @else {
-    <button mat-fab color="accent">
-      <mat-icon class="material-symbols-rounded">settings</mat-icon>
-    </button>
+      <button mat-fab color="accent">
+        <mat-icon class="material-symbols-rounded">settings</mat-icon>
+      </button>
     }
     <button mat-fab extended *ngIf="!collapsed" @showUserButton color="primary">
       <mat-icon class="material-symbols-rounded">home</mat-icon>

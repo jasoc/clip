@@ -41,20 +41,22 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   ],
 })
 export class RegisterComponent {
-  
-  registerFormGroup = new FormGroup({
-    firstName: new FormControl<string>('', [Validators.required]),
-    secondName: new FormControl<string>('', [Validators.required]),
-    username: new FormControl<string>('', [Validators.required]),
-    email: new FormControl<string>('', [Validators.email]),
-    password2: new FormControl<string>('', [Validators.required]),
-    password: new FormControl<string>('', [
-      Validators.required,
-      // TODO: workaround, for some reasons min() or minLength() just color
-      // the input component and doesen't emit the minLength error???
-      // (control) => control.value.length == 0 || control.value.length > 8 ? null : { minLength: true }
-    ]),
-  }, this.passwordValidator);
+  registerFormGroup = new FormGroup(
+    {
+      firstName: new FormControl<string>('', [Validators.required]),
+      secondName: new FormControl<string>('', [Validators.required]),
+      username: new FormControl<string>('', [Validators.required]),
+      email: new FormControl<string>('', [Validators.email]),
+      password2: new FormControl<string>('', [Validators.required]),
+      password: new FormControl<string>('', [
+        Validators.required,
+        // TODO: workaround, for some reasons min() or minLength() just color
+        // the input component and doesen't emit the minLength error???
+        // (control) => control.value.length == 0 || control.value.length > 8 ? null : { minLength: true }
+      ]),
+    },
+    this.passwordValidator
+  );
 
   constructor(
     private userService: UserService,
@@ -66,14 +68,14 @@ export class RegisterComponent {
   public Theme = Theme;
 
   passwordValidator(control: AbstractControl): ValidationErrors | null {
-    const password  = control.value.password;
+    const password = control.value.password;
     const password2 = control.value.password2;
     if (!password || !password2) return null;
     return password == password2 ? null : { passwordEquals: true };
   }
 
   async register() {
-      await this.userService
+    await this.userService
       .RegisterUser({
         username: this.registerFormGroup.controls.username.value!,
         password: this.registerFormGroup.controls.password.value!,
@@ -81,12 +83,12 @@ export class RegisterComponent {
         name: this.registerFormGroup.controls.firstName.value!,
         surname: this.registerFormGroup.controls.secondName.value!,
       })
-      .then((res) => {
+      .then(res => {
         if (res) {
           this.router.navigate(['/home']);
         }
       })
-      .catch((err) => {
+      .catch(err => {
         this.snackBar.open(err.error.message, 'Dismiss');
       });
   }

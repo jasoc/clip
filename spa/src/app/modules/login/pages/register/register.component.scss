@@ -14,7 +14,7 @@
     right: 0;
     margin: 10px;
   }
-  
+
   float-background {
     z-index: 1;
   }
@@ -34,7 +34,7 @@
       display: flex;
       justify-content: flex-end;
       flex-direction: column;
-  
+
       .form-buttons {
         margin-top: 24px;
         display: flex;
@@ -42,17 +42,17 @@
         align-items: center;
         flex-direction: row;
       }
-  
+
       mat-card {
         padding-top: tokens.$clip-shell-margin * 2;
         padding-left: tokens.$clip-shell-margin;
         padding-right: tokens.$clip-shell-margin;
         padding-bottom: tokens.$clip-shell-margin;
-  
+
         .mat-form-field-couple {
           display: flex;
           flex-direction: row;
-  
+
           mat-form-field {
             flex-direction: column;
           }

@@ -17,7 +17,6 @@ import { TextboxElement } from './types/dynamic-form-element-textbox';
   imports: [CommonModule, MatSelectModule, MatIconModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
 })
 export class DynamicFormQuestionComponent {
-
   @Input() question!: DynamicFormElement<string>;
   @Input() form!: FormGroup;
 

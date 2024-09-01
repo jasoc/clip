@@ -1,12 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition
-}
-  from '@angular/animations';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
@@ -25,23 +18,29 @@ import { MatRippleModule } from '@angular/material/core';
           opacity: 0,
           transform: 'translate(-50%, -50px)',
         }),
-        animate('280ms cubic-bezier(0.18, 0.89, 0.32, 1)', style({
-          opacity: 1,
-          transform: 'translate(-50%, 0px)',
-        })),
+        animate(
+          '280ms cubic-bezier(0.18, 0.89, 0.32, 1)',
+          style({
+            opacity: 1,
+            transform: 'translate(-50%, 0px)',
+          })
+        ),
       ]),
       transition(':leave', [
-        animate('280ms cubic-bezier(0.18, 0.89, 0.32, 1)', style({
-          opacity: 0,
-          transform: 'translate(-50%, -50px)',
-        }))
-      ])
+        animate(
+          '280ms cubic-bezier(0.18, 0.89, 0.32, 1)',
+          style({
+            opacity: 0,
+            transform: 'translate(-50%, -50px)',
+          })
+        ),
+      ]),
     ]),
   ],
 })
 export class SearchBarComponent {
   @Input()
-  text: string = "";
+  text: string = '';
 
   @Output()
   textChange = new EventEmitter<string>();
@@ -49,7 +48,7 @@ export class SearchBarComponent {
   public colored: boolean = false;
   public contextMenuOpen: boolean = false;
 
-  constructor() { }
+  constructor() {}
 
   onFocus(event: Event) {
     this.contextMenuOpen = true;

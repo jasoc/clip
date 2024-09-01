@@ -29,8 +29,8 @@ export class DashboardService extends BackendService {
 
   getAllWidgetsSelector(): Array<string> {
     return Object.keys(GridstackComponent.selectorToType)
-      .map((x) => reflectComponentType(GridstackComponent.selectorToType[x])?.selector)
-      .filter((x) => x != undefined) as Array<string>;
+      .map(x => reflectComponentType(GridstackComponent.selectorToType[x])?.selector)
+      .filter(x => x != undefined) as Array<string>;
   }
 
   static InitiateClipWidget(widgetType: Type<BaseWidget>, metadata: WidgetMetadata) {
@@ -42,7 +42,7 @@ export class DashboardService extends BackendService {
   }
 
   async CreateDashboard(dashboard: DashboardModel): Promise<DashboardModel> {
-    let res = await this.post<DashboardModel>("/dashboards", dashboard);
+    let res = await this.post<DashboardModel>('/dashboards', dashboard);
     return res.body!.data;
   }
 

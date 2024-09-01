@@ -7,12 +7,11 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './m3-icon.component.html',
   styleUrls: ['./m3-icon.component.scss'],
   imports: [CommonModule, MatIconModule],
-  standalone: true
+  standalone: true,
 })
 export class M3IconComponent {
-
   @Input()
-  public style: "rounded" | "sharp" | "outlined" = 'rounded';
+  public style: 'rounded' | 'sharp' | 'outlined' = 'rounded';
 
   @Input()
   public filled: boolean = false;
@@ -20,6 +19,6 @@ export class M3IconComponent {
   @Input()
   public weight: number = 400;
 
-  @Input("font-size")
-  public fontSize: string = "24px";
+  @Input('font-size')
+  public fontSize: string = '24px';
 }

@@ -1,11 +1,29 @@
 {
-  "python.analysis.extraPaths": [
-    "./apiserver/.venv/lib/python3.11/site-packages"
-  ],
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true,
-  "editor.formatOnPaste": false,
+  "python.analysis.extraPaths": ["./apiserver/.venv/lib/python3.11/site-packages"],
   "prettier.useEditorConfig": false,
-  "prettier.useTabs": false,
   "prettier.configPath": ".prettierrc",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": false,
+    "prettier.useTabs": false
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": false,
+    "prettier.useTabs": false
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": false,
+    "prettier.useTabs": false
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": false,
+    "prettier.useTabs": false
+  }
 }

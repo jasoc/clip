@@ -8,7 +8,7 @@ describe('M3TabComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [M3TabComponent]
+      declarations: [M3TabComponent],
     });
     fixture = TestBed.createComponent(M3TabComponent);
     component = fixture.componentInstance;

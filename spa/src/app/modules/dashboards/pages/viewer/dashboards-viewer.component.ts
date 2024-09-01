@@ -37,12 +37,15 @@ export class DashboardsViewerComponent implements AfterViewInit {
   };
   public allWidgetsSelector: Array<string> = [];
 
-  constructor(public dashboardService: DashboardService, private route: ActivatedRoute) {
+  constructor(
+    public dashboardService: DashboardService,
+    private route: ActivatedRoute
+  ) {
     this.allWidgetsSelector = this.dashboardService.getAllWidgetsSelector();
   }
 
   async ngAfterViewInit(): Promise<void> {
-    let id = this.route.snapshot.params["id"];
+    let id = this.route.snapshot.params['id'];
     if (id) {
       this.dashboard = await this.dashboardService.GetDashboard(id);
     }

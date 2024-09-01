@@ -42,19 +42,17 @@ import { NavigationElement, navigationElementsTree } from '../navigation-tree';
         'true',
         style({
           opacity: '0',
-          margin: '0'
+          margin: '0',
         })
       ),
       state(
         'false',
         style({
           opacity: '1',
-          margin: '10px 0'
+          margin: '10px 0',
         })
       ),
-      transition('true <=> false', [
-        animate('280ms cubic-bezier(0.18, 0.89, 0.32, 1)')
-      ]),
+      transition('true <=> false', [animate('280ms cubic-bezier(0.18, 0.89, 0.32, 1)')]),
     ]),
   ],
 })
@@ -63,12 +61,15 @@ export class NavigationDrawerComponent {
   public isLightTheme: boolean = false;
   public navigationElementsTree: NavigationElement[];
 
-  constructor(public router: Router, public themeService: ThemeService) {
+  constructor(
+    public router: Router,
+    public themeService: ThemeService
+  ) {
     this.navigationElementsTree = navigationElementsTree;
   }
 
   public ToggleCollapse() {
-    this.navigationElementsTree.forEach((element) => {
+    this.navigationElementsTree.forEach(element => {
       element.isExpanded = false;
       if (this.collapsed) element.rippled = false;
     });
@@ -82,18 +83,18 @@ export class NavigationDrawerComponent {
 
   navigate(navigationElement: NavigationElement, parentElement: NavigationElement | null = null) {
     if (this.collapsed && parentElement == null) {
-      this.router.navigateByUrl(navigationElement.subElements.filter((subel) => subel.name == 'Overview')[0].redirect);
+      this.router.navigateByUrl(navigationElement.subElements.filter(subel => subel.name == 'Overview')[0].redirect);
     }
     if (navigationElement.subElements.length == 0) {
       this.router.navigateByUrl(navigationElement.redirect);
     }
-    this.navigationElementsTree.forEach((element) => {
+    this.navigationElementsTree.forEach(element => {
       if (element != parentElement) {
         element.rippled = false;
       } else {
         element.rippled = true;
       }
-      element.subElements.forEach((subElement) => {
+      element.subElements.forEach(subElement => {
         subElement.rippled = false;
       });
     });

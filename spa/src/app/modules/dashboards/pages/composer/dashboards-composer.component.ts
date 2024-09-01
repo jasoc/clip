@@ -1,4 +1,13 @@
-import { AfterViewInit, Component, OnInit, QueryList, TemplateRef, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnInit,
+  QueryList,
+  TemplateRef,
+  ViewChild,
+  ViewChildren,
+  ViewContainerRef,
+} from '@angular/core';
 import {
   GridstackComponent,
   gsCreateNgComponents,
@@ -66,15 +75,25 @@ import { QuestionControlService } from '../../../../services/question-control.se
   ],
 })
 export class DashboardsComposerComponent implements OnInit, AfterViewInit {
-  @ViewChildren(GridstackComponent) gridComps?: QueryList<GridstackComponent>;
-  @ViewChildren(BaseClipWidget) widgets?: QueryList<BaseClipWidget<any>>;
+  @ViewChildren(GridstackComponent)
+  gridComps?: QueryList<GridstackComponent>;
+  @ViewChildren(BaseClipWidget)
+  widgets?: QueryList<BaseClipWidget<any>>;
 
-  @ViewChild('currentOptionFormOutlet', { read: ViewContainerRef }) currentOptionFormOutlet?: ViewContainerRef;
-  @ViewChild('currentOptionFormContent', { read: TemplateRef }) currentOptionFormContent?: TemplateRef<any>;
+  @ViewChild('currentOptionFormOutlet', {
+    read: ViewContainerRef,
+  })
+  currentOptionFormOutlet?: ViewContainerRef;
+  @ViewChild('currentOptionFormContent', {
+    read: TemplateRef,
+  })
+  currentOptionFormContent?: TemplateRef<any>;
 
   public siderCollapsed: boolean = false;
   public dashboard: DashboardModel | undefined;
-  public gsWidgetGridBySelector: { [id: string]: GridstackComponent } = {};
+  public gsWidgetGridBySelector: {
+    [id: string]: GridstackComponent;
+  } = {};
   public allWidgetsSelector: Array<string> = [];
 
   public subOptions: NgGridStackOptions = {
@@ -95,9 +114,13 @@ export class DashboardsComposerComponent implements OnInit, AfterViewInit {
   public currentOptionForm?: DynamicFormRoot;
   public currentOptionDefaultValues?: object;
 
-  constructor(public dashboardService: DashboardService, private route: ActivatedRoute, private qcs: QuestionControlService) {
+  constructor(
+    public dashboardService: DashboardService,
+    private route: ActivatedRoute,
+    private qcs: QuestionControlService
+  ) {
     this.allWidgetsSelector = this.dashboardService.getAllWidgetsSelector();
-    this.dashboardService.onWidgetClickInComposerCallback = (w) => ( this.onWidgetSelectedCallBack(w) );
+    this.dashboardService.onWidgetClickInComposerCallback = w => this.onWidgetSelectedCallBack(w);
   }
 
   async ngOnInit(): Promise<void> {
@@ -142,7 +165,15 @@ export class DashboardsComposerComponent implements OnInit, AfterViewInit {
       column: minW,
       acceptWidgets: false,
       cellHeight: 40,
-      children: [{ w: minW, h: minH, noMove: true, noResize: true, selector }],
+      children: [
+        {
+          w: minW,
+          h: minH,
+          noMove: true,
+          noResize: true,
+          selector,
+        },
+      ],
     };
   }
 

@@ -1,5 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core';
 
 @Component({
   selector: 'float-background',
@@ -10,30 +18,28 @@ import { ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, ViewChil
   imports: [CommonModule],
 })
 export class FloatBackgroundComponent {
-
   public emojis: Array<string> = [
-    "😀",
-    "🍕",
-    "😃",
-    "🤡",
-    "😅",
-    "👽",
-    "😇",
-    "😈",
-    "😉",
-    "🍉",
-    "😋",
-    "😌",
-    "😍",
-    "🤬",
-    "😏",
-    "🤾",
-    "🥝",
-    "😒",
-    "🥕",
-    "🌮",
-    "🎃",
-    "🔥"
+    '😀',
+    '🍕',
+    '😃',
+    '🤡',
+    '😅',
+    '👽',
+    '😇',
+    '😈',
+    '😉',
+    '🍉',
+    '😋',
+    '😌',
+    '😍',
+    '🤬',
+    '😏',
+    '🤾',
+    '🥝',
+    '😒',
+    '🥕',
+    '🌮',
+    '🎃',
+    '🔥',
   ];
-
 }

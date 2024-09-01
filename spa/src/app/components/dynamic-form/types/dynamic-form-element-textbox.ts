@@ -1,4 +1,4 @@
-import { DynamicFormElement } from "./dynamic-form-element";
+import { DynamicFormElement } from './dynamic-form-element';
 
 export class TextboxElement extends DynamicFormElement<string> {
   override controlType = 'textbox';

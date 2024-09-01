@@ -30,7 +30,7 @@ export class DynamicFormComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.qcs.toFormGroup(this.questions!, this.overrideValues);
-    this.form.valueChanges.subscribe((values) => {
+    this.form.valueChanges.subscribe(values => {
       if (this.form.valid) {
         this.valuesChange.emit(values);
       }

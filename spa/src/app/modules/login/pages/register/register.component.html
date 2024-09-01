@@ -67,14 +67,11 @@
           </mat-error>
         </mat-form-field>
       </div>
-      
+
       @if (registerFormGroup.hasError('passwordEquals')) {
         <div style="margin-bottom: 24px"></div>
-        <mat-error>
-          The two passwords doesen't match with each other.
-        </mat-error>
+        <mat-error> The two passwords doesen't match with each other. </mat-error>
       }
-
     </mat-card>
     <div class="form-buttons">
       <button mat-fab extended class="login-button" type="submit" [disabled]="!registerFormGroup.valid" color="primary">
@@ -83,14 +80,16 @@
       </button>
     </div>
   </form>
-  
+
   <div class="top-right-buttons">
     <button mat-button matTooltip="Switch theme" class="theme-switcher" (click)="themeService.switchDarkLight()">
       @if (themeService.currentTheme == Theme.Light) {
         <mat-icon class="material-symbols-rounded">nights_stay</mat-icon>
-      } @if (themeService.currentTheme == Theme.Dark) {
+      }
+      @if (themeService.currentTheme == Theme.Dark) {
         <mat-icon class="material-symbols-rounded">sunny</mat-icon>
-      } Switch theme
+      }
+      Switch theme
     </button>
     <button mat-button color="accent" (click)="goToLogin($event)">Go to login</button>
   </div>

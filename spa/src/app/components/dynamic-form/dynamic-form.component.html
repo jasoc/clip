@@ -1,9 +1,9 @@
 <div>
-    <form [formGroup]="form">
-      @for (question of questions; track question) {
-        <div class="form-row">
-          <app-question [question]="question" [form]="form"></app-question>
-        </div>
-      }
-    </form>
-  </div>
+  <form [formGroup]="form">
+    @for (question of questions; track question) {
+      <div class="form-row">
+        <app-question [question]="question" [form]="form"></app-question>
+      </div>
+    }
+  </form>
+</div>

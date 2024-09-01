@@ -5,7 +5,6 @@ import { DashboardService } from './dashboard.service';
 
 @Injectable({ providedIn: 'root' })
 export class QuestionControlService {
-
   readonly dashboardService: DashboardService;
 
   constructor() {
@@ -14,7 +13,7 @@ export class QuestionControlService {
 
   toFormGroup(questions: DynamicFormElement<any>[], overrideValues: { [key: string]: any } = {}) {
     const group: any = {};
-    questions.forEach((question) => {
+    questions.forEach(question => {
       const defaultValues = overrideValues[question.key] ?? question.defaultValue;
       group[question.key] = question.required
         ? new FormControl(defaultValues, Validators.required)

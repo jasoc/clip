@@ -9,11 +9,10 @@ import { UserService } from '../../../services/user.service';
   selector: 'app-navigation-bar',
   templateUrl: './navigation-bar.component.html',
   styleUrls: ['./navigation-bar.component.scss'],
-  imports: [CommonModule, MatChipsModule, SearchBarComponent]
+  imports: [CommonModule, MatChipsModule, SearchBarComponent],
 })
 export class NavigationBarComponent {
-  public Paths: string[] = [ "home", "about" ];
+  public Paths: string[] = ['home', 'about'];
 
-  constructor(private userService: UserService) { }
-
+  constructor(private userService: UserService) {}
 }

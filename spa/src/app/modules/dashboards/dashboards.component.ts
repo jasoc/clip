@@ -22,19 +22,11 @@ import { FormsModule } from '@angular/forms';
   selector: 'clip-dashboards',
   standalone: true,
   providers: [DashboardService],
-  imports: [
-    MatTableModule,
-    MatIconModule,
-    MatButtonModule,
-    MatIconModule,
-    MatSortModule,
-    RouterModule
-  ],
+  imports: [MatTableModule, MatIconModule, MatButtonModule, MatIconModule, MatSortModule, RouterModule],
   styleUrls: ['dashboards.component.scss'],
   templateUrl: 'dashboards.component.html',
 })
 export class DashboardsComponent implements OnInit, AfterViewInit {
-
   readonly dialog = inject(MatDialog);
 
   displayedColumns: string[] = ['name', 'actions'];
@@ -56,8 +48,10 @@ export class DashboardsComponent implements OnInit, AfterViewInit {
   }
 
   newDashboard() {
-    this.dialog.open(NewDashboardDialogComponent)
-      .afterClosed().subscribe(result => {
+    this.dialog
+      .open(NewDashboardDialogComponent)
+      .afterClosed()
+      .subscribe(result => {
         if (result !== undefined) {
           this.dashboardService.CreateDashboard({ name: result, json_grid: '' });
         }
@@ -90,7 +84,7 @@ export class DashboardsComponent implements OnInit, AfterViewInit {
       <button mat-button (click)="onClose()">Close</button>
       <button mat-button [mat-dialog-close]="animal()" cdkFocusInitial>Confirm</button>
     </mat-dialog-actions>
-  `
+  `,
 })
 export class NewDashboardDialogComponent {
   readonly dialogRef = inject(MatDialogRef<NewDashboardDialogComponent>);

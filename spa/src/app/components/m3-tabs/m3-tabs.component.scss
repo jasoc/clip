@@ -1,4 +1,4 @@
-@use "theme" as theme;
+@use 'theme' as theme;
 
 :host {
   height: 100%;
@@ -63,9 +63,9 @@
     }
 
     .showed {
-        // background: map.get($clip-accent-palette, 400);
-        @include theme.color-themed(50);
-        // color: var(--clip-accent-color-400);
+      // background: map.get($clip-accent-palette, 400);
+      @include theme.color-themed(50);
+      // color: var(--clip-accent-color-400);
     }
   }
 

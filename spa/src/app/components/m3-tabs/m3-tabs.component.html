@@ -1,14 +1,19 @@
 <div class="m3-tabs">
-    <div class="tabs-header">
-        <div class="tab-selector" [ngClass]="{ 'showed': tab.show }" *ngFor="let tab of tabsComponents"
-            (click)="showTab(tab)">
-            <m3-icon class="icon" [weight]="600" [ngClass]="{ 'iconHighlighted': tab.show }"
-                [filled]="tab.show">{{tab.icon}}</m3-icon>
-            <p [style.font-weight]="tab.show ? 700 : 500">{{tab.label}}</p>
-            <div class="moving-selector" [style.opacity]="tab.show ? 1 : 0"></div>
-        </div>
+  <div class="tabs-header">
+    <div
+      class="tab-selector"
+      [ngClass]="{ showed: tab.show }"
+      *ngFor="let tab of tabsComponents"
+      (click)="showTab(tab)"
+    >
+      <m3-icon class="icon" [weight]="600" [ngClass]="{ iconHighlighted: tab.show }" [filled]="tab.show">{{
+        tab.icon
+      }}</m3-icon>
+      <p [style.font-weight]="tab.show ? 700 : 500">{{ tab.label }}</p>
+      <div class="moving-selector" [style.opacity]="tab.show ? 1 : 0"></div>
     </div>
-    <div class="opened-tab">
-        <ng-content></ng-content>
-    </div>
+  </div>
+  <div class="opened-tab">
+    <ng-content></ng-content>
+  </div>
 </div>

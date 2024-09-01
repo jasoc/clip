@@ -1,12 +1,12 @@
 @use '../tokens' as *;
 
-[data-theme="clip-dark"] {
-    --clip-background-color: #0a0a0a;
+[data-theme='clip-dark'] {
+  --clip-background-color: #0a0a0a;
 
-    --clip-main-ui-text-color: #{$clip-light-primary-text};
-    --clip-main-ui-text-color-light: #a5a4a4;
+  --clip-main-ui-text-color: #{$clip-light-primary-text};
+  --clip-main-ui-text-color-light: #a5a4a4;
 
-    --clip-background-shader: #ffffff1f;
-    --clip-background-shader-lighter: #ffffff0a;
-    --clip-background-shader-stronger: #ffffff4d;
+  --clip-background-shader: #ffffff1f;
+  --clip-background-shader-lighter: #ffffff0a;
+  --clip-background-shader-stronger: #ffffff4d;
 }

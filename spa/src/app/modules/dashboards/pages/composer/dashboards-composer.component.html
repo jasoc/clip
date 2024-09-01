@@ -1,6 +1,11 @@
 <div id="dashboards-composer">
   <div id="dashboards-composer-canvas">
-    <gridstack (changeCB)="onGridChangeEvent($event)" id="main-gridstack-element" class="grid-stack-edit-mode" [options]="gridOptions">
+    <gridstack
+      (changeCB)="onGridChangeEvent($event)"
+      id="main-gridstack-element"
+      class="grid-stack-edit-mode"
+      [options]="gridOptions"
+    >
       <div empty-content>Add items here or reload the grid</div>
     </gridstack>
   </div>
@@ -8,7 +13,6 @@
     @if (!siderCollapsed) {
       <m3-tabs @showSiderContent>
         <m3-tab icon="list" label="Widgets">
-
           <div class="widget-preview-title">
             <m3-icon>grid_on</m3-icon>
             <p>Sub grid</p>
@@ -18,7 +22,7 @@
 
           @for (selector of allWidgetsSelector; track selector) {
             <div class="widget-preview-title">
-              <m3-icon>{{ dashboardService.getClipWidgetBySelector(selector).metadata.icon ?? "widgets" }}</m3-icon>
+              <m3-icon>{{ dashboardService.getClipWidgetBySelector(selector).metadata.icon ?? 'widgets' }}</m3-icon>
               <p>{{ dashboardService.getClipWidgetBySelector(selector).metadata.name }}</p>
               <button mat-flat-button color="primary" (click)="addToDashboard(selector)">Add</button>
             </div>
@@ -27,7 +31,6 @@
             </gridstack>
             <div class="separator"></div>
           }
-
         </m3-tab>
         <m3-tab icon="settings" label="Options">
           <button mat-fab extended color="primary" (click)="saveDashboard()">
@@ -38,17 +41,20 @@
 
         <m3-tab icon="widgets" label="Selected widget">
           @if (currentOptionForm && currentOptionDefaultValues) {
-            <ng-container #currentOptionFormOutlet [ngTemplateOutlet]="currentOptionFormContent">
-            </ng-container>
+            <ng-container #currentOptionFormOutlet [ngTemplateOutlet]="currentOptionFormContent"> </ng-container>
             <ng-template #currentOptionFormContent>
-              <app-dynamic-form [questions]="currentOptionForm" [overrideValues]="currentOptionDefaultValues" (valuesChange)="onWidgetOptionChanges($event)"></app-dynamic-form>
+              <app-dynamic-form
+                [questions]="currentOptionForm"
+                [overrideValues]="currentOptionDefaultValues"
+                (valuesChange)="onWidgetOptionChanges($event)"
+              ></app-dynamic-form>
             </ng-template>
           }
         </m3-tab>
       </m3-tabs>
     }
     <div id="dashboards-composer-sider-handle" (click)="toggleSiderCollapse()">
-      <m3-icon>{{ siderCollapsed ? "keyboard_arrow_left" : "keyboard_arrow_right" }}</m3-icon>
+      <m3-icon>{{ siderCollapsed ? 'keyboard_arrow_left' : 'keyboard_arrow_right' }}</m3-icon>
     </div>
   </div>
 </div>

@@ -1,5 +1,4 @@
 services:
-
   apiserver:
     container_name: clip-apiserver-dev
     image: clip/apiserver:debug
@@ -67,15 +66,6 @@ services:
         target: /pgadmin4/servers.json
       - source: pgpass
         target: /pgpass
-
-  prettier:
-    image: node:20-alpine
-    container_name: clip-prettier
-    restart: no
-    # entrypoint: /bin/sh -c "./scripts/prettier.sh
-    working_dir: /clip
-    volumes:
-      - ./:/clip
 
 configs:
   pgpass:

@@ -6,10 +6,9 @@ import { Component, Input } from '@angular/core';
   templateUrl: './m3-tab.component.html',
   styleUrls: ['./m3-tab.component.scss'],
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule],
 })
 export class M3TabComponent {
-
   @Input()
   public show: boolean = false;
 
@@ -18,5 +17,4 @@ export class M3TabComponent {
 
   @Input()
   public label: string = 'Page';
-
 }

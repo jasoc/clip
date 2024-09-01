@@ -2,12 +2,12 @@ import { Component, OnDestroy } from '@angular/core';
 import { ClipWidget } from '../base-widget.decorator';
 import { BaseClipWidget } from '../BaseClipWidget';
 
-const selector = "clip-dashboards-widget-card";
+const selector = 'clip-dashboards-widget-card';
 
 @ClipWidget({
   id: selector,
-  name: "Card",
-  description: "Card",
+  name: 'Card',
+  description: 'Card',
   minH: 1,
   minW: 1,
 })

@@ -63,12 +63,12 @@ export class LoginComponent {
   async login() {
     await this.userService
       .LoginUser(this.loginFormGroup.controls.username.value!, this.loginFormGroup.controls.password.value!)
-      .then((res) => {
+      .then(res => {
         if (res) {
           this.router.navigate(['/home']);
         }
       })
-      .catch((err) => {
+      .catch(err => {
         this.snackBar.open(err.error.message, 'Dismiss');
       });
   }

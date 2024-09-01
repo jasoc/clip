@@ -1,4 +1,4 @@
-import { DynamicFormElement } from "./dynamic-form-element";
+import { DynamicFormElement } from './dynamic-form-element';
 
 export class DropdownElement extends DynamicFormElement<string> {
   override controlType = 'dropdown';

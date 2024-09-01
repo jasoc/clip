@@ -6,12 +6,12 @@
         <mat-label>{{ question.label }}</mat-label>
         <input matInput [formControlName]="question.key" [id]="question.key" [type]="TextboxQuestion(question).type" />
         @if (TextboxQuestion(question).icon) {
-          <mat-icon class="material-symbols-outlined" color="accent" matSuffix>{{TextboxQuestion(question).icon}}</mat-icon>
+          <mat-icon class="material-symbols-outlined" color="accent" matSuffix>{{
+            TextboxQuestion(question).icon
+          }}</mat-icon>
         }
         @if (!isValid) {
-          <mat-error>
-            {{ question.label }} is required
-          </mat-error>
+          <mat-error> {{ question.label }} is required </mat-error>
         }
       </mat-form-field>
     }
@@ -24,9 +24,7 @@
           }
         </mat-select>
         @if (!isValid) {
-          <mat-error>
-            {{ question.label }} is required
-          </mat-error>
+          <mat-error> {{ question.label }} is required </mat-error>
         }
       </mat-form-field>
     }

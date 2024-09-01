@@ -24,18 +24,16 @@
         }
       }
 
-      .particle:nth-child(#{$i}){
+      .particle:nth-child(#{$i}) {
         animation: particle-animation-#{$i} 60s infinite;
         $size: random(10) + 15 + px;
         font-size: $size;
-        animation-delay: -$i * .2s;
+        animation-delay: -$i * 0.2s;
         transform: translate3d((random(90) * 1vw), (random(90) * 1vh), (random(100) * 1px));
       }
     }
   }
 }
-
-
 
 @keyframes particlesSpawn {
   0% {

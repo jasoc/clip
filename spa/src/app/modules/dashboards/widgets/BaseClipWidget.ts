@@ -14,7 +14,7 @@ export abstract class BaseClipWidget<OptionsType> extends BaseWidget {
 
   public options: OptionsType;
 
-  readonly elRef: ElementRef; 
+  readonly elRef: ElementRef;
   readonly renderer: Renderer2;
   readonly dashboardService: DashboardService;
   readonly qcs: QuestionControlService;
@@ -50,7 +50,7 @@ export abstract class BaseClipWidget<OptionsType> extends BaseWidget {
   }
 
   override serialize(): NgCompInputs | undefined {
-      return this.options as NgCompInputs;
+    return this.options as NgCompInputs;
   }
 
   override deserialize(w: NgGridStackWidget): void {

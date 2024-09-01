@@ -1,24 +1,25 @@
-@use "sass:map";
-@use "@angular/material" as mat;
-@use "theme" as theme;
+@use 'sass:map';
+@use '@angular/material' as mat;
+@use 'theme' as theme;
 
-@import "gridstack/dist/src/gridstack.scss";
-@import "gridstack/dist/src/gridstack-extra.scss";
+@import 'gridstack/dist/src/gridstack.scss';
+@import 'gridstack/dist/src/gridstack-extra.scss';
 
-@import "@fontsource/roboto/index.css";
-@import "@fontsource-variable/roboto-flex/full.css";
+@import '@fontsource/roboto/index.css';
+@import '@fontsource-variable/roboto-flex/full.css';
 
-$material-symbols-font-path: "material-symbols/";
-@import "material-symbols";
+$material-symbols-font-path: 'material-symbols/';
+@import 'material-symbols';
 
 @include mat.core();
 
 // Custom Styles
 
-html, body {
+html,
+body {
   margin: 0;
   height: 100%;
-  font-family: "Roboto Flex Variable";
+  font-family: 'Roboto Flex Variable';
   background-color: var(--clip-background-color);
 
   // Applying Material Themes
@@ -29,10 +30,9 @@ html, body {
   @include mat.typography-hierarchy(theme.$dark-theme);
 
   // Light Theme
-  [data-theme="clip-light"] {
+  [data-theme='clip-light'] {
     @include mat.all-component-colors(theme.$light-theme);
   }
-
 }
 
 // Material Card Title Adjustment
@@ -41,24 +41,29 @@ html, body {
   color: var(--clip-main-ui-text-color);
 }
 
-
 .branded-font {
   font-variation-settings: (
-    "wdth" 100,
-    "opsz" 50,
-    "GRAD" 0,
-    "slnt" 0,
-    "XTRA" 500,
-    "YTLC" 500,
-    "YOPQ" 80,
-    "YTAS" 750,
-    "YTDE" -230,
-    "YTLC" 500,
-    "XOPQ" 92
+    'wdth' 100,
+    'opsz' 50,
+    'GRAD' 0,
+    'slnt' 0,
+    'XTRA' 500,
+    'YTLC' 500,
+    'YOPQ' 80,
+    'YTAS' 750,
+    'YTDE' -230,
+    'YTLC' 500,
+    'XOPQ' 92
   ) !important;
 }
 
-h1, h2, h3, h4, h5, h6, p {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
   color: var(--clip-main-ui-text-color);
 }
 
@@ -66,11 +71,13 @@ h1 {
   font-weight: 600 !important;
 }
 
-h2, h3 {
+h2,
+h3 {
   font-weight: 500 !important;
 }
 
-button, input {
+button,
+input {
   font-family: inherit !important;
   font-variation-settings: inherit !important;
 }
@@ -78,19 +85,20 @@ button, input {
 a {
   color: inherit;
   text-decoration: none;
-  
+
   &:hover {
     text-decoration: underline;
   }
 }
 
-ul, ol {
+ul,
+ol {
   margin: 0 0 1rem 1.5rem;
   padding: 0;
 }
 
 code {
-  font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+  font-family: Monaco, Menlo, Consolas, 'Courier New', monospace;
 }
 
 .density-minus-1 {
@@ -106,7 +114,8 @@ code {
 }
 
 table {
-  th, td {
+  th,
+  td {
     border-bottom-color: var(--clip-background-shader) !important;
   }
 }
@@ -138,7 +147,8 @@ table {
     bottom: 50%;
     left: 50%;
     transform: translate(-50%, 50%);
-    $box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.726),
-             1px 1px 4px 0px rgba(0, 0, 0, 0.15);
+    $box-shadow:
+      0px 1px 1px 0px rgba(0, 0, 0, 0.726),
+      1px 1px 4px 0px rgba(0, 0, 0, 0.15);
   }
 }

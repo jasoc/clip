@@ -29,7 +29,7 @@ import { simpleFade } from '../../../animations/enterAndLeave';
   animations: [
     trigger('ShowText', simpleFade('200ms')),
     trigger('marginLeft', [
-      transition('false <=> true', animate("280ms cubic-bezier(0.18, 0.89, 0.32, 1)")),
+      transition('false <=> true', animate('280ms cubic-bezier(0.18, 0.89, 0.32, 1)')),
       state(
         'false',
         style({
@@ -46,7 +46,7 @@ import { simpleFade } from '../../../animations/enterAndLeave';
       ),
     ]),
     trigger('spaced', [
-      transition('false <=> true', animate("280ms cubic-bezier(0.18, 0.89, 0.32, 1)")),
+      transition('false <=> true', animate('280ms cubic-bezier(0.18, 0.89, 0.32, 1)')),
       state(
         'false',
         style({

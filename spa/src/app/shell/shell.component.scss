@@ -1,47 +1,47 @@
-@use "tokens" as tokens;
+@use 'tokens' as tokens;
 
 :host {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  .app-container {
+    height: inherit;
+    width: inherit;
+
+    mat-drawer {
+      width: 600px;
+    }
+  }
+
+  #router {
     height: 100vh;
-    width: 100vw;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
+    width: 100%;
+    display: grid;
+    grid-template-columns: tokens.$clip-shell-margin auto tokens.$clip-shell-margin;
+    grid-template-rows: 64px auto tokens.$clip-shell-margin;
 
-    .app-container {
-        height: inherit;
-        width: inherit;
-
-        mat-drawer {
-            width: 600px;
-        }
+    #navigation-bar {
+      grid-column: 1 / 4;
+      grid-row: 1;
+      height: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
     }
 
-    #router {
-        height: 100vh;
-        width: 100%;
-        display: grid;
-        grid-template-columns: tokens.$clip-shell-margin auto tokens.$clip-shell-margin;
-        grid-template-rows: 64px auto tokens.$clip-shell-margin;
-
-        #navigation-bar {
-            grid-column: 1 / 4;
-            grid-row: 1;
-            height: auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-        }
-
-        #router__inner {
-            width: calc(100% - tokens.$clip-shell-margin * 2);
-            height: calc(100% - tokens.$clip-shell-margin * 2);
-            background: var(--clip-background-shader-lighter);
-            border-radius: tokens.$clip-shell-rounding;
-            grid-column: 1 / 3;
-            grid-row: 2;
-            overflow-x: hidden;
-            padding: tokens.$clip-shell-margin;
-        }
+    #router__inner {
+      width: calc(100% - tokens.$clip-shell-margin * 2);
+      height: calc(100% - tokens.$clip-shell-margin * 2);
+      background: var(--clip-background-shader-lighter);
+      border-radius: tokens.$clip-shell-rounding;
+      grid-column: 1 / 3;
+      grid-row: 2;
+      overflow-x: hidden;
+      padding: tokens.$clip-shell-margin;
     }
+  }
 }

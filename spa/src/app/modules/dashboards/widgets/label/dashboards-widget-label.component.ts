@@ -54,5 +54,7 @@ interface LabelOptions {
   imports: [FormsModule, MatIconModule, MatButtonModule, MatSlideToggleModule, MatSliderModule],
 })
 export class DashboardsWidgetLabelComponent extends BaseClipWidget<LabelOptions> {
-  public override getSelector(): string { return selector; }
+  public override getSelector(): string {
+    return selector;
+  }
 }
