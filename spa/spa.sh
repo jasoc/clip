@@ -21,7 +21,6 @@ build_spa()
     yarn build
 }
 
-
 generate_m3_theme()
 {
     yarn run ng generate @angular/material:m3-theme
@@ -33,17 +32,19 @@ generate_m3_theme()
 prettify()
 {
     yarn run prettier . --write
+    yarn run eslint . --fix
 }
 
 main()
 {
     case $1 in
-        '')                  develop_spa;;
-        dev)                 develop_spa;;
-        run)                 run_spa;;
-        build)               build_spa;;
-        generate_m3_theme)   generate_m3_theme;;
-        prettify)            prettify;;
+        '')                develop_spa;;
+        dev)               develop_spa;;
+        run)               run_spa;;
+        build)             build_spa;;
+        generate_m3_theme) generate_m3_theme;;
+        prettify)          prettify;;
+        *) $@
     esac
 }
 

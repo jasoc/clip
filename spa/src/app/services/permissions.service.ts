@@ -4,8 +4,8 @@ import { UserService } from './user.service';
 
 export class PermissionsService {
   static isUserLoggedFn(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    let userService = inject(UserService);
-    let routerService = inject(Router);
+    const userService = inject(UserService);
+    const routerService = inject(Router);
 
     if (!userService.userLogged()) {
       routerService.navigateByUrl('/login');

@@ -128,7 +128,7 @@ export class DashboardsComposerComponent implements OnInit, AfterViewInit {
   }
 
   async ngAfterViewInit(): Promise<void> {
-    let id = this.route.snapshot.params['id'];
+    const id = this.route.snapshot.params['id'];
     if (id) {
       this.dashboard = await this.dashboardService.GetDashboard(id);
     }

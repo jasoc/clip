@@ -8,17 +8,11 @@ services:
       context: ./apiserver
       target: apiserver-base
       network: host
-    develop:
-      watch:
-        - action: rebuild
-          path: ./apiserver/pyproject.toml
     env_file:
       - path: .env
         required: true
     volumes:
-      - ./apiserver/.venv:/apiserver/.venv
-      - ./apiserver/dist:/apiserver/dist
-      - ./apiserver/clip_apiserver:/apiserver/clip_apiserver
+      - ./apiserver:/apiserver
     ports:
       - ${CLIP_APISERVER_PORT}:${CLIP_APISERVER_PORT}
       - 5678:5678
@@ -33,12 +27,6 @@ services:
       context: ./spa
       target: spa-base
       network: host
-    develop:
-      watch:
-        - action: rebuild
-          path: ./spa/package.json
-        - action: rebuild
-          path: ./spa/angular.json
     env_file:
       - path: .env
         required: true

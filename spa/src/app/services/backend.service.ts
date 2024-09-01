@@ -23,7 +23,7 @@ export class BackendService {
 
   constructor(
     @Inject(PLATFORM_ID)
-    private platformId: Object,
+    private platformId: object,
     protected httpClient: HttpClient,
     protected cookieService: CookieService
   ) {
@@ -54,7 +54,7 @@ export class BackendService {
       });
     }
 
-    let response = await firstValueFrom(
+    const response = await firstValueFrom(
       this.httpClient.request<HttpBody<ReturnType>>(method, this.baseUrl + relativeUrl, {
         body,
         params: httpPar,

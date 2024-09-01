@@ -49,12 +49,12 @@ export class DashboardService extends BackendService {
   }
 
   async CreateDashboard(dashboard: DashboardModel): Promise<DashboardModel> {
-    let res = await this.post<DashboardModel>('/dashboards', dashboard);
+    const res = await this.post<DashboardModel>('/dashboards', dashboard);
     return res.body!.data;
   }
 
   async GetDashboards(skip: number = 0, limit: number = 100): Promise<DashboardModel[]> {
-    let res = await this.get<DashboardModel[]>('/dashboards/', {
+    const res = await this.get<DashboardModel[]>('/dashboards/', {
       skip,
       limit,
     });
@@ -62,12 +62,12 @@ export class DashboardService extends BackendService {
   }
 
   async GetDashboard(dashboardId: string): Promise<DashboardModel> {
-    let res = await this.get<DashboardModel>('/dashboards/' + dashboardId);
+    const res = await this.get<DashboardModel>('/dashboards/' + dashboardId);
     return res.body!.data;
   }
 
   async UpdateDashboard(dashboardId: string, dashboard: DashboardModel): Promise<DashboardModel> {
-    let res = await this.put<DashboardModel>('/dashboards/' + dashboardId, dashboard);
+    const res = await this.put<DashboardModel>('/dashboards/' + dashboardId, dashboard);
     return res.body!.data;
   }
 

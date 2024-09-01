@@ -16,10 +16,10 @@ export class ThemeService {
 
   constructor(
     @Inject(PLATFORM_ID)
-    private platformId: Object
+    private platformId: object
   ) {
     if (isPlatformBrowser(this.platformId)) {
-      let localValue = localStorage.getItem('theme');
+      const localValue = localStorage.getItem('theme');
       if (localValue != null) {
         this.currentTheme =
           Theme[Object.keys(Theme)[Object.values(Theme).indexOf(localValue as unknown as Theme)] as keyof typeof Theme];
