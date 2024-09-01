@@ -1,3 +1,15 @@
+import { GridStack, GridStackOptions } from 'gridstack';
+import {
+  GridstackComponent,
+  GridstackModule,
+  gsCreateNgComponents,
+  NgGridStackOptions,
+  NgGridStackWidget,
+  nodesCB,
+} from 'gridstack/dist/angular';
+
+import { animate, animateChild, group, query, state, style, transition, trigger } from '@angular/animations';
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -8,32 +20,19 @@ import {
   ViewChildren,
   ViewContainerRef,
 } from '@angular/core';
-import {
-  GridstackComponent,
-  gsCreateNgComponents,
-  NgGridStackOptions,
-  NgGridStackWidget,
-  GridstackModule,
-  nodesCB,
-} from 'gridstack/dist/angular';
 import { MatButtonModule } from '@angular/material/button';
-import { GridStack, GridStackOptions } from 'gridstack';
-import { M3TabsComponent } from '../../../../components/m3-tabs/m3-tabs.component';
-import { M3TabComponent } from '../../../../components/m3-tabs/m3-tab/m3-tab.component';
 import { MatIconModule } from '@angular/material/icon';
-import { M3IconComponent } from '../../../../components/m3-icon/m3-icon.component';
-import { animate, animateChild, group, query, state, style, transition, trigger } from '@angular/animations';
-import { simpleFade } from '../../../../animations/enterAndLeave';
-import { DashboardModel, DashboardService } from '../../../../services/dashboard.service';
 import { ActivatedRoute } from '@angular/router';
-import { BaseClipWidget } from '../../widgets/BaseClipWidget';
+
+import { simpleFade } from '../../../../animations/enterAndLeave';
 import { DynamicFormComponent } from '../../../../components/dynamic-form/dynamic-form.component';
-import { DynamicFormElement } from '../../../../components/dynamic-form/types/dynamic-form-element';
-import { DropdownElement } from '../../../../components/dynamic-form/types/dynamic-form-element-dropdown';
-import { TextboxElement } from '../../../../components/dynamic-form/types/dynamic-form-element-textbox';
 import { DynamicFormRoot } from '../../../../components/dynamic-form/types/dynamic-form';
-import { CommonModule } from '@angular/common';
+import { M3IconComponent } from '../../../../components/m3-icon/m3-icon.component';
+import { M3TabComponent } from '../../../../components/m3-tabs/m3-tab/m3-tab.component';
+import { M3TabsComponent } from '../../../../components/m3-tabs/m3-tabs.component';
+import { DashboardModel, DashboardService } from '../../../../services/dashboard.service';
 import { QuestionControlService } from '../../../../services/question-control.service';
+import { BaseClipWidget } from '../../widgets/BaseClipWidget';
 
 @Component({
   selector: 'clip-dashboards-composer',

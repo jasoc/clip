@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
+import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+
 import { M3IconComponent } from '../../components/m3-icon/m3-icon.component';
-import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'clip-home',

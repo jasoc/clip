@@ -1,29 +1,30 @@
 {
   "python.analysis.extraPaths": ["./apiserver/.venv/lib/python3.11/site-packages"],
+  "importSorter.generalConfiguration.sortOnBeforeSave": true,
+  "importSorter.sortConfiguration.removeUnusedImports": true,
+  "importSorter.sortConfiguration.removeUnusedDefaultImports": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "eslint.options": {
+    "overrideConfigFile": "/spa/eslint.config.mjs"
+  },
   "prettier.useEditorConfig": false,
-  "prettier.configPath": ".prettierrc",
+  "prettier.configPath": "spa/.prettierrc",
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
-    "editor.formatOnPaste": false,
-    "prettier.useTabs": false
   },
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
-    "editor.formatOnPaste": false,
-    "prettier.useTabs": false
   },
   "[scss]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
-    "editor.formatOnPaste": false,
-    "prettier.useTabs": false
   },
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
-    "editor.formatOnPaste": false,
-    "prettier.useTabs": false
-  }
+  },
 }

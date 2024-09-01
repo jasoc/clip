@@ -1,21 +1,15 @@
-import { AfterViewInit, Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
-import {
-  GridstackComponent,
-  gsCreateNgComponents,
-  NgGridStackOptions,
-  NgGridStackWidget,
-  GridstackModule,
-} from 'gridstack/dist/angular';
-import { MatButtonModule } from '@angular/material/button';
 import { GridStack } from 'gridstack';
-import { M3TabsComponent } from '../../../../components/m3-tabs/m3-tabs.component';
-import { M3TabComponent } from '../../../../components/m3-tabs/m3-tab/m3-tab.component';
+import { GridstackComponent, GridstackModule, NgGridStackOptions } from 'gridstack/dist/angular';
+
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { M3IconComponent } from '../../../../components/m3-icon/m3-icon.component';
-import { animate, animateChild, group, query, state, style, transition, trigger } from '@angular/animations';
-import { simpleFade } from '../../../../animations/enterAndLeave';
-import { DashboardModel, DashboardService } from '../../../../services/dashboard.service';
 import { ActivatedRoute } from '@angular/router';
+
+import { M3IconComponent } from '../../../../components/m3-icon/m3-icon.component';
+import { M3TabComponent } from '../../../../components/m3-tabs/m3-tab/m3-tab.component';
+import { M3TabsComponent } from '../../../../components/m3-tabs/m3-tabs.component';
+import { DashboardModel, DashboardService } from '../../../../services/dashboard.service';
 
 @Component({
   selector: 'clip-dashboards-viewer',

@@ -1,13 +1,14 @@
-import { Component, Input, OnDestroy } from '@angular/core';
-import { ClipWidget, WidgetMetadata } from '../base-widget.decorator';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSliderModule } from '@angular/material/slider';
-import { BaseClipWidget } from '../BaseClipWidget';
-import { TextboxElement } from '../../../../components/dynamic-form/types/dynamic-form-element-textbox';
+
 import { DropdownElement } from '../../../../components/dynamic-form/types/dynamic-form-element-dropdown';
+import { TextboxElement } from '../../../../components/dynamic-form/types/dynamic-form-element-textbox';
+import { ClipWidget } from '../base-widget.decorator';
+import { BaseClipWidget } from '../BaseClipWidget';
 
 const selector = 'clip-dashboards-widget-label';
 

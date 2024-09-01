@@ -1,24 +1,24 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "type": "firefox",
-            "request": "launch",
-            "reAttach": true,
-            "name": "Launch SPA (Firefox)",
-            "url": "http://localhost:4200",
-            "webRoot": "${workspaceFolder}/spa"
-        },
-        
-        {
-            "type": "chrome",
-            "request": "launch",
-            "name": "Launch SPA (Chrome)",
-            "url": "http://localhost:4200",
-            "webRoot": "${workspaceFolder}/spa"
-        }
-    ]
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "firefox",
+      "request": "launch",
+      "reAttach": true,
+      "name": "Launch SPA (Firefox)",
+      "url": "http://localhost:4200",
+      "webRoot": "${workspaceFolder}/spa"
+    },
+
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Launch SPA (Chrome)",
+      "url": "http://localhost:4200",
+      "webRoot": "${workspaceFolder}/spa"
+    }
+  ]
 }

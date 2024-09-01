@@ -1,4 +1,5 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
+
 import { ClipWidget } from '../base-widget.decorator';
 import { BaseClipWidget } from '../BaseClipWidget';
 

@@ -1,11 +1,6 @@
-import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { AfterViewInit, Component, inject, model, OnInit, ViewChild } from '@angular/core';
-import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { DashboardService } from '../../services/dashboard.service';
-import { MatIconModule } from '@angular/material/icon';
+import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterModule } from '@angular/router';
 import {
   MatDialog,
   MatDialogActions,
@@ -15,8 +10,13 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { FormsModule } from '@angular/forms';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { RouterModule } from '@angular/router';
+
+import { DashboardService } from '../../services/dashboard.service';
 
 @Component({
   selector: 'clip-dashboards',
