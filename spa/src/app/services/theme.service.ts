@@ -1,6 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { debug } from 'console';
 
 export enum Theme {
   Light = 'clip-light',

@@ -1,13 +1,11 @@
 {
-	// See https://go.microsoft.com/fwlink/?LinkId=827846 to learn about workspace recommendations.
-	// Extension identifier format: ${publisher}.${name}. Example: vscode.csharp
-	"recommendations": [
-		"dbaeumer.vscode-eslint",
-		"EditorConfig.EditorConfig",
-		"esbenp.prettier-vscode",
-		"ow.vscode-subword-navigation",
-		"mike-co.import-sorter",
-		"styled-components.vscode-styled-components",
-	],
-	"unwantedRecommendations": []
+  // See https://go.microsoft.com/fwlink/?LinkId=827846 to learn about workspace recommendations.
+  // Extension identifier format: ${publisher}.${name}. Example: vscode.csharp
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "EditorConfig.EditorConfig",
+    "esbenp.prettier-vscode",
+    "mike-co.import-sorter"
+  ],
+  "unwantedRecommendations": []
 }

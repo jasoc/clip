@@ -1,9 +1,11 @@
-import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
-import { firstValueFrom } from 'rxjs';
-import { environment } from '../../environments/environment';
 import { CookieService } from 'ngx-cookie-service';
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
+
 import { isPlatformBrowser } from '@angular/common';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+
+import { environment } from '../../environments/environment';
 
 interface HttpBody<T> {
   success: boolean;

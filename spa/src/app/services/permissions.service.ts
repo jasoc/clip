@@ -1,5 +1,6 @@
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { inject } from '@angular/core';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
+
 import { UserService } from './user.service';
 
 export class PermissionsService {

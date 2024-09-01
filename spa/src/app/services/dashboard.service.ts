@@ -1,8 +1,10 @@
-import { Injectable, reflectComponentType, Type } from '@angular/core';
 import { BaseWidget, GridstackComponent } from 'gridstack/dist/angular';
+
+import { Injectable, reflectComponentType, Type } from '@angular/core';
+
 import { WidgetMetadata } from '../modules/dashboards/widgets/base-widget.decorator';
-import { BackendService } from './backend.service';
 import { BaseClipWidget } from '../modules/dashboards/widgets/BaseClipWidget';
+import { BackendService } from './backend.service';
 
 export type ClipWidgetInfo = {
   widgetType: Type<BaseWidget>;

@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+
 import { PermissionsService } from './services/permissions.service';
 
 export const routes: Routes = [
