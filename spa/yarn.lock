@@ -2996,13 +2996,13 @@ cli-width@^4.1.0:
     "@angular/ssr" "^18.0.1"
     "@fontsource-variable/roboto-flex" "5.0.15"
     "@fontsource/roboto" "5.0.13"
-    clip-spa "file:../usr/local/share/.cache/yarn/v6/npm-clip-spa-0.0.0-9cc1bbdd-58fd-47c2-aff4-a13396b39392-1725216538279/node_modules/clip-spa"
+    clip-spa "file:."
     express "^4.18.2"
     gridstack "10.3.1"
     material-symbols "^0.17.3"
     ngx-cookie-service "^18.0.0"
     rxjs "~7.8.0"
-    tslib "^2.3.0"
+    tslib "^2.7.0"
     zone.js "~0.14.3"
 
 cliui@^7.0.2:
@@ -5050,9 +5050,9 @@ methods@~1.1.2:
   integrity sha512-iclAHeNqNm68zFtnZ0e+1L2yUIdvzNoauKU4WBA3VvH/vPFieF7qfRlwUZU+DA9P9bPXIS90ulxoUoCH23sV2w==
 
 micromatch@^4.0.2, micromatch@^4.0.4, micromatch@^4.0.5:
-  version "4.0.7"
-  resolved "https://registry.npmjs.org/micromatch/-/micromatch-4.0.7.tgz"
-  integrity sha512-LPP/3KorzCwBxfeUuZmaR6bG2kdeHSbe0P2tY3FLRU4vYrjYz5hI4QZwV0njUx3jeuKe67YukQ1LSPZBKDqO/Q==
+  version "4.0.8"
+  resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-4.0.8.tgz#d66fa18f3a47076789320b9b1af32bd86d9fa202"
+  integrity sha512-PXwfBhYu0hBCPw8Dn0E+WDYb7af3dSLVWKi3HGv84IdF4TyFoC0ysxFd0Goxw7nSv4T/PzEJQxsYsEiFCKo2BA==
   dependencies:
     braces "^3.0.3"
     picomatch "^2.3.1"
