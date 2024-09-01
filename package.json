@@ -1,0 +1,11 @@
+{
+  "name": "clip",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/jasoc/clip.git",
+  "author": "Jasoc <paridegiunta@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "prettier": "^3.3.3"
+  }
+}
