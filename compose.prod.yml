@@ -8,6 +8,9 @@ services:
       dockerfile: ./Dockerfile
     ports:
       - 432:80
+    env_file:
+      - path: .env
+        required: true
 
   apiserver:
     container_name: clip-apiserver

@@ -1,3 +1,5 @@
 FROM nginx:1.21.6-alpine as spa-prod
-RUN rm -rf /usr/share/nginx/html/*
-COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY entrypoint.sh entrypoint.sh
+COPY nginx.template.conf /etc/nginx/nginx.template.conf
+RUN chmod +x entrypoint.sh
+ENTRYPOINT ["/bin/sh","entrypoint.sh"]
