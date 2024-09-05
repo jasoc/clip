@@ -1,24 +1,16 @@
 import { GridStack, GridStackOptions } from 'gridstack';
 import {
-  GridstackComponent,
-  GridstackModule,
-  gsCreateNgComponents,
-  NgGridStackOptions,
-  NgGridStackWidget,
-  nodesCB,
+    GridstackComponent, GridstackModule, gsCreateNgComponents, NgGridStackOptions,
+    NgGridStackWidget, nodesCB
 } from 'gridstack/dist/angular';
 
-import { animate, animateChild, group, query, state, style, transition, trigger } from '@angular/animations';
+import {
+    animate, animateChild, group, query, state, style, transition, trigger
+} from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import {
-  AfterViewInit,
-  Component,
-  OnInit,
-  QueryList,
-  TemplateRef,
-  ViewChild,
-  ViewChildren,
-  ViewContainerRef,
+    AfterViewInit, Component, OnInit, QueryList, TemplateRef, ViewChild, ViewChildren,
+    ViewContainerRef
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';

@@ -1,6 +1,7 @@
-import { Component, ElementRef, HostListener, inject, Input, Renderer2, Type } from '@angular/core';
 import { BaseWidget, NgCompInputs, NgGridStackWidget } from 'gridstack/dist/angular';
-import { WidgetMetadata } from './base-widget.decorator';
+
+import { Component, ElementRef, HostListener, inject, Renderer2 } from '@angular/core';
+
 import { DashboardService } from '../../../services/dashboard.service';
 import { QuestionControlService } from '../../../services/question-control.service';
 
@@ -31,7 +32,7 @@ export abstract class BaseClipWidget<OptionsType> extends BaseWidget {
   // abstract getInitialOptions(): OptionsType;
 
   @HostListener('mousedown', ['$event'])
-  handleClick(event: MouseEvent): void {
+  handleClick(_: MouseEvent): void {
     if (this.dashboardService.onWidgetClickInComposerCallback) {
       this.dashboardService.onWidgetClickInComposerCallback(this);
     }
