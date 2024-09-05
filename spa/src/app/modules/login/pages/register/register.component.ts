@@ -1,12 +1,5 @@
+import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { UserService } from '../../../../services/user.service';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { Theme, ThemeService } from '../../../../services/theme.service';
-import { MatIcon, MatIconModule } from '@angular/material/icon';
-import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import {
   AbstractControl,
   FormControl,
@@ -16,9 +9,17 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { FloatBackgroundComponent } from '../../../../components/float-background/float-background.component';
-import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/material/form-field';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+
+import { FloatBackgroundComponent } from '../../../../components/float-background/float-background.component';
+import { Theme, ThemeService } from '../../../../services/theme.service';
+import { UserService } from '../../../../services/user.service';
 
 @Component({
   standalone: true,

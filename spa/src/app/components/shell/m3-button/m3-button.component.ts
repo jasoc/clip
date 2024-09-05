@@ -1,21 +1,13 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  Input,
-  OnInit,
-  ViewChild,
-  ViewContainerRef,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { MatRipple, MatRippleModule, RippleRef } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
-import { M3IconComponent } from '../../m3-icon/m3-icon.component';
-import { ThemeService } from '../../../services/theme.service';
+
 import { simpleFade } from '../../../animations/enterAndLeave';
+import { ThemeService } from '../../../services/theme.service';
+import { M3IconComponent } from '../../m3-icon/m3-icon.component';
 
 @Component({
   selector: 'm3-button',

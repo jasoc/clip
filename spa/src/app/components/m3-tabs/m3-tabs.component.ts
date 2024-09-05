@@ -1,8 +1,9 @@
-import { AfterViewInit, Component, ContentChildren, QueryList, ViewChildren } from '@angular/core';
-import { M3TabComponent } from './m3-tab/m3-tab.component';
 import { CommonModule } from '@angular/common';
+import { AfterViewInit, Component, ContentChildren, QueryList } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+
 import { M3IconComponent } from '../m3-icon/m3-icon.component';
+import { M3TabComponent } from './m3-tab/m3-tab.component';
 
 @Component({
   selector: 'm3-tabs',

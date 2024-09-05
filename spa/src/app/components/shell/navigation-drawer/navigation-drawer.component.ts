@@ -1,13 +1,14 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { animate, animateChild, group, query, state, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
-import { Router } from '@angular/router';
-import { M3ButtonComponent } from '../m3-button/m3-button.component';
-import { simpleFade } from '../../../animations/enterAndLeave';
-import { ThemeService } from '../../../services/theme.service';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
+import { Router } from '@angular/router';
+
+import { simpleFade } from '../../../animations/enterAndLeave';
+import { ThemeService } from '../../../services/theme.service';
+import { M3ButtonComponent } from '../m3-button/m3-button.component';
 import { NavigationElement, navigationElementsTree } from '../navigation-tree';
 
 @Component({

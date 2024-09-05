@@ -1,24 +1,17 @@
+import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { UserService } from '../../../../services/user.service';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { Theme, ThemeService } from '../../../../services/theme.service';
-import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/material/form-field';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import {
-  AbstractControl,
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  ValidationErrors,
-  Validators,
-} from '@angular/forms';
-import { FloatBackgroundComponent } from '../../../../components/float-background/float-background.component';
-import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+
+import { FloatBackgroundComponent } from '../../../../components/float-background/float-background.component';
+import { Theme, ThemeService } from '../../../../services/theme.service';
+import { UserService } from '../../../../services/user.service';
 
 @Component({
   standalone: true,

@@ -1,4 +1,4 @@
-import { Directive, HostBinding, Input } from '@angular/core';
+import { Directive, Input } from '@angular/core';
 import { MatMenuPanel, MatMenuTrigger } from '@angular/material/menu';
 
 @Directive({

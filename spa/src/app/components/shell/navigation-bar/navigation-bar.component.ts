@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatChipsModule } from '@angular/material/chips';
-import { SearchBarComponent } from '../search-bar/search-bar.component';
+
 import { UserService } from '../../../services/user.service';
+import { SearchBarComponent } from '../search-bar/search-bar.component';
 
 @Component({
   standalone: true,
