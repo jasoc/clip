@@ -8,7 +8,8 @@
     "mike-co.import-sorter",
     "ms-python.black-formatter",
     "ms-python.flake8",
-    "Angular.ng-template"
+    "Angular.ng-template",
+    "ms-dotnettools.csdevkit"
   ],
   "unwantedRecommendations": []
 }

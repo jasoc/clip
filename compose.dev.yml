@@ -37,6 +37,25 @@ services:
     volumes:
       - ./spa:/spa
 
+  agent:
+    container_name: clip-agent-dev
+    image: clip/agent:debug
+    entrypoint: /bin/sh ./agent.sh
+    command: dev
+    working_dir: /agent
+    build:
+      context: ./agent
+      target: agent-base
+      network: host
+    env_file:
+      - path: .env
+        required: true
+    ports:
+      - 4200:4200
+      - 9222:9222
+    volumes:
+      - ./agent:/agent
+
   pgadmin:
     image: dpage/pgadmin4
     container_name: clip-dev-pgadmin4
