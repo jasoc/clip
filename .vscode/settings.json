@@ -1,5 +1,5 @@
 {
-  // Python backend
+  // API server
   "flake8.cwd": "${workspaceFolder}/apiserver",
   "flake8.args": ["--config=.flake8"],
   "[python]": {
@@ -8,7 +8,7 @@
   },
   "python.analysis.extraPaths": ["./apiserver/.venv/lib/python3.11/site-packages"],
 
-  // Frontend backenc
+  // Frontend
   "importSorter.generalConfiguration.sortOnBeforeSave": true,
   "importSorter.sortConfiguration.removeUnusedImports": true,
   "importSorter.sortConfiguration.removeUnusedDefaultImports": true,
@@ -36,11 +36,6 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true
   },
-  // "dotnetAcquisitionExtension.existingDotnetPath": [
-  //   {
-  //     "extensionId": "ms.dotnettools.csharp",
-  //     "path": "agent/.dotnet-home"
-  //   }
-  // ],
-  "dotnetAcquisitionExtension.sharedExistingDotnetPath": "agent/.dotnet-home"
+  // Agent
+  "dotnetAcquisitionExtension.sharedExistingDotnetPath": "agent/.dotnet-home/.dotnet"
 }
