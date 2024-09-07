@@ -1,3 +1,5 @@
+.devenv/
+
 *.db
 *.zip
 
