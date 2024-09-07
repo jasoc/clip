@@ -43,6 +43,7 @@ services:
     entrypoint: /bin/sh ./agent.sh
     command: dev
     working_dir: /agent
+    user: ${UID}:${GID}
     build:
       context: ./agent
       target: agent-base
@@ -50,6 +51,8 @@ services:
     env_file:
       - path: .env
         required: true
+    environment:
+      - HOME=/agent/.dotnet-home
     ports:
       - 4200:4200
       - 9222:9222

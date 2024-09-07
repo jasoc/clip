@@ -36,10 +36,11 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true
   },
-  "dotnetAcquisitionExtension.existingDotnetPath": [
-    {
-      "extensionId": "ms.dotnettools.csharp",
-      "path": ".devenv/dotnet-sdk"
-    }
-  ]
+  // "dotnetAcquisitionExtension.existingDotnetPath": [
+  //   {
+  //     "extensionId": "ms.dotnettools.csharp",
+  //     "path": "agent/.dotnet-home"
+  //   }
+  // ],
+  "dotnetAcquisitionExtension.sharedExistingDotnetPath": "agent/.dotnet-home"
 }

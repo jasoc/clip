@@ -5,10 +5,19 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Attach Agent (.NET/Docker)",
+      "type": "docker",
+      "request": "attach",
+      "platform": "netCore",
+      "sourceFileMap": {
+        "/src": "${workspaceFolder}/agent"
+      }
+    },
+    {
       "type": "firefox",
       "request": "launch",
       "reAttach": true,
-      "name": "Launch SPA (Firefox)",
+      "name": "Attach SPA (Firefox)",
       "url": "http://localhost:4200",
       "webRoot": "${workspaceFolder}/spa"
     },
@@ -16,7 +25,7 @@
     {
       "type": "chrome",
       "request": "launch",
-      "name": "Launch SPA (Chrome)",
+      "name": "Attach SPA (Chrome)",
       "url": "http://localhost:4200",
       "webRoot": "${workspaceFolder}/spa"
     }

@@ -12,4 +12,6 @@ rm -r $CLIP_PROJECT_PATH/spa/node_modules
 rm -r $CLIP_PROJECT_PATH/spa/.angular
 rm -r $CLIP_PROJECT_PATH/apiserver/.venv
 rm -r $CLIP_PROJECT_PATH/apiserver/dist
-rm -r $CLIP_PROJECT_PATH/.devenv
+rm -r $CLIP_PROJECT_PATH/agent/bin
+rm -r $CLIP_PROJECT_PATH/agent/obj
+rm -r $CLIP_PROJECT_PATH/agent/.dotnet-home
