@@ -138,3 +138,5 @@ __pycache__
 
 # Apiserver database
 apiserver/database.db
+
+.sdk/

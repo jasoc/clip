@@ -12,11 +12,11 @@ services:
     env_file:
       - path: .env
         required: true
-    volumes:
-      - ./apiserver:/apiserver
     ports:
       - ${CLIP_APISERVER_PORT}:${CLIP_APISERVER_PORT}
       - 5678:5678
+    volumes:
+      - ./apiserver:/apiserver
 
   spa:
     container_name: clip-spa-dev
@@ -52,10 +52,7 @@ services:
       - path: .env
         required: true
     environment:
-      - HOME=/agent/.dotnet-home
-    ports:
-      - 4200:4200
-      - 9222:9222
+      - HOME=/agent/.sdk
     volumes:
       - ./agent:/agent
 

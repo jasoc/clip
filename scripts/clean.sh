@@ -14,4 +14,4 @@ rm -r $CLIP_PROJECT_PATH/apiserver/.venv
 rm -r $CLIP_PROJECT_PATH/apiserver/dist
 rm -r $CLIP_PROJECT_PATH/agent/bin
 rm -r $CLIP_PROJECT_PATH/agent/obj
-rm -r $CLIP_PROJECT_PATH/agent/.dotnet-home
+rm -r $CLIP_PROJECT_PATH/agent/.sdk

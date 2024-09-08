@@ -35,7 +35,5 @@
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true
-  },
-  // Agent
-  "dotnetAcquisitionExtension.sharedExistingDotnetPath": "agent/.dotnet-home/.dotnet"
+  }
 }

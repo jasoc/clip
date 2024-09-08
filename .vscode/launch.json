@@ -9,6 +9,7 @@
       "type": "docker",
       "request": "attach",
       "platform": "netCore",
+      "processId": "${command:pickProcess}",
       "sourceFileMap": {
         "/src": "${workspaceFolder}/agent"
       }
