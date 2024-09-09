@@ -1514,10 +1514,10 @@
   resolved "https://registry.yarnpkg.com/@eslint/object-schema/-/object-schema-2.1.4.tgz#9e69f8bb4031e11df79e03db09f9dbbae1740843"
   integrity sha512-BsWiH1yFGjXXS2yvrf5LyuoSIIbPrGUWob917o+BTKuZ7qJdxX8aJLRxs1fS9n6r7vESrq1OUqb68dANcFXuQQ==
 
-"@fontsource-variable/roboto-flex@5.0.15":
-  version "5.0.15"
-  resolved "https://registry.npmjs.org/@fontsource-variable/roboto-flex/-/roboto-flex-5.0.15.tgz"
-  integrity sha512-CTBG6EceGcuj49sYZVPx533laiGxKboq0H4GLTJ+/2FkqTsSYIYoF8RzeyySTiCSmY7+EfWckfwYW7L9Wlh3bw==
+"@fontsource-variable/roboto-flex@5.0.17":
+  version "5.0.17"
+  resolved "https://registry.yarnpkg.com/@fontsource-variable/roboto-flex/-/roboto-flex-5.0.17.tgz#7df2b803f99e3e88a8ed08314b1372cf3374a176"
+  integrity sha512-ID4+ej354VuBnuz5vtR66uVBNel1qe3lCOdx/ylST8qQGdjy/IQy8wxkUvyX+FqWHWHslPCq9vG2cMOqLpRpyQ==
 
 "@fontsource/roboto@5.0.14":
   version "5.0.14"
@@ -2971,7 +2971,7 @@ cli-width@^4.1.0:
     "@angular/platform-server" "^18.2.3"
     "@angular/router" "^18.2.3"
     "@angular/ssr" "^18.2.3"
-    "@fontsource-variable/roboto-flex" "5.0.15"
+    "@fontsource-variable/roboto-flex" "5.0.17"
     "@fontsource/roboto" "5.0.14"
     clip-spa "file:."
     express "^4.18.2"
