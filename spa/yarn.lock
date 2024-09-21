@@ -1521,10 +1521,10 @@
   dependencies:
     levn "^0.4.1"
 
-"@fontsource-variable/roboto-flex@5.0.17":
-  version "5.0.17"
-  resolved "https://registry.yarnpkg.com/@fontsource-variable/roboto-flex/-/roboto-flex-5.0.17.tgz#7df2b803f99e3e88a8ed08314b1372cf3374a176"
-  integrity sha512-ID4+ej354VuBnuz5vtR66uVBNel1qe3lCOdx/ylST8qQGdjy/IQy8wxkUvyX+FqWHWHslPCq9vG2cMOqLpRpyQ==
+"@fontsource-variable/roboto-flex@5.1.0":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@fontsource-variable/roboto-flex/-/roboto-flex-5.1.0.tgz#27a88f659e546922f95fb9a832612ae76bf2fb6e"
+  integrity sha512-TwH8+uOwBqIjxtvTc+kp7ywyH7V7bDLbAXrEQg2SoCTJ6m2pn00x7ULioTTzDEvek+XpbqIf8gbKE1zlcONNGg==
 
 "@fontsource/roboto@5.1.0":
   version "5.1.0"
@@ -2978,7 +2978,7 @@ cli-width@^4.1.0:
     "@angular/platform-server" "^18.2.3"
     "@angular/router" "^18.2.3"
     "@angular/ssr" "^18.2.3"
-    "@fontsource-variable/roboto-flex" "5.0.17"
+    "@fontsource-variable/roboto-flex" "5.1.0"
     "@fontsource/roboto" "5.1.0"
     clip-spa "file:."
     express "^4.21.0"
