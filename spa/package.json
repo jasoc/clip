@@ -26,7 +26,7 @@
     "@fontsource-variable/roboto-flex": "5.1.0",
     "@fontsource/roboto": "5.1.0",
     "clip-spa": "file:",
-    "express": "^4.21.0",
+    "express": "^4.21.1",
     "gridstack": "10.3.1",
     "material-symbols": "^0.23.0",
     "ngx-cookie-service": "^18.0.0",
