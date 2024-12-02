@@ -42,7 +42,7 @@
     "@types/express": "^5.0.0",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^22.7.4",
-    "eslint": "^9.11.1",
+    "eslint": "^9.16.0",
     "globals": "^15.9.0",
     "jasmine-core": "~5.3.0",
     "karma": "~6.4.0",
