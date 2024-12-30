@@ -24,7 +24,7 @@
     "@angular/router": "^18.2.6",
     "@angular/ssr": "^18.2.6",
     "@fontsource-variable/roboto-flex": "5.1.0",
-    "@fontsource/roboto": "5.1.0",
+    "@fontsource/roboto": "5.1.1",
     "clip-spa": "file:",
     "express": "^4.21.0",
     "gridstack": "10.3.1",
