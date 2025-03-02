@@ -1687,10 +1687,10 @@
   resolved "https://registry.yarnpkg.com/@fontsource-variable/roboto-flex/-/roboto-flex-5.1.1.tgz#6cb42a852ff44bd1574491c33d79aa3c872fff3e"
   integrity sha512-cMtqtR+EhqTcox5+Sz+/+N7C8hHheQm1EtxJ9qrr356N2lwbpEU0y5OA4as+V7cdiaEFxXw6jzO9KoqLMZ6tNg==
 
-"@fontsource/roboto@5.1.0":
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/@fontsource/roboto/-/roboto-5.1.0.tgz#00230737ec09c60ae877a5e33d067c0607fdd5ba"
-  integrity sha512-cFRRC1s6RqPygeZ8Uw/acwVHqih8Czjt6Q0MwoUoDe9U3m4dH1HmNDRBZyqlMSFwgNAUKgFImncKdmDHyKpwdg==
+"@fontsource/roboto@5.1.1":
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/@fontsource/roboto/-/roboto-5.1.1.tgz#64b3f819baf8d3bcfb48c0437ddc7e4118a6ab14"
+  integrity sha512-XwVVXtERDQIM7HPUIbyDe0FP4SRovpjF7zMI8M7pbqFp3ahLJsJTd18h+E6pkar6UbV3btbwkKjYARr5M+SQow==
 
 "@humanfs/core@^0.19.1":
   version "0.19.1"
@@ -3327,7 +3327,7 @@ cli-width@^4.1.0:
     "@angular/router" "^19.2.0"
     "@angular/ssr" "^19.2.0"
     "@fontsource-variable/roboto-flex" "5.1.1"
-    "@fontsource/roboto" "5.1.0"
+    "@fontsource/roboto" "5.1.1"
     clip-spa "file:."
     express "^4.21.0"
     gridstack "11.4.0"
