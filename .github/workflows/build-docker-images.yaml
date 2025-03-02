@@ -1,0 +1,95 @@
+name: Build and Push Containers
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Semantic version (e.g.: 1.0.0) - leave empty for only latest'
+        required: false
+        default: ''
+      latest:
+        description: 'Update the latest tag as well?'
+        type: boolean
+        default: true
+
+jobs:
+  build-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      # Build and push each service
+      - name: Build and push all services
+        run: |
+          SERVICES="apiserver spa agent"
+          
+          for SERVICE_NAME in $SERVICES; do
+            echo "Building and pushing $SERVICE_NAME..."
+            
+            # Check if service directory exists
+            if [ ! -d "./$SERVICE_NAME" ]; then
+              echo "Warning: Directory ./$SERVICE_NAME not found, skipping..."
+              continue
+            fi
+            
+            # Check if Dockerfile exists
+            if [ ! -f "./$SERVICE_NAME/Dockerfile" ]; then
+              echo "Warning: Dockerfile not found in ./$SERVICE_NAME, skipping..."
+              continue
+            fi
+            
+            # Prepare tags
+            TAGS="ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}-$SERVICE_NAME:sha-$(echo ${{ github.sha }} | cut -c1-7)"
+            
+            # Add version tags if specified
+            if [[ "${{ inputs.version }}" != "" ]]; then
+              VERSION=${{ inputs.version }}
+              TAGS="$TAGS,ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}-$SERVICE_NAME:$VERSION"
+              
+              # Extract major, minor for additional tags
+              MAJOR=$(echo $VERSION | cut -d. -f1)
+              MINOR=$(echo $VERSION | cut -d. -f2)
+              
+              if [[ "$MAJOR" != "" ]]; then
+                TAGS="$TAGS,ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}-$SERVICE_NAME:$MAJOR"
+                
+                if [[ "$MINOR" != "" ]]; then
+                  TAGS="$TAGS,ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}-$SERVICE_NAME:$MAJOR.$MINOR"
+                fi
+              fi
+            fi
+            
+            # Add latest tag if requested
+            if [[ "${{ inputs.latest }}" == "true" ]]; then
+              TAGS="$TAGS,ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}-$SERVICE_NAME:latest"
+            fi
+            
+            # Convert comma-separated tag list to --tag arguments for docker build
+            TAG_ARGS=$(echo $TAGS | sed 's/,/ --tag /g')
+            
+            echo "Building with tags: $TAG_ARGS"
+            
+            # Execute build and push
+            docker buildx build \
+              --push \
+              --platform linux/amd64 \
+              --cache-from type=gha \
+              --cache-to type=gha,mode=max \
+              --tag $TAG_ARGS \
+              ./$SERVICE_NAME
+          done

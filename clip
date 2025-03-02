@@ -1,4 +1,2 @@
 #!/usr/bin/env bash
-export UID=$(id -u)
-export GID=$(id -g)
 docker compose -f compose.base.yml -f compose.$1.yml ${@:2}
