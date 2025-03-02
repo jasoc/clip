@@ -43,7 +43,6 @@ services:
     entrypoint: /bin/sh ./agent.sh
     command: dev
     working_dir: /agent
-    user: ${UID}:${GID}
     build:
       context: ./agent
       target: agent-base
