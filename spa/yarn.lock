@@ -1554,10 +1554,10 @@
     "@eslint/core" "^0.12.0"
     levn "^0.4.1"
 
-"@fontsource-variable/roboto-flex@5.1.1":
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/@fontsource-variable/roboto-flex/-/roboto-flex-5.1.1.tgz#6cb42a852ff44bd1574491c33d79aa3c872fff3e"
-  integrity sha512-cMtqtR+EhqTcox5+Sz+/+N7C8hHheQm1EtxJ9qrr356N2lwbpEU0y5OA4as+V7cdiaEFxXw6jzO9KoqLMZ6tNg==
+"@fontsource-variable/roboto-flex@5.2.5":
+  version "5.2.5"
+  resolved "https://registry.yarnpkg.com/@fontsource-variable/roboto-flex/-/roboto-flex-5.2.5.tgz#38368ea754697c2fdf08df11b06e8b6d391ff4c1"
+  integrity sha512-yrZ9rWNvfM4IBqJSpoFV4wC1GaKNwpzhihyBke+N3WiA0Y7LYxwj6kvvHgecabVIHFL3ZZJTwj3KcKOCyASFPg==
 
 "@fontsource/roboto@5.1.1":
   version "5.1.1"
@@ -3147,9 +3147,9 @@ cli-width@^4.1.0:
     "@angular/platform-server" "^18.2.6"
     "@angular/router" "^18.2.6"
     "@angular/ssr" "^18.2.6"
-    "@fontsource-variable/roboto-flex" "5.1.1"
+    "@fontsource-variable/roboto-flex" "5.2.5"
     "@fontsource/roboto" "5.1.1"
-    clip-spa "file:../usr/local/share/.cache/yarn/v6/npm-clip-spa-0.0.0-e01e3938-06e8-4a9e-a198-28881c7cf380-1740939450639/node_modules/clip-spa"
+    clip-spa "file:."
     express "^4.21.0"
     gridstack "11.4.0"
     material-symbols "^0.23.0"
