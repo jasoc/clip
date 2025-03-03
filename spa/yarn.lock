@@ -3149,7 +3149,7 @@ cli-width@^4.1.0:
     "@angular/ssr" "^18.2.6"
     "@fontsource-variable/roboto-flex" "5.1.1"
     "@fontsource/roboto" "5.1.1"
-    clip-spa "file:../usr/local/share/.cache/yarn/v6/npm-clip-spa-0.0.0-e01e3938-06e8-4a9e-a198-28881c7cf380-1740939450639/node_modules/clip-spa"
+    clip-spa "file:."
     express "^4.21.0"
     gridstack "11.4.0"
     material-symbols "^0.23.0"
@@ -4811,10 +4811,10 @@ jasmine-core@^4.1.0:
   resolved "https://registry.yarnpkg.com/jasmine-core/-/jasmine-core-4.6.1.tgz#5ebb8afa07282078f8d7b15871737a83b74e58f2"
   integrity sha512-VYz/BjjmC3klLJlLwA4Kw8ytk0zDSmbbDLNs794VnWmkcCB7I9aAL/D48VNQtmITyPvea2C3jdUMfc3kAoy0PQ==
 
-jasmine-core@~5.3.0:
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/jasmine-core/-/jasmine-core-5.3.0.tgz#ed784e5a10af43988d8408bad80b9f08e240a3f8"
-  integrity sha512-zsOmeBKESky4toybvWEikRiZ0jHoBEu79wNArLfMdSnlLMZx3Xcp6CSm2sUcYyoJC+Uyj8LBJap/MUbVSfJ27g==
+jasmine-core@~5.6.0:
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/jasmine-core/-/jasmine-core-5.6.0.tgz#4b979c254e7d9b1fe8e767ab00c5d2901c00bd4f"
+  integrity sha512-niVlkeYVRwKFpmfWg6suo6H9CrNnydfBLEqefM5UjibYS+UoTjZdmvPJSiuyrRLGnFj1eYRhFd/ch+5hSlsFVA==
 
 jest-worker@^27.4.5:
   version "27.5.1"
