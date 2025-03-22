@@ -27,4 +27,5 @@ FROM python:3.11.3-slim-bullseye AS apiserver-prod
 COPY --from=apiserver-build /apiserver/dist ./apiserver
 COPY --from=apiserver-build /apiserver/apiserver.sh ./apiserver
 WORKDIR /apiserver
+RUN /bin/sh ./apiserver.sh install_deps
 CMD ["/bin/sh", "./apiserver.sh", "run"]

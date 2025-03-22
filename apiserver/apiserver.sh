@@ -28,8 +28,13 @@ build_apiserver()
 
     mkdir ./dist
     cp ./requirements.txt ./dist/requirements.txt
-    pip install --root-user-action=ignore --no-cache-dir --upgrade -r requirements.txt
+    install_deps
     cp -r ./clip_apiserver/* ./dist/
+}
+
+install_deps()
+{
+    pip install --root-user-action=ignore --no-cache-dir --upgrade -r requirements.txt
 }
 
 prettify()
@@ -47,6 +52,7 @@ main()
         run)      run_apiserver;;
         build)    build_apiserver;;
         prettify) prettify;;
+        install_deps) install_deps;;
         *) $@
     esac
 }
