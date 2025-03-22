@@ -35,7 +35,7 @@ def create_app() -> FastAPI:
 
     @app.on_event("startup")
     async def init_connect():
-        init_clip_database()
+        await init_clip_database()
 
     return app
 

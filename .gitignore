@@ -140,3 +140,4 @@ __pycache__
 apiserver/database.db
 
 .sdk/
+*.ignore

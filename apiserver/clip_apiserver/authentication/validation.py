@@ -2,9 +2,6 @@ from typing import (
     Annotated,
 )
 
-from database import (
-    DBSession,
-)
 from database.models.user import (
     User,
 )
@@ -42,7 +39,7 @@ async def get_current_user(
     token: Annotated[
         str,
         Depends(oauth2_scheme),
-    ]
+    ],
 ) -> UserModel:
     payload = jwt.decode(
         token,
