@@ -28,7 +28,7 @@
     "clip-spa": "file:",
     "express": "^4.21.0",
     "gridstack": "11.4.0",
-    "material-symbols": "^0.23.0",
+    "material-symbols": "^0.30.0",
     "ngx-cookie-service": "^18.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.7.0",
