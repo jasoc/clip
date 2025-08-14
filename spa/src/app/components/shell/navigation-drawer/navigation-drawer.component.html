@@ -82,15 +82,31 @@
 
   <div class="show-user">
     @if (collapsed) {
-      <button mat-mini-fab color="accent">
-        <mat-icon class="material-symbols-rounded">settings</mat-icon>
+      <button mat-mini-fab color="accent" (click)="router.navigateByUrl('/home')">
+        <img
+          *ngIf="currentUserAvatarUrl as av; else defaultIconMini"
+          [src]="av"
+          alt="avatar"
+          style="width: 24px; height: 24px; border-radius: 50%"
+        />
+        <ng-template #defaultIconMini>
+          <mat-icon class="material-symbols-rounded">account_circle</mat-icon>
+        </ng-template>
       </button>
     } @else {
-      <button mat-fab color="accent">
-        <mat-icon class="material-symbols-rounded">settings</mat-icon>
+      <button mat-fab color="accent" (click)="router.navigateByUrl('/home')">
+        <img
+          *ngIf="currentUserAvatarUrl as av; else defaultIcon"
+          [src]="av"
+          alt="avatar"
+          style="width: 40px; height: 40px; border-radius: 50%"
+        />
+        <ng-template #defaultIcon>
+          <mat-icon class="material-symbols-rounded">account_circle</mat-icon>
+        </ng-template>
       </button>
     }
-    <button mat-fab extended *ngIf="!collapsed" @showUserButton color="primary">
+    <button mat-fab extended *ngIf="!collapsed" @showUserButton color="primary" (click)="router.navigateByUrl('/home')">
       <mat-icon class="material-symbols-rounded">home</mat-icon>
       Home page
     </button>

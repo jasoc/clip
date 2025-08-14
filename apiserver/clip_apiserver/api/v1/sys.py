@@ -39,6 +39,6 @@ def get_migratedb(
     return http_response(
         data={
             "user_agent": user_agent,
-            "user": user.username,
+            "user": user.model_dump(),
         }
     )

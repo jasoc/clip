@@ -4,6 +4,7 @@ from sqlalchemy import (
     Column,
     String,
     Uuid,
+    LargeBinary,
 )
 from sqlalchemy.orm import (
     relationship,
@@ -41,4 +42,8 @@ class User(Base):
     hashed_password = Column(
         String,
         nullable=False,
+    )
+    avatar = Column(
+        LargeBinary,
+        nullable=True,
     )

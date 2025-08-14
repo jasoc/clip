@@ -10,7 +10,8 @@ BEGIN
             surname VARCHAR NOT NULL,
             email VARCHAR NULL,
             username VARCHAR NOT NULL,
-            hashed_password VARCHAR NOT NULL
+            hashed_password VARCHAR NOT NULL,
+            avatar BYTEA NULL
         );
     END IF;
 END

@@ -4,6 +4,7 @@ from database.models.user import (
 from pydantic import (
     BaseModel,
 )
+import base64
 
 
 class UserModel(BaseModel):
@@ -12,6 +13,7 @@ class UserModel(BaseModel):
     surname: str = None
     email: str = None
     username: str = None
+    avatar: str | None = None  # base64 encoded
 
     @staticmethod
     def from_db_model(
@@ -23,6 +25,7 @@ class UserModel(BaseModel):
         user.email = user_model.email
         user.username = user_model.username
         user.id = str(user_model.id)
+        user.avatar = base64.b64encode(user_model.avatar).decode("utf-8") if user_model.avatar is not None else None
         return user
 
 

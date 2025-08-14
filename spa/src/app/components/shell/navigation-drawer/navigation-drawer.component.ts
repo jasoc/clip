@@ -1,6 +1,6 @@
 import { animate, animateChild, group, query, state, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 
 import { simpleFade } from '../../../animations/enterAndLeave';
 import { ThemeService } from '../../../services/theme.service';
+import { UserService } from '../../../services/user.service';
 import { M3ButtonComponent } from '../m3-button/m3-button.component';
 import { NavigationElement, navigationElementsTree } from '../navigation-tree';
 
@@ -57,16 +58,40 @@ import { NavigationElement, navigationElementsTree } from '../navigation-tree';
     ]),
   ],
 })
-export class NavigationDrawerComponent {
+export class NavigationDrawerComponent implements OnInit {
   public collapsed: boolean = false;
   public isLightTheme: boolean = false;
   public navigationElementsTree: NavigationElement[];
+  public currentUserAvatarUrl: string | null = null;
+  private currentUserId: string | null = null;
 
   constructor(
     public router: Router,
-    public themeService: ThemeService
+    public themeService: ThemeService,
+    private userService: UserService,
+    private cdr: ChangeDetectorRef
   ) {
     this.navigationElementsTree = navigationElementsTree;
+  }
+
+  async ngOnInit() {
+    try {
+      const who = await this.userService.WhoAmI();
+      const user = (who as any).user;
+      this.currentUserId = user?.id ?? null;
+      if (this.currentUserId) {
+        // Prefer avatar from whoami if present
+        if (user?.avatar) {
+          this.currentUserAvatarUrl = `data:image/*;base64,${user.avatar}`;
+        } else {
+          const avatar = await this.userService.GetUserAvatar(this.currentUserId);
+          this.currentUserAvatarUrl = avatar ? `data:image/*;base64,${avatar}` : null;
+        }
+        this.cdr.markForCheck();
+      }
+    } catch (e) {
+      // ignore
+    }
   }
 
   public ToggleCollapse() {

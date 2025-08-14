@@ -16,6 +16,7 @@ interface UserModel {
   email: string;
   name: string;
   surname: string;
+  avatar?: string | null; // base64
 }
 
 interface UserUpdateModel {
@@ -57,6 +58,11 @@ export class UserService extends BackendService {
     return true;
   }
 
+  async WhoAmI(): Promise<{ user: UserModel; user_agent: string }> {
+    const res = await this.get<{ user: UserModel; user_agent: string }>('/sys/whoami');
+    return res.body!.data;
+  }
+
   async GetUsers(skip: number = 0, limit: number = 100): Promise<UserModel[]> {
     const res = await this.get<UserModel[]>('/users/', {
       skip,
@@ -73,6 +79,18 @@ export class UserService extends BackendService {
   async UpdateUser(userId: string, userInfo: UserUpdateModel): Promise<UserModel> {
     const res = await this.put<UserModel>('/users/' + userId, userInfo);
     return res.body!.data;
+  }
+
+  async UploadAvatar(userId: string, file: File): Promise<UserModel> {
+    const form = new FormData();
+    form.append('file', file);
+    const res = await this.put<UserModel>('/users/' + userId + '/avatar', form);
+    return res.body!.data;
+  }
+
+  async GetUserAvatar(userId: string): Promise<string | null> {
+    const res = await this.get<{ avatar: string }>('/users/' + userId + '/avatar');
+    return res.body!.data?.avatar ?? null;
   }
 
   async DeleteUser(userId: string): Promise<void> {

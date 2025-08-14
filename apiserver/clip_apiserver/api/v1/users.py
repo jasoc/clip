@@ -1,6 +1,3 @@
-from datetime import (
-    timedelta,
-)
 from authentication import (
     get_current_user,
 )
@@ -12,6 +9,9 @@ from fastapi import (
     Depends,
     HTTPException,
     status,
+    UploadFile,
+    File,
+    Form,
 )
 from typing import (
     Annotated,
@@ -26,9 +26,9 @@ from schemas import (
 )
 from utils import (
     context,
-    config,
     get_logger,
 )
+import base64
 
 users_router = APIRouter()
 
@@ -110,9 +110,65 @@ async def update_user(
         db_user.email = body_user.email
         db_user.name = body_user.name
         db_user.surname = body_user.surname
+        # ignore avatar here; use dedicated endpoint
         db.commit()
         db.refresh(db_user)
     return http_response(data=UserModel.from_db_model(db_user).model_dump())
+
+
+@users_router.put(
+    "/{user_id}/avatar",
+    response_model=HttpResponseModel[UserModel],
+)
+async def upload_user_avatar(
+    _: Annotated[
+        UserModel,
+        Depends(get_current_user),
+    ],
+    user_id: str,
+    file: UploadFile = File(None),
+    avatar_b64: str | None = Form(None),
+):
+    with context.db_session() as db:
+        db_user = db.query(User).filter(User.id == user_id).first()
+        if db_user is None:
+            raise HTTPException(status_code=404, detail="User not found")
+        content: bytes | None = None
+        if file is not None:
+            content = await file.read()
+        elif avatar_b64 is not None:
+            try:
+                # accept data URLs or raw base64
+                if avatar_b64.startswith("data:"):
+                    avatar_b64 = avatar_b64.split(",", 1)[1]
+                content = base64.b64decode(avatar_b64)
+            except Exception:
+                raise HTTPException(status_code=400, detail="Invalid base64 avatar")
+        else:
+            raise HTTPException(status_code=400, detail="No avatar provided")
+        db_user.avatar = content
+        db.commit()
+        db.refresh(db_user)
+        return http_response(data=UserModel.from_db_model(db_user).model_dump())
+
+
+@users_router.get(
+    "/{user_id}/avatar",
+    status_code=status.HTTP_200_OK,
+)
+async def get_user_avatar(
+    _: Annotated[
+        UserModel,
+        Depends(get_current_user),
+    ],
+    user_id: str,
+):
+    with context.db_session() as db:
+        db_user = db.query(User).filter(User.id == user_id).first()
+        if db_user is None or db_user.avatar is None:
+            raise HTTPException(status_code=404, detail="Avatar not found")
+        # return base64 content
+        return http_response(data={"avatar": base64.b64encode(db_user.avatar).decode("utf-8")})
 
 
 @users_router.delete(

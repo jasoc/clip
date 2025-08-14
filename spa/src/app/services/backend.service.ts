@@ -2,7 +2,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { firstValueFrom } from 'rxjs';
 
 import { isPlatformBrowser } from '@angular/common';
-import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 
 import { environment } from '../../environments/environment';
@@ -17,11 +17,12 @@ interface HttpBody<T> {
 export class BackendService {
   private baseUrl: string;
 
-  private headers: {
-    [header: string]: string;
-  } = {
-    Authorization: `Bearer ${this.cookieService.get('token')}`,
-  };
+  private buildHeaders(): HttpHeaders {
+    const token = this.cookieService.get('token');
+    let headers = new HttpHeaders();
+    if (token) headers = headers.set('Authorization', `Bearer ${token}`);
+    return headers;
+  }
 
   constructor(
     @Inject(PLATFORM_ID)
@@ -61,7 +62,7 @@ export class BackendService {
         body,
         params: httpPar,
         observe: 'response',
-        headers: this.headers,
+        headers: this.buildHeaders(),
       })
     );
     callback(response);
