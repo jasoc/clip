@@ -37,15 +37,6 @@
   </form>
 
   <div class="top-right-buttons">
-    <button mat-button matTooltip="Switch theme" class="theme-switcher" (click)="themeService.switchDarkLight()">
-      @if (themeService.currentTheme == Theme.Light) {
-        <mat-icon class="material-symbols-rounded">nights_stay</mat-icon>
-      }
-      @if (themeService.currentTheme == Theme.Dark) {
-        <mat-icon class="material-symbols-rounded">sunny</mat-icon>
-      }
-      Switch theme
-    </button>
     <button mat-button color="accent" (click)="goToRegister()">Create a user</button>
   </div>
 </div>

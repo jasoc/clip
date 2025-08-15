@@ -14,16 +14,6 @@
   </div>
 
   <div class="entries">
-    <m3-button
-      [Icon]="isLightTheme ? 'toggle_off' : 'toggle_on'"
-      Type="sidenav-left"
-      [Text]="collapsed ? '' : 'Dark Theme'"
-      [Ripple]="true"
-      BackgroundColor="transparent"
-      (click)="onThemeSwitchChange()"
-    >
-    </m3-button>
-
     <!-- 1st level -->
     <ng-container *ngFor="let element of navigationElementsTree">
       <div
@@ -81,13 +71,52 @@
   <div style="margin: auto 0px"></div>
 
   <div [class]="collapsed ? 'user-widget-collapsed' : 'user-widget'">
-    <img
-      [src]="userService.currentUserAvatarUrl"
-      (click)="router.navigateByUrl('/settings')"
-      alt="avatar"
-      style="width: 40px; height: 40px; border-radius: 50%"
-    />
-    <p>{{ userService.loggedOnUser?.name }} {{ userService.loggedOnUser?.username }}</p>
-    <mat-icon fontSet="material-symbols-outlined">settings</mat-icon>
+    <div class="user-widget-content">
+      <img
+        (click)="forceUserWidgetExpand()"
+        [src]="userService.currentUserAvatarUrl"
+        alt="avatar"
+        style="width: 40px; height: 40px; border-radius: 50%"
+      />
+      <p>{{ userService.loggedOnUser?.name }} {{ userService.loggedOnUser?.username }}</p>
+      <button
+        mat-icon-button
+        color="primary"
+        class="user-widget-expand"
+        (click)="userWidgetCollapsed = !userWidgetCollapsed"
+      >
+        <mat-icon fontSet="material-symbols-outlined">{{
+          userWidgetCollapsed ? 'collapse_all' : 'expand_all'
+        }}</mat-icon>
+      </button>
+    </div>
+    @if (!userWidgetCollapsed) {
+      <div class="user-widget-actions">
+        <div [formGroup]="themeForm">
+          <mat-form-field
+            color="accent"
+            (cdkObserveContent)="themeService.setThemeByString(themeForm.value.theme)"
+            class="marginated"
+          >
+            <mat-label>Theme</mat-label>
+            <mat-select [formControlName]="'theme'">
+              <mat-option [value]="'clip-light'">White theme</mat-option>
+              <mat-option [value]="'clip-dark'">Black theme</mat-option>
+              <mat-option [value]="'clip-grey'">Grey theme</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <p>Clip server version 0.1.0</p>
+        <div class="user-widget-actions-row">
+          <button mat-button color="accent" (click)="router.navigateByUrl('/settings')">
+            Settings
+            <mat-icon fontSet="material-symbols-outlined">settings</mat-icon>
+          </button>
+          <button mat-icon-button color="warn">
+            <mat-icon fontSet="material-symbols-outlined">logout</mat-icon>
+          </button>
+        </div>
+      </div>
+    }
   </div>
 </div>

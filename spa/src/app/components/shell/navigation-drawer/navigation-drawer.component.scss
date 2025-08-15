@@ -16,12 +16,10 @@
     align-items: center;
     flex-direction: row;
     justify-content: flex-start;
-    height: 7vh;
+    height: 8vh;
     padding: 0 tokens.$clip-shell-margin;
     cursor: pointer;
-    * {
-      cursor: pointer;
-    }
+
     p {
       margin: 0 0 0 16px;
       font-weight: 500;
@@ -34,7 +32,7 @@
   .user-widget-collapsed {
     margin: tokens.$clip-shell-margin;
     p,
-    mat-icon {
+    .user-widget-expand {
       display: none;
     }
 
@@ -53,22 +51,21 @@
     padding: tokens.$clip-shell-margin;
     display: flex;
     justify-content: flex-start;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
     transition: cubic-bezier(0.2, 0, 0, 1) 300ms;
     user-select: none;
 
     &:hover {
       box-shadow: 0px 0px 0px 2px var(--clip-background-shader) inset;
-      // background: linear-gradient(128deg, var(--clip-background-shader) 0%, var(--clip-background-shader-lighter) 100%);
-      background: var(--clip-background-shader);
+      background: linear-gradient(128deg, var(--clip-background-shader) 0%, var(--clip-background-shader-lighter) 100%);
+      // background: var(--clip-background-shader);
 
       img {
         box-shadow: 0px 0px 0px 2px var(--clip-background-shader-stronger);
       }
 
-      cursor: pointer;
-
-      mat-icon {
+      .user-widget-expand {
         opacity: 1;
         transform: none;
       }
@@ -88,15 +85,53 @@
       margin: auto auto auto tokens.$clip-shell-margin;
     }
 
-    mat-icon {
+    .user-widget-expand {
       color: var(--clip-background-shader-stronger);
       opacity: 0;
       transform: translateX(10px) rotate(135deg);
       transition: cubic-bezier(0.2, 0, 0, 1) 300ms;
     }
+
+    .user-widget-content {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .user-widget-actions {
+      width: 100%;
+      margin-top: tokens.$clip-shell-margin;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+
+      @include mat.select-density(-3);
+
+      p {
+        font-size: 12px;
+        color: var(--clip-main-ui-text-color-light);
+        margin: 0 0 tokens.$clip-shell-margin tokens.$clip-shell-margin;
+      }
+
+      .user-widget-actions-row {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+
+    .marginated {
+      margin-bottom: tokens.$clip-shell-margin / 2;
+    }
   }
 
   .entries {
+    height: 92vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -172,6 +207,8 @@
       m3-button {
         margin: 8px;
       }
+
+      background: linear-gradient(128deg, var(--clip-background-shader) 0%, var(--clip-background-shader-lighter) 100%);
     }
 
     m3-button {

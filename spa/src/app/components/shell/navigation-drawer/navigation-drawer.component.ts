@@ -1,12 +1,19 @@
-import { animate, animateChild, group, query, state, style, transition, trigger } from '@angular/animations';
+import {
+    animate, animateChild, group, query, state, style, transition, trigger
+} from '@angular/animations';
+import { CdkObserveContent } from '@angular/cdk/observers';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { Router } from '@angular/router';
 
-import { simpleFade } from '../../../animations/enterAndLeave';
+import { simpleFade, simpleFadeVertical } from '../../../animations/enterAndLeave';
 import { ThemeService } from '../../../services/theme.service';
 import { UserService } from '../../../services/user.service';
 import { M3ButtonComponent } from '../m3-button/m3-button.component';
@@ -17,11 +24,30 @@ import { NavigationElement, navigationElementsTree } from '../navigation-tree';
   selector: 'app-navigation-drawer',
   templateUrl: './navigation-drawer.component.html',
   styleUrls: ['./navigation-drawer.component.scss'],
-  providers: [ThemeService],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, MatChipsModule, M3ButtonComponent, MatIconModule, MatButtonModule],
+  imports: [
+    CommonModule,
+    MatChipsModule,
+    ReactiveFormsModule,
+    M3ButtonComponent,
+    MatIconModule,
+    MatButtonModule,
+    MatInputModule,
+    MatSelectModule,
+    CdkObserveContent,
+  ],
+  providers: [
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: {
+        appearance: 'outline',
+      },
+    },
+    ThemeService,
+  ],
   animations: [
     trigger('showUserButton', simpleFade('150ms')),
+    trigger('expandUserWidget', simpleFadeVertical('300ms')),
     trigger('openClose', [
       state(
         'open',
@@ -60,11 +86,14 @@ import { NavigationElement, navigationElementsTree } from '../navigation-tree';
 })
 export class NavigationDrawerComponent {
   public collapsed: boolean = false;
+  public userWidgetCollapsed: boolean = false;
   public isLightTheme: boolean = false;
   public navigationElementsTree: NavigationElement[];
   public currentUserAvatarUrl: string | null = null;
   private currentUserId: string | null = null;
-
+  themeForm: FormGroup = new FormGroup({
+    theme: new FormControl(this.themeService.currentThemeStr),
+  });
   constructor(
     public router: Router,
     public userService: UserService,
@@ -79,12 +108,22 @@ export class NavigationDrawerComponent {
       element.isExpanded = false;
       if (this.collapsed) element.rippled = false;
     });
+    if (!this.collapsed) {
+      this.userWidgetCollapsed = true;
+    }
     this.collapsed = !this.collapsed;
     localStorage.setItem('navigation-drawer-collapsed', this.collapsed ? '1' : '0');
   }
 
-  onThemeSwitchChange() {
-    this.themeService.switchDarkLight();
+  forceUserWidgetExpand() {
+    if (this.collapsed) {
+      this.collapsed = false;
+    } else {
+      return;
+    }
+    if (this.userWidgetCollapsed) {
+      this.userWidgetCollapsed = false;
+    }
   }
 
   navigate(navigationElement: NavigationElement, parentElement: NavigationElement | null = null) {

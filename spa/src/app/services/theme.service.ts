@@ -1,17 +1,15 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 
-export enum Theme {
-  Light = 'clip-light',
-  Dark = 'clip-dark',
-}
+// List of available themes
+// - clip-dark -> spa/src/styles/theme/_clip-dark.scss
+// - clip-light -> spa/src/styles/theme/_clip-light.scss
 
 @Injectable({
   providedIn: 'root',
 })
 export class ThemeService {
-  public defaultTheme: Theme = Theme.Dark;
-  public currentTheme: Theme = this.defaultTheme;
+  public currentThemeStr: string = 'clip-dark';
 
   constructor(
     @Inject(PLATFORM_ID)
@@ -20,33 +18,27 @@ export class ThemeService {
     if (isPlatformBrowser(this.platformId)) {
       const localValue = localStorage.getItem('theme');
       if (localValue != null) {
-        this.currentTheme =
-          Theme[Object.keys(Theme)[Object.values(Theme).indexOf(localValue as unknown as Theme)] as keyof typeof Theme];
+        this.currentThemeStr = localValue;
       }
       this.setDataTheme();
     }
   }
 
-  public switchDarkLight() {
-    if (this.currentTheme == Theme.Light) {
-      this.currentTheme = Theme.Dark;
-    } else {
-      this.currentTheme = Theme.Light;
-    }
+  public setThemeByString(theme: string) {
+    this.currentThemeStr = theme;
     this.saveTheme();
     this.setDataTheme();
-    // window.location.reload();
   }
 
   private saveTheme() {
     if (isPlatformBrowser(this.platformId)) {
-      localStorage.setItem('theme', this.currentTheme.toString());
+      localStorage.setItem('theme', this.currentThemeStr);
     }
   }
 
   private setDataTheme() {
     if (isPlatformBrowser(this.platformId)) {
-      document.body.setAttribute('data-theme', this.currentTheme.toString());
+      document.body.setAttribute('data-theme', this.currentThemeStr);
     }
   }
 }

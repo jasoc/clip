@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { QuestionControlService } from '../../services/question-control.service';
-import { DynamicFormQuestionComponent } from './dynamic-form-question.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+
+import { QuestionControlService } from '../../services/question-control.service';
+import { DynamicFormQuestionComponent } from './dynamic-form-question.component';
 import { DynamicFormRoot } from './types/dynamic-form';
 
 @Component({

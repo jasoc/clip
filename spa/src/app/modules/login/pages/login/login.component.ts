@@ -9,8 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 
-import { FloatBackgroundComponent } from '../../../../components/float-background/float-background.component';
-import { Theme, ThemeService } from '../../../../services/theme.service';
+import { ThemeService } from '../../../../services/theme.service';
 import { UserService } from '../../../../services/user.service';
 
 @Component({
@@ -32,7 +31,6 @@ import { UserService } from '../../../../services/user.service';
     CommonModule,
     MatButtonModule,
     MatIconModule,
-    FloatBackgroundComponent,
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule,
@@ -58,8 +56,6 @@ export class LoginComponent {
     public themeService: ThemeService,
     private snackBar: MatSnackBar
   ) {}
-
-  public Theme = Theme;
 
   async login() {
     await this.userService
