@@ -36,6 +36,26 @@ logger = get_logger("users_router")
 
 
 @users_router.get(
+    "/me",
+    response_model=HttpResponseModel[UserModel],
+    status_code=status.HTTP_200_OK,
+)
+@users_router.get(
+    "/me/",
+    response_model=HttpResponseModel[UserModel],
+    status_code=status.HTTP_200_OK,
+    include_in_schema=False,
+)
+def get_me(
+    user: Annotated[
+        UserModel,
+        Depends(get_current_user),
+    ],
+):
+    return http_response(data=user.model_dump())
+
+
+@users_router.get(
     "",
     response_model=HttpResponseModel[List[UserModel]],
     status_code=status.HTTP_200_OK,
@@ -91,6 +111,11 @@ async def read_user(
     "/{user_id}",
     response_model=HttpResponseModel[UserModel],
 )
+@users_router.put(
+    "/{user_id}/",
+    response_model=HttpResponseModel[UserModel],
+    include_in_schema=False,
+)
 async def update_user(
     _: Annotated[
         UserModel,
@@ -110,8 +135,6 @@ async def update_user(
         db_user.email = body_user.email
         db_user.name = body_user.name
         db_user.surname = body_user.surname
-        # ignore avatar here; use dedicated endpoint
-        db.commit()
         db.refresh(db_user)
     return http_response(data=UserModel.from_db_model(db_user).model_dump())
 
@@ -119,6 +142,11 @@ async def update_user(
 @users_router.put(
     "/{user_id}/avatar",
     response_model=HttpResponseModel[UserModel],
+)
+@users_router.put(
+    "/{user_id}/avatar/",
+    response_model=HttpResponseModel[UserModel],
+    include_in_schema=False,
 )
 async def upload_user_avatar(
     _: Annotated[
@@ -156,6 +184,11 @@ async def upload_user_avatar(
     "/{user_id}/avatar",
     status_code=status.HTTP_200_OK,
 )
+@users_router.get(
+    "/{user_id}/avatar/",
+    status_code=status.HTTP_200_OK,
+    include_in_schema=False,
+)
 async def get_user_avatar(
     _: Annotated[
         UserModel,
@@ -175,6 +208,7 @@ async def get_user_avatar(
     "/{user_id}",
     status_code=status.HTTP_204_NO_CONTENT,
 )
+@users_router.delete("/{user_id}/", status_code=status.HTTP_204_NO_CONTENT, include_in_schema=False)
 async def delete_user(
     _: Annotated[
         UserModel,

@@ -23,11 +23,12 @@ export class HomeAboutComponent {
 
   async uploadRandomAvatar() {
     try {
-      const who = await this.userService.WhoAmI();
-      const userId = (who as any).user.id as string;
+      const user = await this.userService.getMe();
+      const userId = user.id as string;
       const resp = await fetch('https://picsum.photos/seed/' + Math.random() + '/256');
       const blob = await resp.blob();
       const file = new File([blob], 'avatar.jpg', { type: blob.type || 'image/jpeg' });
+      console.log(file);
       await this.userService.UploadAvatar(userId, file);
       this.snackBar.open('Profile picture updated', 'Close', { duration: 2000 });
     } catch (e) {

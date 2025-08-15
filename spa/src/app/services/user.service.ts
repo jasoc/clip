@@ -34,6 +34,9 @@ interface TokenModel {
   providedIn: 'root',
 })
 export class UserService extends BackendService {
+  public loggedOnUser: UserModel | null = null;
+  public currentUserAvatarUrl: string | null = null;
+
   async RegisterUser(userInfo: RegisterModelPost): Promise<boolean> {
     const res = await this.post('/auth/register', userInfo);
     if (res.status === 201) {
@@ -55,11 +58,18 @@ export class UserService extends BackendService {
       return false;
     }
     this.cookieService.set('token', res.body!.data.access_token);
+    this.init();
     return true;
   }
 
-  async WhoAmI(): Promise<{ user: UserModel; user_agent: string }> {
-    const res = await this.get<{ user: UserModel; user_agent: string }>('/sys/whoami');
+  async init(): Promise<void> {
+    this.loggedOnUser = await this.getMe();
+    const avatar = await this.GetUserAvatar(this.loggedOnUser.id);
+    this.currentUserAvatarUrl = avatar ? `data:image/*;base64,${avatar}` : null;
+  }
+
+  async getMe(): Promise<UserModel> {
+    const res = await this.get<UserModel>('/users/me');
     return res.body!.data;
   }
 

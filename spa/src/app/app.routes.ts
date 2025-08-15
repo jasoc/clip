@@ -20,6 +20,19 @@ export const routes: Routes = [
           import('./modules/home/pages/about/home-about.component').then((m) => m.HomeAboutComponent),
       },
       {
+        path: 'settings',
+        canActivate: [PermissionsService.isUserLoggedFn],
+        loadComponent: () => import('./modules/settings/settings.component').then((m) => m.SettingsComponent),
+      },
+      {
+        path: 'settings/personal',
+        canActivate: [PermissionsService.isUserLoggedFn],
+        loadComponent: () =>
+          import('./modules/settings/pages/personal/settings-personal.component').then(
+            (m) => m.SettingsPersonalComponent
+          ),
+      },
+      {
         path: 'dashboards',
         canActivate: [PermissionsService.isUserLoggedFn],
         loadComponent: () => import('./modules/dashboards/dashboards.component').then((m) => m.DashboardsComponent),

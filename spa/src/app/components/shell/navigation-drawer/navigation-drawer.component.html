@@ -80,35 +80,14 @@
 
   <div style="margin: auto 0px"></div>
 
-  <div class="show-user">
-    @if (collapsed) {
-      <button mat-mini-fab color="accent" (click)="router.navigateByUrl('/home')">
-        <img
-          *ngIf="currentUserAvatarUrl as av; else defaultIconMini"
-          [src]="av"
-          alt="avatar"
-          style="width: 24px; height: 24px; border-radius: 50%"
-        />
-        <ng-template #defaultIconMini>
-          <mat-icon class="material-symbols-rounded">account_circle</mat-icon>
-        </ng-template>
-      </button>
-    } @else {
-      <button mat-fab color="accent" (click)="router.navigateByUrl('/home')">
-        <img
-          *ngIf="currentUserAvatarUrl as av; else defaultIcon"
-          [src]="av"
-          alt="avatar"
-          style="width: 40px; height: 40px; border-radius: 50%"
-        />
-        <ng-template #defaultIcon>
-          <mat-icon class="material-symbols-rounded">account_circle</mat-icon>
-        </ng-template>
-      </button>
-    }
-    <button mat-fab extended *ngIf="!collapsed" @showUserButton color="primary" (click)="router.navigateByUrl('/home')">
-      <mat-icon class="material-symbols-rounded">home</mat-icon>
-      Home page
-    </button>
+  <div [class]="collapsed ? 'user-widget-collapsed' : 'user-widget'">
+    <img
+      [src]="userService.currentUserAvatarUrl"
+      (click)="router.navigateByUrl('/settings')"
+      alt="avatar"
+      style="width: 40px; height: 40px; border-radius: 50%"
+    />
+    <p>{{ userService.loggedOnUser?.name }} {{ userService.loggedOnUser?.username }}</p>
+    <mat-icon fontSet="material-symbols-outlined">settings</mat-icon>
   </div>
 </div>

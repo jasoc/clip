@@ -1,6 +1,6 @@
 import { animate, animateChild, group, query, state, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
@@ -58,7 +58,7 @@ import { NavigationElement, navigationElementsTree } from '../navigation-tree';
     ]),
   ],
 })
-export class NavigationDrawerComponent implements OnInit {
+export class NavigationDrawerComponent {
   public collapsed: boolean = false;
   public isLightTheme: boolean = false;
   public navigationElementsTree: NavigationElement[];
@@ -67,31 +67,11 @@ export class NavigationDrawerComponent implements OnInit {
 
   constructor(
     public router: Router,
+    public userService: UserService,
     public themeService: ThemeService,
-    private userService: UserService,
     private cdr: ChangeDetectorRef
   ) {
     this.navigationElementsTree = navigationElementsTree;
-  }
-
-  async ngOnInit() {
-    try {
-      const who = await this.userService.WhoAmI();
-      const user = (who as any).user;
-      this.currentUserId = user?.id ?? null;
-      if (this.currentUserId) {
-        // Prefer avatar from whoami if present
-        if (user?.avatar) {
-          this.currentUserAvatarUrl = `data:image/*;base64,${user.avatar}`;
-        } else {
-          const avatar = await this.userService.GetUserAvatar(this.currentUserId);
-          this.currentUserAvatarUrl = avatar ? `data:image/*;base64,${avatar}` : null;
-        }
-        this.cdr.markForCheck();
-      }
-    } catch (e) {
-      // ignore
-    }
   }
 
   public ToggleCollapse() {
