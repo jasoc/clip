@@ -40,6 +40,9 @@ $TRANSLUCENT_COLOR: #ffffffc9;
 .thin {
   border-radius: 100px;
   height: 40px;
+  &:hover {
+    box-shadow: 0px 0px 0px 2px var(--clip-background-shader);
+  }
   .m3-button__inner {
     justify-content: flex-start !important;
   }
@@ -49,6 +52,9 @@ $TRANSLUCENT_COLOR: #ffffffc9;
   height: 49px;
   border-radius: 16px;
   justify-content: flex-start;
+  &:hover {
+    box-shadow: 0px 0px 0px 2px var(--clip-background-shader);
+  }
 }
 
 .fab {

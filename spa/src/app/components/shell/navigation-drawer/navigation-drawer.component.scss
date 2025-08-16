@@ -204,11 +204,19 @@
       width: 95%;
       margin-top: 4px;
       margin-bottom: 4px;
+      transition: cubic-bezier(0.2, 0, 0, 1) 300ms;
+
       m3-button {
         margin: 8px;
       }
 
-      background: linear-gradient(128deg, var(--clip-background-shader) 0%, var(--clip-background-shader-lighter) 100%);
+      &:hover {
+        background: linear-gradient(
+          128deg,
+          var(--clip-background-shader) 0%,
+          var(--clip-background-shader-lighter) 100%
+        );
+      }
     }
 
     m3-button {

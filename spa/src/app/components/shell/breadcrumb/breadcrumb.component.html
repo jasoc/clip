@@ -1,0 +1,6 @@
+@for (bc of breadcrumbs; track bc) {
+  <a [routerLink]="bc.url">{{ bc.label }}</a>
+  @if (breadcrumbs[breadcrumbs.length - 1] !== bc) {
+    <mat-icon class="material-symbols-outlined" color="accent" matSuffix>arrow_right</mat-icon>
+  }
+}

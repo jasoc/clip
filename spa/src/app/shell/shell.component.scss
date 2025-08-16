@@ -21,7 +21,7 @@
     width: 100%;
     display: grid;
     grid-template-columns: tokens.$clip-shell-margin auto tokens.$clip-shell-margin;
-    grid-template-rows: 50px auto tokens.$clip-shell-margin;
+    grid-template-rows: 40px auto tokens.$clip-shell-margin;
 
     #navigation-bar {
       grid-column: 1 / 3;

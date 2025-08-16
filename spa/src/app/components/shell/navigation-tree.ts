@@ -56,6 +56,31 @@ export const navigationElementsTree: NavigationElement[] = [
     ],
   }),
   new NavigationElement({
+    name: 'Settings',
+    icon: 'settings',
+    subElements: [
+      new NavigationElement({
+        name: 'Overview',
+        icon: 'navigate_next',
+        redirect: 'settings',
+      }),
+      new NavigationElement({
+        name: 'Personal settings',
+        icon: 'settings_account_box',
+        redirect: 'settings/personal',
+      }),
+      new NavigationElement({
+        type: 'tag',
+        name: 'Admin',
+      }),
+      new NavigationElement({
+        name: 'Admin settings',
+        icon: 'admin',
+        redirect: 'settings/admin ',
+      }),
+    ],
+  }),
+  new NavigationElement({
     type: 'tag',
     name: 'Automation',
   }),
