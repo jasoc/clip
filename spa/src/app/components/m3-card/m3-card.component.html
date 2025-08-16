@@ -1,0 +1,19 @@
+<div class="m3-card" matRipple [matRippleColor]="'var(--clip-background-shader)'">
+  <div class="card-hero">
+    <mat-icon fontSet="material-symbols-outlined">{{ titleIcon }}</mat-icon>
+    <h2>{{ title }}</h2>
+  </div>
+  @if (link) {
+    <a [routerLink]="link" class="card-link">{{ link }}</a>
+  }
+  <h3>{{ subTitle }}</h3>
+  <div class="actions">
+    @for (action of actions; track action) {
+      <button mat-flat-button [color]="action.color ?? 'accent'" (click)="action.callback()">
+        <mat-icon fontSet="material-symbols-outlined">{{ action.icon }}</mat-icon>
+        {{ action.label }}
+      </button>
+    }
+    <mat-icon class="filigrana" fontSet="material-symbols-outlined">{{ titleIcon }}</mat-icon>
+  </div>
+</div>

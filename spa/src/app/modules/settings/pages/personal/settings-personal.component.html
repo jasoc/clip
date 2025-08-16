@@ -1,1 +1,9 @@
-<h1>Sex</h1>
+<h1>Personal settings</h1>
+
+<div class="user-avatar">
+  <img [src]="userService.currentUserAvatarUrl" alt="avatar" />
+  <button mat-fab extended color="primary"  (click)="changeUserAvatar()">
+    <mat-icon fontSet="material-symbols-outlined">photo_size_select_large</mat-icon>
+    Change Avatar
+  </button>
+</div>

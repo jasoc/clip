@@ -1,0 +1,17 @@
+:host {
+  h1 {
+    margin: 1rem 0 3rem 2rem;
+  }
+
+  .user-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2rem;
+    margin-left: 2rem;
+    img {
+      border-radius: 100%;
+      border: 4px solid var(--clip-background-shader-stronger);
+    }
+  }
+}

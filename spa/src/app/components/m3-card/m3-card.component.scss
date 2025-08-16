@@ -1,0 +1,81 @@
+.m3-card {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  border-radius: 20px;
+  user-select: none;
+  padding: 20px;
+  transition: cubic-bezier(0.2, 0, 0, 1) 300ms;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(128deg, var(--clip-background-shader) 0%, var(--clip-background-shader) 100%);
+
+  &:hover {
+    background: linear-gradient(128deg, var(--clip-background-shader) 0%, var(--clip-background-shader-stronger) 100%);
+    box-shadow:
+      0px 1px 1px 0px rgba(0, 0, 0, 0.3),
+      1px 1px 4px 0px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+
+    .filigrana {
+      opacity: 0.1;
+    }
+  }
+
+  .card-link {
+    color: var(--clip-main-ui-text-color);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 1rem 0;
+  }
+
+  .filigrana {
+    position: absolute;
+    top: 50%;
+    left: 75%;
+    transition: cubic-bezier(0.2, 0, 0, 1) 300ms;
+    transform: translate(-50%, -50%) scale(5);
+    color: var(--clip-main-ui-text-color);
+    opacity: 0;
+  }
+
+  .card-hero {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    mat-icon {
+      color: var(--clip-main-ui-text-color);
+      margin: 1rem 1.5rem 1rem 0;
+    }
+  }
+
+  h2 {
+    font-size: 2.1rem;
+    text-wrap: nowrap;
+  }
+
+  h3 {
+    font-size: 1.3rem;
+    line-height: 1.5;
+  }
+
+  h2,
+  h3 {
+    margin: 0;
+    padding: 0;
+    color: var(--clip-main-ui-text-color);
+  }
+
+  .actions {
+    display: flex;
+    margin-top: 1rem;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.5rem;
+  }
+}

@@ -1,6 +1,4 @@
-import {
-    animate, animateChild, group, query, state, style, transition, trigger
-} from '@angular/animations';
+import { animate, animateChild, group, query, state, style, transition, trigger } from '@angular/animations';
 import { CdkObserveContent } from '@angular/cdk/observers';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
@@ -86,7 +84,7 @@ import { NavigationElement, navigationElementsTree } from '../navigation-tree';
 })
 export class NavigationDrawerComponent {
   public collapsed: boolean = false;
-  public userWidgetCollapsed: boolean = false;
+  public userWidgetCollapsed: boolean = true;
   public isLightTheme: boolean = false;
   public navigationElementsTree: NavigationElement[];
   public currentUserAvatarUrl: string | null = null;

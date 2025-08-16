@@ -1,11 +1,6 @@
 <div id="navigation-drawer" [@openClose]="collapsed ? 'closed' : 'open'">
   <div class="navigation-drawer__top" [ngStyle]="{}">
-    <button
-      mat-icon-button
-      matTooltip="Basic"
-      (click)="ToggleCollapse()"
-      aria-label="Example icon-button with a heart icon"
-    >
+    <button mat-icon-button matTooltip="Basic" (click)="ToggleCollapse()">
       <mat-icon fontSet="material-symbols-outlined">{{ collapsed ? 'menu' : 'chevron_left' }}</mat-icon>
     </button>
     @if (!this.collapsed) {

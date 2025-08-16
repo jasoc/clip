@@ -1,0 +1,60 @@
+:host {
+  h1 {
+    margin: 1rem 0 3rem 2rem;
+  }
+
+  .settings-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    border: 2px solid var(--clip-background-shader);
+    max-width: 500px;
+
+    div {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      margin: 2rem 0;
+    }
+
+    h3 {
+      margin: 0;
+    }
+
+    mat-icon {
+      margin: 0 1rem;
+    }
+  }
+
+  .settings-container {
+    display: grid;
+    --min-card-width: 260px;
+    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fill, minmax(var(--min-card-width), 1fr));
+    align-items: stretch;
+    width: 100%;
+    margin-block: 1.5rem 3rem;
+
+    m3-card {
+      height: 100%;
+    }
+  }
+
+  @media (min-width: 640px) {
+    .settings-container {
+      --min-card-width: 300px;
+    }
+  }
+  @media (min-width: 960px) {
+    .settings-container {
+      --min-card-width: 340px;
+    }
+  }
+  @media (min-width: 1280px) {
+    .settings-container {
+      --min-card-width: 380px;
+    }
+  }
+}

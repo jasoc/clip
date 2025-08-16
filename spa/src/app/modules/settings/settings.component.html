@@ -1,1 +1,14 @@
-<h1>Settings</h1>
+<h1 class="page-title">Settings</h1>
+<section class="settings-container" aria-label="Settings sections">
+  @for (h of settingsHeaders; track h.title) {
+    <m3-card
+      (click)="router.navigate([h.redirect])"
+      class="settings-card"
+      [actions]="h.actions"
+      [link]="h.link"
+      [title]="h.title"
+      [subTitle]="h.description"
+      [titleIcon]="h.icon"
+    ></m3-card>
+  }
+</section>
