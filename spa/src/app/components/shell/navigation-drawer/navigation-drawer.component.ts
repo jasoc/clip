@@ -80,6 +80,21 @@ import { NavigationElement, navigationElementsTree } from '../navigation-tree';
       ),
       transition('true <=> false', [animate('280ms cubic-bezier(0.18, 0.89, 0.32, 1)')]),
     ]),
+    trigger('animateSubgroup', [
+      state(
+        'true',
+        style({
+          opacity: '1',
+        })
+      ),
+      state(
+        'false',
+        style({
+          opacity: '0',
+        })
+      ),
+      transition('true <=> false', [animate('2800ms cubic-bezier(0.18, 0.89, 0.32, 1)')]),
+    ]),
   ],
 })
 export class NavigationDrawerComponent {

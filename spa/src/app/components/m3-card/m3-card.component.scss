@@ -1,6 +1,5 @@
 .m3-card {
   display: flex;
-  height: 100%;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
@@ -19,7 +18,7 @@
       1px 1px 4px 0px rgba(0, 0, 0, 0.15);
     cursor: pointer;
 
-    .filigrana {
+    .watermark {
       opacity: 0.1;
     }
   }
@@ -31,7 +30,7 @@
     margin: 1rem 0;
   }
 
-  .filigrana {
+  .watermark {
     position: absolute;
     top: 50%;
     left: 75%;

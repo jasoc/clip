@@ -2,7 +2,7 @@
   <label [attr.for]="question.key">{{ question.label }}</label>
   @switch (question.controlType) {
     @case ('textbox') {
-      <mat-form-field color="accent">
+      <mat-form-field>
         <mat-label>{{ question.label }}</mat-label>
         <input matInput [formControlName]="question.key" [id]="question.key" [type]="TextboxQuestion(question).type" />
         @if (TextboxQuestion(question).icon) {

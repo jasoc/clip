@@ -3,6 +3,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 
 import { M3CardAction, M3CardComponent } from '../../components/m3-card/m3-card.component';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'clip-settings',
@@ -13,6 +14,8 @@ import { M3CardAction, M3CardComponent } from '../../components/m3-card/m3-card.
 })
 export class SettingsComponent {
   public router = inject(Router);
+  public themeService: ThemeService = inject(ThemeService);
+
   settingsHeaders: {
     title: string;
     redirect: string;
@@ -34,4 +37,8 @@ export class SettingsComponent {
       icon: 'notifications',
     },
   ];
+
+  constructor() {
+    this.themeService.watermarks['/settings'] = 'settings';
+  }
 }

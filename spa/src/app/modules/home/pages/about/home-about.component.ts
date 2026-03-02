@@ -28,7 +28,6 @@ export class HomeAboutComponent {
       const resp = await fetch('https://picsum.photos/seed/' + Math.random() + '/256');
       const blob = await resp.blob();
       const file = new File([blob], 'avatar.jpg', { type: blob.type || 'image/jpeg' });
-      console.log(file);
       await this.userService.UploadAvatar(userId, file);
       this.snackBar.open('Profile picture updated', 'Close', { duration: 2000 });
     } catch (e) {

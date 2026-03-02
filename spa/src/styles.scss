@@ -154,3 +154,48 @@ table {
       1px 1px 4px 0px rgba(0, 0, 0, 0.15);
   }
 }
+
+// Material-style slide to right view transition
+@keyframes m3-slide-in-right {
+  from {
+    transform: translateX(24px);
+    opacity: 0.001; // avoid flash during transition
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes m3-slide-out-right {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(24px);
+    opacity: 0.001;
+  }
+}
+
+::view-transition-new(router_inner_scrollable) {
+  animation-duration: 75ms;
+  animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  animation-name: m3-slide-in-right;
+  animation-fill-mode: both;
+}
+
+::view-transition-old(router_inner_scrollable) {
+  animation-duration: 75ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 1, 1);
+  animation-name: m3-slide-out-right;
+  animation-fill-mode: both;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(router_inner_scrollable),
+  ::view-transition-new(router_inner_scrollable) {
+    animation: none !important;
+  }
+}

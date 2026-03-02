@@ -1,5 +1,6 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { inject, Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 
 // List of available themes
 // - clip-dark -> spa/src/styles/theme/_clip-dark.scss
@@ -10,6 +11,10 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 })
 export class ThemeService {
   public currentThemeStr: string = 'clip-dark';
+
+  public currentWatermark: string = '';
+  public watermarks: { [key: string]: string } = {};
+  private router = inject(Router);
 
   constructor(
     @Inject(PLATFORM_ID)
@@ -22,6 +27,16 @@ export class ThemeService {
       }
       this.setDataTheme();
     }
+
+    this.router.events.subscribe((ev) => {
+      if (ev instanceof NavigationEnd) {
+        if (this.watermarks[ev.urlAfterRedirects]) {
+          this.currentWatermark = this.watermarks[ev.url];
+        } else {
+          this.currentWatermark = '';
+        }
+      }
+    });
   }
 
   public setThemeByString(theme: string) {

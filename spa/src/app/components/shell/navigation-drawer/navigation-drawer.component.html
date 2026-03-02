@@ -35,7 +35,7 @@
           {{ element.name }}
         </mat-chip>
         <!-- 2nd level -->
-        <ng-container *ngIf="element.isExpanded">
+        <div [@animateSubgroup]="element.isExpanded" *ngIf="element.isExpanded">
           <div class="navigation-entry-subelements">
             <div class="navigation-entry-subelements-left">
               <div class="navigation-entry-subelements-left-spacer"></div>
@@ -58,7 +58,7 @@
               </ng-container>
             </div>
           </div>
-        </ng-container>
+        </div>
       </div>
     </ng-container>
   </div>
@@ -88,11 +88,7 @@
     @if (!userWidgetCollapsed) {
       <div class="user-widget-actions">
         <div [formGroup]="themeForm">
-          <mat-form-field
-            color="accent"
-            (cdkObserveContent)="themeService.setThemeByString(themeForm.value.theme)"
-            class="marginated"
-          >
+          <mat-form-field (cdkObserveContent)="themeService.setThemeByString(themeForm.value.theme)" class="marginated">
             <mat-label>Theme</mat-label>
             <mat-select [formControlName]="'theme'">
               <mat-option [value]="'clip-light'">White theme</mat-option>

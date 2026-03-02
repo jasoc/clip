@@ -1,9 +1,59 @@
 <h1>Personal settings</h1>
 
-<div class="user-avatar">
-  <img [src]="userService.currentUserAvatarUrl" alt="avatar" />
-  <button mat-fab extended color="primary"  (click)="changeUserAvatar()">
-    <mat-icon fontSet="material-symbols-outlined">photo_size_select_large</mat-icon>
-    Change Avatar
+<div class="content">
+  <form [formGroup]="userSettingsFormGroup" (ngSubmit)="save()">
+    <div class="settings-group">
+      <h3>Name</h3>
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput type="text" formControlName="firstName" />
+      </mat-form-field>
+    </div>
+    <div class="settings-group">
+      <h3>Surname</h3>
+      <mat-form-field>
+        <mat-label>Surname</mat-label>
+        <input matInput type="text" formControlName="secondName" />
+      </mat-form-field>
+    </div>
+    <div class="settings-group">
+      <h3>Username</h3>
+      <mat-form-field>
+        <mat-label>Username</mat-label>
+        <input matInput type="text" formControlName="username" />
+      </mat-form-field>
+    </div>
+  </form>
+
+  <div
+    class="user-avatar"
+    [class.drag-over]="dragOver"
+    (dragover)="onDragOver($event)"
+    (dragleave)="onDragLeave($event)"
+    (drop)="onDrop($event)"
+  >
+    <div class="avatar-wrapper" (click)="changeUserAvatar()">
+      <img [src]="userService.currentUserAvatarUrl || 'assets/placeholder-avatar.svg'" alt="avatar" />
+      @if (!uploading) {
+        <div class="overlay">
+          <mat-icon fontSet="material-symbols-outlined">upload</mat-icon>
+          <span>Drop or Click</span>
+        </div>
+      } @else {
+        <div class="overlay uploading">
+          <mat-icon fontSet="material-symbols-outlined" class="spin">autorenew</mat-icon>
+          <span>Uploading...</span>
+        </div>
+      }
+    </div>
+    <button mat-fab extended (click)="fileInput.click()">
+      <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
+      Edit avatar
+    </button>
+    <input #fileInput type="file" accept="image/*" (change)="onFileSelected($event)" hidden />
+  </div>
+  <button mat-fab extended (click)="fileInput.click()">
+    <mat-icon fontSet="material-symbols-outlined">save</mat-icon>
+    Save
   </button>
 </div>

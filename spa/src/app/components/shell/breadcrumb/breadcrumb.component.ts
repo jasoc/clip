@@ -20,7 +20,6 @@ export class BreadcrumbComponent {
   constructor() {
     this.breadcrumbService.breadcrumbs.subscribe((bcs: Breadcrumb[]) => {
       this.breadcrumbs = bcs;
-      console.log(this.breadcrumbs);
     });
   }
 }
