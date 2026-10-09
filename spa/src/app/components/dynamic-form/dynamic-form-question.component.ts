@@ -1,6 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -21,23 +20,20 @@ import { TextboxElement } from './types/dynamic-form-element-textbox';
       },
     },
   ],
-  imports: [CommonModule, MatSelectModule, MatIconModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
+  imports: [MatSelectModule, MatIconModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DynamicFormQuestionComponent {
-  @Input()
-  question!: DynamicFormElement<string>;
-  @Input()
-  form!: FormGroup;
+  readonly question = input.required<DynamicFormElement<string>>();
+  readonly form = input.required<FormGroup>();
 
-  get isValid() {
-    return this.form.controls[this.question.key].valid;
-  }
+  readonly isValid = computed(() => this.form().controls[this.question().key]?.valid ?? true);
 
-  public DropdownQuestion(obj: DynamicFormElement<any>): DropdownElement {
+  DropdownQuestion(obj: DynamicFormElement<any>): DropdownElement {
     return obj as DropdownElement;
   }
 
-  public TextboxQuestion(obj: DynamicFormElement<any>): TextboxElement {
+  TextboxQuestion(obj: DynamicFormElement<any>): TextboxElement {
     return obj as TextboxElement;
   }
 }

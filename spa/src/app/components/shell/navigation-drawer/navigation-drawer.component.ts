@@ -1,7 +1,5 @@
-import { animate, animateChild, group, query, state, style, transition, trigger } from '@angular/animations';
 import { CdkObserveContent } from '@angular/cdk/observers';
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
@@ -11,7 +9,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { Router } from '@angular/router';
 
-import { simpleFade, simpleFadeVertical } from '../../../animations/enterAndLeave';
 import { ThemeService } from '../../../services/theme.service';
 import { UserService } from '../../../services/user.service';
 import { M3ButtonComponent } from '../m3-button/m3-button.component';
@@ -24,7 +21,6 @@ import { NavigationElement, navigationElementsTree } from '../navigation-tree';
   styleUrls: ['./navigation-drawer.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     MatChipsModule,
     ReactiveFormsModule,
     M3ButtonComponent,
@@ -43,133 +39,96 @@ import { NavigationElement, navigationElementsTree } from '../navigation-tree';
     },
     ThemeService,
   ],
-  animations: [
-    trigger('showUserButton', simpleFade('150ms')),
-    trigger('expandUserWidget', simpleFadeVertical('300ms')),
-    trigger('openClose', [
-      state(
-        'open',
-        style({
-          width: '275px',
-        })
-      ),
-      state(
-        'closed',
-        style({
-          width: '70px',
-        })
-      ),
-      transition('open <=> closed', [
-        group([query('@*', animateChild()), animate('280ms cubic-bezier(0.18, 0.89, 0.32, 1)')]),
-      ]),
-    ]),
-    trigger('separatorDisappear', [
-      state(
-        'true',
-        style({
-          opacity: '0',
-          margin: '0',
-        })
-      ),
-      state(
-        'false',
-        style({
-          opacity: '1',
-          margin: '10px 0',
-        })
-      ),
-      transition('true <=> false', [animate('280ms cubic-bezier(0.18, 0.89, 0.32, 1)')]),
-    ]),
-    trigger('animateSubgroup', [
-      state(
-        'true',
-        style({
-          opacity: '1',
-        })
-      ),
-      state(
-        'false',
-        style({
-          opacity: '0',
-        })
-      ),
-      transition('true <=> false', [animate('2800ms cubic-bezier(0.18, 0.89, 0.32, 1)')]),
-    ]),
-  ],
 })
 export class NavigationDrawerComponent {
-  public collapsed: boolean = false;
-  public userWidgetCollapsed: boolean = true;
-  public isLightTheme: boolean = false;
-  public navigationElementsTree: NavigationElement[];
-  public currentUserAvatarUrl: string | null = null;
-  private currentUserId: string | null = null;
-  themeForm: FormGroup = new FormGroup({
-    theme: new FormControl(this.themeService.currentThemeStr),
-  });
-  constructor(
-    public router: Router,
-    public userService: UserService,
-    public themeService: ThemeService,
-    private cdr: ChangeDetectorRef
-  ) {
-    this.navigationElementsTree = navigationElementsTree;
-  }
+  readonly router = inject(Router);
+  readonly userService = inject(UserService);
+  readonly themeService = inject(ThemeService);
 
-  public ToggleCollapse() {
-    this.navigationElementsTree.forEach((element) => {
-      element.isExpanded = false;
-      if (this.collapsed) element.rippled = false;
-    });
-    if (!this.collapsed) {
-      this.userWidgetCollapsed = true;
+  readonly collapsed = signal(false);
+  readonly userWidgetCollapsed = signal(true);
+  readonly navigationElementsTree = signal<NavigationElement[]>(
+    navigationElementsTree.map((el) => el.clone())
+  );
+
+  readonly themeForm = new FormGroup({
+    theme: new FormControl(this.themeService.currentThemeStr()),
+  });
+
+  ToggleCollapse() {
+    const isCollapsed = this.collapsed();
+    this.navigationElementsTree.update((tree) =>
+      tree.map((element) => {
+        const updated = element.clone();
+        updated.isExpanded = false;
+        if (isCollapsed) updated.rippled = false;
+        return updated;
+      })
+    );
+    if (!isCollapsed) {
+      this.userWidgetCollapsed.set(true);
     }
-    this.collapsed = !this.collapsed;
-    localStorage.setItem('navigation-drawer-collapsed', this.collapsed ? '1' : '0');
+    this.collapsed.set(!isCollapsed);
+    localStorage.setItem('navigation-drawer-collapsed', !isCollapsed ? '1' : '0');
   }
 
   forceUserWidgetExpand() {
-    if (this.collapsed) {
-      this.collapsed = false;
+    if (this.collapsed()) {
+      this.collapsed.set(false);
     } else {
       return;
     }
-    if (this.userWidgetCollapsed) {
-      this.userWidgetCollapsed = false;
+    if (this.userWidgetCollapsed()) {
+      this.userWidgetCollapsed.set(false);
     }
   }
 
   navigate(navigationElement: NavigationElement, parentElement: NavigationElement | null = null) {
-    if (this.collapsed && parentElement == null) {
-      this.router.navigateByUrl(navigationElement.subElements.filter((subel) => subel.name == 'Overview')[0].redirect);
+    const isCollapsed = this.collapsed();
+
+    if (isCollapsed && parentElement == null) {
+      const overview = navigationElement.subElements.find((subel) => subel.name === 'Overview');
+      if (overview) this.router.navigateByUrl(overview.redirect);
     }
-    if (navigationElement.subElements.length == 0) {
+    if (navigationElement.subElements.length === 0) {
       this.router.navigateByUrl(navigationElement.redirect);
     }
-    this.navigationElementsTree.forEach((element) => {
-      if (element != parentElement) {
-        element.rippled = false;
-      } else {
-        element.rippled = true;
-      }
-      element.subElements.forEach((subElement) => {
-        subElement.rippled = false;
-      });
-    });
-    if (!this.collapsed) {
-      if (navigationElement.subElements.length > 0) {
-        if (navigationElement.isExpanded) {
-          navigationElement.rippled = false;
-          navigationElement.isExpanded = false;
+
+    this.navigationElementsTree.update((tree) =>
+      tree.map((element) => {
+        const updated = element.clone();
+        if (element !== parentElement) {
+          updated.rippled = false;
         } else {
-          navigationElement.rippled = true;
-          navigationElement.isExpanded = true;
+          updated.rippled = true;
         }
-      } else {
-        navigationElement.rippled = true;
-      }
-    } else {
-      navigationElement.rippled = true;
-    }
+        updated.subElements = element.subElements.map((sub) => {
+          const subUpdated = sub.clone();
+          subUpdated.rippled = false;
+          return subUpdated;
+        });
+
+        // Handle expand/collapse for the clicked element
+        if (element === parentElement || (parentElement == null && element.name === navigationElement.name)) {
+          if (!isCollapsed) {
+            if (navigationElement.subElements.length > 0) {
+              if (navigationElement.isExpanded) {
+                updated.rippled = false;
+                updated.isExpanded = false;
+              } else {
+                updated.rippled = true;
+                updated.isExpanded = true;
+              }
+            } else {
+              updated.rippled = true;
+            }
+          } else {
+            updated.rippled = true;
+          }
+        }
+
+        return updated;
+      })
+    );
   }
 }

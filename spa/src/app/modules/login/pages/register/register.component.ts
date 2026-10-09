@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -12,7 +11,7 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/material/form-field';
-import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -32,11 +31,10 @@ import { UserService } from '../../../../services/user.service';
       },
     },
   ],
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
   imports: [
-    CommonModule,
     MatButtonModule,
     MatIconModule,
     MatFormFieldModule,
@@ -44,33 +42,25 @@ import { UserService } from '../../../../services/user.service';
     ReactiveFormsModule,
     MatCardModule,
     FormsModule,
-    MatIcon,
   ],
 })
 export class RegisterComponent {
-  registerFormGroup = new FormGroup(
+  private readonly userService = inject(UserService);
+  private readonly router = inject(Router);
+  readonly themeService = inject(ThemeService);
+  private readonly snackBar = inject(MatSnackBar);
+
+  readonly registerFormGroup = new FormGroup(
     {
       firstName: new FormControl<string>('', [Validators.required]),
       secondName: new FormControl<string>('', [Validators.required]),
       username: new FormControl<string>('', [Validators.required]),
       email: new FormControl<string>('', [Validators.email]),
       password2: new FormControl<string>('', [Validators.required]),
-      password: new FormControl<string>('', [
-        Validators.required,
-        // TODO: workaround, for some reasons min() or minLength() just color
-        // the input component and doesen't emit the minLength error???
-        // (control) => control.value.length == 0 || control.value.length > 8 ? null : { minLength: true }
-      ]),
+      password: new FormControl<string>('', [Validators.required]),
     },
     this.passwordValidator
   );
-
-  constructor(
-    private userService: UserService,
-    private router: Router,
-    public themeService: ThemeService,
-    private snackBar: MatSnackBar
-  ) {}
 
   passwordValidator(control: AbstractControl): ValidationErrors | null {
     const password = control.value.password;

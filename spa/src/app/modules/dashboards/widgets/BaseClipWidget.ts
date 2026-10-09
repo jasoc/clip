@@ -1,6 +1,6 @@
 import { BaseWidget, NgCompInputs, NgGridStackWidget } from 'gridstack/dist/angular';
 
-import { Component, ElementRef, HostListener, inject, Renderer2 } from '@angular/core';
+import { Component, ElementRef, inject, Renderer2 } from '@angular/core';
 
 import { DashboardService } from '../../../services/dashboard.service';
 import { QuestionControlService } from '../../../services/question-control.service';
@@ -9,29 +9,25 @@ import { QuestionControlService } from '../../../services/question-control.servi
   selector: 'clip-dashboards-widget-base',
   standalone: true,
   template: '',
+  host: {
+    '(mousedown)': 'handleClick($event)',
+  },
 })
 export abstract class BaseClipWidget<OptionsType> extends BaseWidget {
   static currentlyHighlighted: BaseClipWidget<any> | null = null;
 
   public options: OptionsType;
 
-  readonly elRef: ElementRef;
-  readonly renderer: Renderer2;
-  readonly dashboardService: DashboardService;
-  readonly qcs: QuestionControlService;
+  readonly elRef = inject(ElementRef);
+  readonly renderer = inject(Renderer2);
+  readonly dashboardService = inject(DashboardService);
+  readonly qcs = inject(QuestionControlService);
 
   constructor() {
     super();
-    this.elRef = inject(ElementRef);
-    this.renderer = inject(Renderer2);
-    this.dashboardService = inject(DashboardService);
-    this.qcs = inject(QuestionControlService);
     this.options = this.qcs.getInitialOptions(this.getSelector());
   }
 
-  // abstract getInitialOptions(): OptionsType;
-
-  @HostListener('mousedown', ['$event'])
   handleClick(_: MouseEvent): void {
     if (this.dashboardService.onWidgetClickInComposerCallback) {
       this.dashboardService.onWidgetClickInComposerCallback(this);

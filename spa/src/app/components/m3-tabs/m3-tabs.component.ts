@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, ContentChildren, QueryList } from '@angular/core';
+import { afterNextRender, ChangeDetectionStrategy, Component, contentChildren } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 
 import { M3IconComponent } from '../m3-icon/m3-icon.component';
@@ -10,29 +9,25 @@ import { M3TabComponent } from './m3-tab/m3-tab.component';
   standalone: true,
   templateUrl: './m3-tabs.component.html',
   styleUrls: ['./m3-tabs.component.scss'],
-  imports: [CommonModule, M3IconComponent, M3TabComponent, MatIconModule],
+  imports: [M3IconComponent, MatIconModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class M3TabsComponent implements AfterViewInit {
-  @ContentChildren(M3TabComponent)
-  tabsComponents?: QueryList<M3TabComponent>;
+export class M3TabsComponent {
+  readonly tabs = contentChildren(M3TabComponent);
 
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      if (this.tabsComponents && this.tabsComponents.length > 0) {
-        this.tabsComponents.forEach((tab) => {
-          tab.show = false;
-        });
-        this.tabsComponents.get(0)!.show = true;
+  constructor() {
+    afterNextRender(() => {
+      const tabs = this.tabs();
+      if (tabs.length > 0) {
+        tabs.forEach((tab) => tab.show.set(false));
+        tabs[0].show.set(true);
       }
     });
   }
 
   showTab(tab: M3TabComponent) {
-    if (this.tabsComponents && this.tabsComponents.length > 0) {
-      this.tabsComponents.forEach((tab) => {
-        tab.show = false;
-      });
-    }
-    tab.show = true;
+    const tabs = this.tabs();
+    tabs.forEach((t) => t.show.set(false));
+    tab.show.set(true);
   }
 }

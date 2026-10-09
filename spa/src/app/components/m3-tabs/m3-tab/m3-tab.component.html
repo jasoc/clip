@@ -1,3 +1,5 @@
-<div *ngIf="show" class="m3-tab">
-  <ng-content></ng-content>
-</div>
+@if (show()) {
+  <div class="m3-tab">
+    <ng-content></ng-content>
+  </div>
+}

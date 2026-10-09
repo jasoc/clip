@@ -1,6 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,13 +11,12 @@ import { UserService } from '../../../../services/user.service';
   standalone: true,
   templateUrl: './home-about.component.html',
   styleUrls: ['./home-about.component.scss'],
-  imports: [CommonModule, MatButtonModule, MatIconModule, MatSnackBarModule, HttpClientModule, FormsModule],
+  imports: [MatButtonModule, MatIconModule, MatSnackBarModule, FormsModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeAboutComponent {
-  constructor(
-    private userService: UserService,
-    private snackBar: MatSnackBar
-  ) {}
+  private readonly userService = inject(UserService);
+  private readonly snackBar = inject(MatSnackBar);
 
   async uploadRandomAvatar() {
     try {

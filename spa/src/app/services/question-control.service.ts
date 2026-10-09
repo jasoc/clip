@@ -8,11 +8,7 @@ import { DashboardService } from './dashboard.service';
   providedIn: 'root',
 })
 export class QuestionControlService {
-  readonly dashboardService: DashboardService;
-
-  constructor() {
-    this.dashboardService = inject(DashboardService);
-  }
+  private readonly dashboardService = inject(DashboardService);
 
   toFormGroup(
     questions: DynamicFormElement<any>[],

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-develop_spa()
+dev()
 {
     if [ ! -d "./node_modules" ] || [ -z "$(ls -A ./node_modules)" ]
     then
@@ -9,13 +9,13 @@ develop_spa()
     yarn start
 }
 
-run_spa()
+run()
 {
     cd ./dist/clip-spa
     node server/server.mjs
 }
 
-build_spa()
+build()
 {
     yarn install
     yarn build
@@ -37,10 +37,10 @@ prettify()
 main()
 {
     case $1 in
-        '')                develop_spa;;
-        dev)               develop_spa;;
-        run)               run_spa;;
-        build)             build_spa;;
+        '')                dev;;
+        dev)               dev;;
+        run)               run;;
+        build)             build;;
         generate_m3_theme) generate_m3_theme;;
         prettify)          prettify;;
         *) $@

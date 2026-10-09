@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -7,8 +7,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
-import { M3IconComponent } from '../../components/m3-icon/m3-icon.component';
-
 @Component({
   selector: 'clip-home',
   standalone: true,
@@ -16,16 +14,15 @@ import { M3IconComponent } from '../../components/m3-icon/m3-icon.component';
   styleUrls: ['./home.component.scss'],
   imports: [
     MatIconModule,
-    M3IconComponent,
     MatSlideToggleModule,
     MatFormFieldModule,
     MatInputModule,
     MatCardModule,
     FormsModule,
     MatButtonModule,
-    MatIconModule,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeMainComponent {
-  value = 'Clear me';
+  readonly value = signal('Clear me');
 }

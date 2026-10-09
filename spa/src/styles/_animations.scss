@@ -1,0 +1,142 @@
+// =============================================================================
+// Clip CSS Animations — replaces Angular @angular/animations
+// =============================================================================
+
+$clip-ease: cubic-bezier(0.18, 0.89, 0.32, 1);
+$clip-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+// ---------------------------------------------------------------------------
+// Generic enter/leave helpers (used with @if blocks)
+// Elements get animated on insertion via @starting-style + allow-discrete
+// ---------------------------------------------------------------------------
+
+// Simple fade + translateX (used by showUserButton, ShowText triggers)
+.clip-fade-enter {
+  animation: clip-fade-in-x 200ms $clip-ease both;
+}
+
+@keyframes clip-fade-in-x {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// Simple fade + translateY (used by expandUserWidget)
+.clip-fade-enter-y {
+  animation: clip-fade-in-y 300ms $clip-ease both;
+}
+
+@keyframes clip-fade-in-y {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Navigation Drawer — open / close
+// ---------------------------------------------------------------------------
+.navigation-drawer-animated {
+  transition: width 280ms $clip-ease;
+}
+
+// ---------------------------------------------------------------------------
+// Navigation Drawer — separator
+// ---------------------------------------------------------------------------
+.separator-animated {
+  transition:
+    opacity 280ms $clip-ease,
+    margin 280ms $clip-ease;
+
+  &.separator-hidden {
+    opacity: 0;
+    margin: 0;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Navigation Drawer — subgroup
+// ---------------------------------------------------------------------------
+.subgroup-animated {
+  transition: opacity 280ms $clip-ease;
+
+  &.subgroup-hidden {
+    opacity: 0;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// M3 Button — margin animation for icon when text is present
+// ---------------------------------------------------------------------------
+.m3-button-margin-animated {
+  transition:
+    margin-left 280ms $clip-ease,
+    margin-right 280ms $clip-ease;
+}
+
+.m3-button-margin-no-text {
+  margin-left: 9px;
+  margin-right: 0px;
+}
+
+.m3-button-margin-has-text {
+  margin-left: 16px;
+  margin-right: 24px;
+}
+
+// ---------------------------------------------------------------------------
+// M3 Button — justify-content animation
+// ---------------------------------------------------------------------------
+.m3-button-spaced-animated {
+  transition: justify-content 280ms $clip-ease;
+}
+
+// ---------------------------------------------------------------------------
+// Search Bar — context menu enter/leave
+// ---------------------------------------------------------------------------
+.search-context-enter {
+  animation: search-context-in 280ms $clip-ease both;
+}
+
+@keyframes search-context-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0px);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Dashboard Composer — sider collapse
+// ---------------------------------------------------------------------------
+.sider-animated {
+  transition:
+    width 280ms $clip-ease,
+    padding 280ms $clip-ease;
+  width: 340px;
+  padding: 16px;
+
+  &.sider-collapsed {
+    width: 20px;
+    padding: 0px;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Dashboard Composer — sider content enter
+// ---------------------------------------------------------------------------
+.sider-content-enter {
+  animation: clip-fade-in-x 200ms $clip-ease both;
+}

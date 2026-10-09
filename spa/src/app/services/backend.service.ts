@@ -2,38 +2,26 @@ import { CookieService } from 'ngx-cookie-service';
 import { firstValueFrom } from 'rxjs';
 
 import { isPlatformBrowser } from '@angular/common';
-import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
+import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 
 import { environment } from '../../environments/environment';
-
-interface HttpBody<T> {
-  success: boolean;
-  message: string;
-  data: T;
-}
+import { HttpBody } from '../domain';
 
 @Injectable()
 export class BackendService {
-  private baseUrl: string;
+  private readonly platformId = inject(PLATFORM_ID);
+  protected readonly httpClient = inject(HttpClient);
+  protected readonly cookieService = inject(CookieService);
 
-  private buildHeaders(): HttpHeaders {
-    const token = this.cookieService.get('token');
-    let headers = new HttpHeaders();
-    if (token) headers = headers.set('Authorization', `Bearer ${token}`);
-    return headers;
-  }
+  private readonly baseUrl: string;
 
-  constructor(
-    @Inject(PLATFORM_ID)
-    private platformId: object,
-    protected httpClient: HttpClient,
-    protected cookieService: CookieService
-  ) {
-    this.baseUrl = this.resolveOrigin(environment.apiBaseurl);
-    if (!this.baseUrl.endsWith('/')) {
-      this.baseUrl = this.baseUrl + '/';
+  constructor() {
+    let url = this.resolveOrigin(environment.apiBaseurl);
+    if (!url.endsWith('/')) {
+      url = url + '/';
     }
+    this.baseUrl = url;
   }
 
   private async sendRequest<ReturnType>(
@@ -62,7 +50,6 @@ export class BackendService {
         body,
         params: httpPar,
         observe: 'response',
-        headers: this.buildHeaders(),
       })
     );
     callback(response);

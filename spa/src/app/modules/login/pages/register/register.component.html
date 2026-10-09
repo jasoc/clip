@@ -7,10 +7,12 @@
         <mat-form-field class="mat-form-field-couple">
           <mat-label>First name</mat-label>
           <input matInput type="text" formControlName="firstName" />
-          <mat-error *ngIf="registerFormGroup.controls.firstName.hasError('required')">
-            <strong>First name</strong>
-            is required
-          </mat-error>
+          @if (registerFormGroup.controls.firstName.hasError('required')) {
+            <mat-error>
+              <strong>First name</strong>
+              is required
+            </mat-error>
+          }
         </mat-form-field>
 
         <div style="margin-left: 16px"></div>
@@ -18,10 +20,12 @@
         <mat-form-field>
           <mat-label>Second name</mat-label>
           <input matInput type="text" formControlName="secondName" />
-          <mat-error *ngIf="registerFormGroup.controls.secondName.hasError('required')">
-            <strong>Second name</strong>
-            is required
-          </mat-error>
+          @if (registerFormGroup.controls.secondName.hasError('required')) {
+            <mat-error>
+              <strong>Second name</strong>
+              is required
+            </mat-error>
+          }
         </mat-form-field>
       </div>
 
@@ -30,10 +34,12 @@
       <mat-form-field>
         <mat-label>Username</mat-label>
         <input matInput type="text" formControlName="username" />
-        <mat-error *ngIf="registerFormGroup.controls.username.hasError('required')">
-          Please provide a valid and unique
-          <strong>Username</strong>
-        </mat-error>
+        @if (registerFormGroup.controls.username.hasError('required')) {
+          <mat-error>
+            Please provide a valid and unique
+            <strong>Username</strong>
+          </mat-error>
+        }
       </mat-form-field>
 
       <div style="margin-top: 16px"></div>
@@ -41,10 +47,12 @@
       <mat-form-field>
         <mat-label>Email</mat-label>
         <input matInput type="email" placeholder="ex. it@acme.org" formControlName="email" />
-        <mat-error *ngIf="registerFormGroup.controls.email.hasError('email')">
-          The field should be a valid
-          <strong>email</strong>
-        </mat-error>
+        @if (registerFormGroup.controls.email.hasError('email')) {
+          <mat-error>
+            The field should be a valid
+            <strong>email</strong>
+          </mat-error>
+        }
       </mat-form-field>
 
       <div style="margin-top: 16px"></div>
@@ -53,14 +61,16 @@
         <mat-form-field class="mat-form-field-couple">
           <mat-label>Password</mat-label>
           <input matInput type="password" autocomplete="new-password" formControlName="password" />
-          <mat-error *ngIf="registerFormGroup.controls.password.hasError('required')">
-            A
-            <strong>password</strong>
-            is required
-          </mat-error>
-          <mat-error *ngIf="registerFormGroup.controls.password.hasError('minLength')">
-            A password should be minimum 8 characters
-          </mat-error>
+          @if (registerFormGroup.controls.password.hasError('required')) {
+            <mat-error>
+              A
+              <strong>password</strong>
+              is required
+            </mat-error>
+          }
+          @if (registerFormGroup.controls.password.hasError('minLength')) {
+            <mat-error> A password should be minimum 8 characters </mat-error>
+          }
         </mat-form-field>
 
         <div style="margin-left: 16px"></div>
@@ -68,11 +78,13 @@
         <mat-form-field class="mat-form-field-couple">
           <mat-label>Confirm password</mat-label>
           <input matInput type="password" autocomplete="new-password" formControlName="password2" />
-          <mat-error *ngIf="registerFormGroup.controls.password2.hasError('required')">
-            Retype
-            <strong>password</strong>
-            to confirm
-          </mat-error>
+          @if (registerFormGroup.controls.password2.hasError('required')) {
+            <mat-error>
+              Retype
+              <strong>password</strong>
+              to confirm
+            </mat-error>
+          }
         </mat-form-field>
       </div>
 

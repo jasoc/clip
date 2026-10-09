@@ -9,6 +9,19 @@ export class NavigationElement {
   public constructor(init?: Partial<NavigationElement>) {
     Object.assign(this, init);
   }
+
+  public clone(): NavigationElement {
+    const cloned = new NavigationElement({
+      name: this.name,
+      icon: this.icon,
+      redirect: this.redirect,
+      rippled: this.rippled,
+      isExpanded: this.isExpanded,
+      type: this.type,
+    });
+    cloned.subElements = this.subElements.map((sub) => sub.clone());
+    return cloned;
+  }
 }
 
 export const navigationElementsTree: NavigationElement[] = [

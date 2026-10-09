@@ -1,24 +1,17 @@
-import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'm3-icon',
   templateUrl: './m3-icon.component.html',
   styleUrls: ['./m3-icon.component.scss'],
-  imports: [CommonModule, MatIconModule],
+  imports: [MatIconModule],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class M3IconComponent {
-  @Input()
-  public style: 'rounded' | 'sharp' | 'outlined' = 'rounded';
-
-  @Input()
-  public filled: boolean = false;
-
-  @Input()
-  public weight: number = 400;
-
-  @Input('font-size')
-  public fontSize: string = '24px';
+  readonly style = input<'rounded' | 'sharp' | 'outlined'>('rounded');
+  readonly filled = input(false);
+  readonly weight = input(400);
+  readonly fontSize = input('24px', { alias: 'font-size' });
 }

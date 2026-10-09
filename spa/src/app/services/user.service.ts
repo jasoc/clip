@@ -1,41 +1,15 @@
+import { signal } from '@angular/core';
 import { Injectable } from '@angular/core';
 
+import { RegisterModelPost, TokenModel, UserModel, UserUpdateModel } from '../domain';
 import { BackendService } from './backend.service';
-
-interface RegisterModelPost {
-  username: string;
-  password: string;
-  email: string;
-  name: string;
-  surname: string;
-}
-
-interface UserModel {
-  id: string;
-  username: string;
-  email: string;
-  name: string;
-  surname: string;
-  avatar?: string | null; // base64
-}
-
-interface UserUpdateModel {
-  email?: string;
-  name?: string;
-  surname?: string;
-}
-
-interface TokenModel {
-  access_token: string;
-  token_type: string;
-}
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService extends BackendService {
-  public loggedOnUser: UserModel | null = null;
-  public currentUserAvatarUrl: string | null = null;
+  readonly loggedOnUser = signal<UserModel | null>(null);
+  readonly currentUserAvatarUrl = signal<string | null>(null);
 
   async RegisterUser(userInfo: RegisterModelPost): Promise<boolean> {
     const res = await this.post('/auth/register', userInfo);
@@ -63,9 +37,10 @@ export class UserService extends BackendService {
   }
 
   async init(): Promise<void> {
-    this.loggedOnUser = await this.getMe();
-    const avatar = await this.GetUserAvatar(this.loggedOnUser.id);
-    this.currentUserAvatarUrl = avatar ? `data:image/*;base64,${avatar}` : null;
+    const user = await this.getMe();
+    this.loggedOnUser.set(user);
+    const avatar = await this.GetUserAvatar(user.id);
+    this.currentUserAvatarUrl.set(avatar ? `data:image/*;base64,${avatar}` : null);
   }
 
   async getMe(): Promise<UserModel> {

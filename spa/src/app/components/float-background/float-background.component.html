@@ -1,5 +1,7 @@
 <div class="mtd-emoji-background">
   <div class="particle-container">
-    <span class="particle" *ngFor="let emoji of emojis">{{ emoji }}</span>
+    @for (emoji of emojis; track $index) {
+      <span class="particle">{{ emoji }}</span>
+    }
   </div>
 </div>

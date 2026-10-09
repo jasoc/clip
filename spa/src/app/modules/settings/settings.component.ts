@@ -1,8 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 
-import { M3CardAction, M3CardComponent } from '../../components/m3-card/m3-card.component';
+import { M3CardComponent } from '../../components/m3-card/m3-card.component';
+import { M3CardAction } from '../../domain';
 import { ThemeService } from '../../services/theme.service';
 
 @Component({
@@ -11,10 +12,11 @@ import { ThemeService } from '../../services/theme.service';
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss'],
   imports: [MatIconModule, M3CardComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SettingsComponent {
-  public router = inject(Router);
-  public themeService: ThemeService = inject(ThemeService);
+  readonly router = inject(Router);
+  readonly themeService = inject(ThemeService);
 
   settingsHeaders: {
     title: string;

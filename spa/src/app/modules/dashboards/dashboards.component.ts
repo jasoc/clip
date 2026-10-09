@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, inject, model, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, model, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import {
@@ -22,29 +22,33 @@ import { DashboardService } from '../../services/dashboard.service';
   selector: 'clip-dashboards',
   standalone: true,
   providers: [DashboardService],
-  imports: [MatTableModule, MatIconModule, MatButtonModule, MatIconModule, MatSortModule, RouterModule],
+  imports: [MatTableModule, MatIconModule, MatButtonModule, MatSortModule, RouterModule],
   styleUrls: ['dashboards.component.scss'],
   templateUrl: 'dashboards.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DashboardsComponent implements OnInit, AfterViewInit {
-  readonly dialog = inject(MatDialog);
+export class DashboardsComponent {
+  private readonly dialog = inject(MatDialog);
+  private readonly dashboardService = inject(DashboardService);
+  private readonly sort = viewChild(MatSort);
 
-  displayedColumns: string[] = ['name', 'actions'];
-  public dataSource = new MatTableDataSource();
+  readonly displayedColumns: string[] = ['name', 'actions'];
+  readonly dataSource = new MatTableDataSource();
 
-  constructor(private dashboardService: DashboardService) {}
+  constructor() {
+    this.loadDashboards();
 
-  async ngOnInit() {
-    const data = this.dataSource.data;
-    data.push(...(await this.dashboardService.GetDashboards()));
-    this.dataSource.data = data;
+    effect(() => {
+      const s = this.sort();
+      if (s) {
+        this.dataSource.sort = s;
+      }
+    });
   }
 
-  @ViewChild(MatSort)
-  sort!: MatSort;
-
-  ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
+  private async loadDashboards() {
+    const data = await this.dashboardService.GetDashboards();
+    this.dataSource.data = data;
   }
 
   newDashboard() {
@@ -75,6 +79,7 @@ export class DashboardsComponent implements OnInit, AfterViewInit {
     MatDialogActions,
     MatDialogClose,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <h2 mat-dialog-title>New dashboard</h2>
     <mat-dialog-content>

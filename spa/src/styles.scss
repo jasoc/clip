@@ -1,15 +1,15 @@
 @use 'sass:map';
 @use '@angular/material' as mat;
 @use 'theme' as theme;
-
-@import 'gridstack/dist/src/gridstack.scss';
-@import 'gridstack/dist/src/gridstack-extra.scss';
+@use 'animations';
+@use 'gridstack/dist/src/gridstack.scss';
+@use 'gridstack/dist/src/gridstack-extra.scss';
+@use 'material-symbols';
 
 @import '@fontsource/roboto/index.css';
 @import '@fontsource-variable/roboto-flex/full.css';
 
 $material-symbols-font-path: 'material-symbols/';
-@import 'material-symbols';
 
 @include mat.elevation-classes();
 @include mat.app-background();

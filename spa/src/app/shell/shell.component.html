@@ -6,7 +6,7 @@
     <clip-breadcrumb></clip-breadcrumb>
   </div>
   <div id="router_inner">
-    <m3-icon class="watermark" [filled]="true">{{ themeService.currentWatermark }}</m3-icon>
+    <m3-icon class="watermark" [filled]="true">{{ themeService.currentWatermark() }}</m3-icon>
     <div id="router_inner_scrollable" class="router_inner_scrollable">
       <router-outlet></router-outlet>
     </div>

@@ -1,9 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 
-import { Breadcrumb, BreadcrumbService } from '../../../services/breadcrumb.service';
+import { BreadcrumbService } from '../../../services/breadcrumb.service';
 
 @Component({
   selector: 'clip-breadcrumb',
@@ -11,15 +11,9 @@ import { Breadcrumb, BreadcrumbService } from '../../../services/breadcrumb.serv
   imports: [RouterModule, MatChipsModule, MatIconModule],
   templateUrl: './breadcrumb.component.html',
   styleUrls: ['./breadcrumb.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BreadcrumbComponent {
-  breadcrumbs: Breadcrumb[] = [];
-
-  public breadcrumbService: BreadcrumbService = inject(BreadcrumbService);
-
-  constructor() {
-    this.breadcrumbService.breadcrumbs.subscribe((bcs: Breadcrumb[]) => {
-      this.breadcrumbs = bcs;
-    });
-  }
+  readonly breadcrumbService = inject(BreadcrumbService);
+  readonly breadcrumbs = this.breadcrumbService.breadcrumbs;
 }

@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { Component, ElementRef, inject, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal, viewChild, ElementRef } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/material/form-field';
@@ -15,6 +14,7 @@ import { UserService } from '../../../../services/user.service';
   standalone: true,
   templateUrl: './settings-personal.component.html',
   styleUrls: ['./settings-personal.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
@@ -24,7 +24,6 @@ import { UserService } from '../../../../services/user.service';
     },
   ],
   imports: [
-    CommonModule,
     MatInputModule,
     MatButtonModule,
     MatFormFieldModule,
@@ -35,65 +34,65 @@ import { UserService } from '../../../../services/user.service';
   ],
 })
 export class SettingsPersonalComponent {
-  public userService = inject(UserService);
-  public themeService: ThemeService = inject(ThemeService);
+  readonly userService = inject(UserService);
+  readonly themeService = inject(ThemeService);
+  private readonly snackBar = inject(MatSnackBar);
+  private readonly fileInput = viewChild<ElementRef<HTMLInputElement>>('fileInput');
 
-  userSettingsFormGroup = new FormGroup({
-    firstName: new FormControl<string>(this.userService.loggedOnUser?.name ?? '', [Validators.required]),
-    secondName: new FormControl<string>(this.userService.loggedOnUser?.surname ?? '', [Validators.required]),
-    username: new FormControl<string>(this.userService.loggedOnUser?.username ?? '', [Validators.required]),
-    email: new FormControl<string>(this.userService.loggedOnUser?.email ?? '', [Validators.email]),
+  readonly dragOver = signal(false);
+  readonly uploading = signal(false);
+
+  readonly userSettingsFormGroup = new FormGroup({
+    firstName: new FormControl<string>(this.userService.loggedOnUser()?.name ?? '', [Validators.required]),
+    secondName: new FormControl<string>(this.userService.loggedOnUser()?.surname ?? '', [Validators.required]),
+    username: new FormControl<string>(this.userService.loggedOnUser()?.username ?? '', [Validators.required]),
+    email: new FormControl<string>(this.userService.loggedOnUser()?.email ?? '', [Validators.email]),
   });
 
-  constructor(private snackBar: MatSnackBar) {
+  constructor() {
     this.themeService.watermarks['/settings/personal'] = 'contacts_product';
   }
-  @ViewChild('fileInput') private fileInput!: ElementRef<HTMLInputElement>;
 
-  public dragOver = false;
-  public uploading = false;
-
-  public async save(): Promise<void> {
+  async save(): Promise<void> {
     return;
   }
 
-  public changeUserAvatar(): void {
-    // Open hidden file input dialog
-    this.fileInput?.nativeElement.click();
+  changeUserAvatar(): void {
+    this.fileInput()?.nativeElement.click();
   }
 
-  public onDragOver(evt: DragEvent): void {
+  onDragOver(evt: DragEvent): void {
     evt.preventDefault();
     evt.stopPropagation();
-    this.dragOver = true;
+    this.dragOver.set(true);
   }
 
-  public onDragLeave(evt: DragEvent): void {
+  onDragLeave(evt: DragEvent): void {
     evt.preventDefault();
     evt.stopPropagation();
-    this.dragOver = false;
+    this.dragOver.set(false);
   }
 
-  public onDrop(evt: DragEvent): void {
+  onDrop(evt: DragEvent): void {
     evt.preventDefault();
     evt.stopPropagation();
-    this.dragOver = false;
+    this.dragOver.set(false);
     if (!evt.dataTransfer || evt.dataTransfer.files.length === 0) return;
     const file = evt.dataTransfer.files[0];
     this.handleFile(file);
   }
 
-  public onFileSelected(event: Event): void {
+  onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
     if (!file) return;
     this.handleFile(file);
-    // reset so same file can be selected again later
     input.value = '';
   }
 
   private async handleFile(file: File): Promise<void> {
-    if (!this.userService.loggedOnUser) {
+    const user = this.userService.loggedOnUser();
+    if (!user) {
       this.snackBar.open('Not logged in', 'Close', { duration: 2500 });
       return;
     }
@@ -101,23 +100,22 @@ export class SettingsPersonalComponent {
       this.snackBar.open('Please select an image file', 'Close', { duration: 2500 });
       return;
     }
-    const maxSize = 50 * 1024 * 1024; // 50MB
+    const maxSize = 50 * 1024 * 1024;
     if (file.size > maxSize) {
       this.snackBar.open('Image too large (max 50MB)', 'Close', { duration: 3000 });
       return;
     }
-    this.uploading = true;
+    this.uploading.set(true);
     try {
-      await this.userService.UploadAvatar(this.userService.loggedOnUser.id, file);
-      const avatar = await this.userService.GetUserAvatar(this.userService.loggedOnUser.id);
-      this.userService.currentUserAvatarUrl = avatar ? `data:image/*;base64,${avatar}` : null;
-
+      await this.userService.UploadAvatar(user.id, file);
+      const avatar = await this.userService.GetUserAvatar(user.id);
+      this.userService.currentUserAvatarUrl.set(avatar ? `data:image/*;base64,${avatar}` : null);
       this.snackBar.open('Avatar updated', 'Close', { duration: 2000 });
     } catch (e) {
       console.error(e);
       this.snackBar.open('Failed to upload avatar', 'Close', { duration: 3000 });
     } finally {
-      this.uploading = false;
+      this.uploading.set(false);
     }
   }
 }

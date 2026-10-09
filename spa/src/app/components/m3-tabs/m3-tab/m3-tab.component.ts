@@ -1,20 +1,14 @@
-import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, model } from '@angular/core';
 
 @Component({
   selector: 'm3-tab',
   templateUrl: './m3-tab.component.html',
   styleUrls: ['./m3-tab.component.scss'],
   standalone: true,
-  imports: [CommonModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class M3TabComponent {
-  @Input()
-  public show: boolean = false;
-
-  @Input()
-  public icon: string = 'home';
-
-  @Input()
-  public label: string = 'Page';
+  readonly show = model(false);
+  readonly icon = input('home');
+  readonly label = input('Page');
 }

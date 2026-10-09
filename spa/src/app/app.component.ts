@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 import { UserService } from './services/user.service';
@@ -9,11 +9,12 @@ import { UserService } from './services/user.service';
   imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent implements OnInit {
-  readonly userService = inject(UserService);
+export class AppComponent {
+  private readonly userService = inject(UserService);
 
-  ngOnInit() {
+  constructor() {
     if (this.userService.userLogged()) {
       this.userService.init();
     }

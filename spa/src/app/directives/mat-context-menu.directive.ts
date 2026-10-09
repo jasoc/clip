@@ -1,4 +1,4 @@
-import { Directive, Input } from '@angular/core';
+import { Directive, effect, input } from '@angular/core';
 import { MatMenuPanel, MatMenuTrigger } from '@angular/material/menu';
 
 @Directive({
@@ -13,12 +13,13 @@ import { MatMenuPanel, MatMenuTrigger } from '@angular/material/menu';
   },
 })
 export class MatContextMenuDirective extends MatMenuTrigger {
-  @Input('matContextMenu')
-  get _matMenuTriggerForContext(): MatMenuPanel | null {
-    return this.menu;
-  }
-  set _matMenuTriggerForContext(v: MatMenuPanel | null) {
-    this.menu = v;
+  readonly matContextMenu = input<MatMenuPanel | null>(null);
+
+  constructor() {
+    super();
+    effect(() => {
+      this.menu = this.matContextMenu();
+    });
   }
 
   _handleContextMenu($event: MouseEvent): boolean {

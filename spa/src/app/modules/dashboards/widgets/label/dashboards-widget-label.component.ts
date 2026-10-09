@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -7,15 +7,11 @@ import { MatSliderModule } from '@angular/material/slider';
 
 import { DropdownElement } from '../../../../components/dynamic-form/types/dynamic-form-element-dropdown';
 import { TextboxElement } from '../../../../components/dynamic-form/types/dynamic-form-element-textbox';
+import { LabelOptions } from '../../../../domain';
 import { ClipWidget } from '../base-widget.decorator';
 import { BaseClipWidget } from '../BaseClipWidget';
 
 const selector = 'clip-dashboards-widget-label';
-
-interface LabelOptions {
-  content: string;
-  size: string;
-}
 
 @ClipWidget({
   id: selector,
@@ -62,6 +58,7 @@ interface LabelOptions {
   templateUrl: './dashboards-widget-label.component.html',
   styleUrls: ['./dashboards-widget-label.component.scss'],
   imports: [FormsModule, MatIconModule, MatButtonModule, MatSlideToggleModule, MatSliderModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardsWidgetLabelComponent extends BaseClipWidget<LabelOptions> {
   public override getSelector(): string {

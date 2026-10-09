@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterOutlet } from '@angular/router';
 
@@ -12,8 +12,9 @@ import { ThemeService } from '../services/theme.service';
   standalone: true,
   templateUrl: './shell.component.html',
   styleUrls: ['./shell.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NavigationDrawerComponent, MatIconModule, RouterOutlet, BreadcrumbComponent, M3IconComponent],
 })
 export class ShellComponent {
-  public themeService: ThemeService = inject(ThemeService);
+  readonly themeService = inject(ThemeService);
 }

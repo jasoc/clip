@@ -126,7 +126,7 @@
     }
 
     .marginated {
-      margin-bottom: tokens.$clip-shell-margin / 2;
+      margin-bottom: calc(tokens.$clip-shell-margin / 2);
     }
   }
 

@@ -1,9 +1,10 @@
-import { provideHttpClient, withFetch } from '@angular/common/http';
-import { ApplicationConfig } from '@angular/core';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import { ApplicationConfig, provideZonelessChangeDetection } from '@angular/core';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter, withViewTransitions } from '@angular/router';
 
+import { authInterceptor } from './interceptors/auth.interceptor';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
@@ -16,9 +17,9 @@ export const appConfig: ApplicationConfig = {
         },
       })
     ),
+    provideZonelessChangeDetection(),
     provideClientHydration(),
     provideAnimationsAsync(),
-    provideHttpClient(withFetch()),
-    provideAnimationsAsync(),
+    provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
   ],
 };

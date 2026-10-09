@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, input, output } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,27 +12,30 @@ import { DynamicFormRoot } from './types/dynamic-form';
   selector: 'app-dynamic-form',
   templateUrl: './dynamic-form.component.html',
   providers: [QuestionControlService],
-  imports: [CommonModule, DynamicFormQuestionComponent, ReactiveFormsModule, MatButtonModule, MatIconModule],
+  imports: [DynamicFormQuestionComponent, ReactiveFormsModule, MatButtonModule, MatIconModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DynamicFormComponent implements OnInit {
-  @Input()
-  questions: DynamicFormRoot | null = [];
-
-  @Input()
-  overrideValues: object = {};
-
-  @Output()
-  valuesChange = new EventEmitter<object>();
+export class DynamicFormComponent {
+  readonly questions = input<DynamicFormRoot | null>([]);
+  readonly overrideValues = input<object>({});
+  readonly valuesChange = output<object>();
 
   form!: FormGroup;
 
-  constructor(private qcs: QuestionControlService) {}
+  private readonly qcs = inject(QuestionControlService);
 
-  ngOnInit() {
-    this.form = this.qcs.toFormGroup(this.questions!, this.overrideValues);
-    this.form.valueChanges.subscribe((values) => {
-      if (this.form.valid) {
-        this.valuesChange.emit(values);
+  constructor() {
+    effect((onCleanup) => {
+      const questions = this.questions();
+      const overrides = this.overrideValues();
+      if (questions) {
+        this.form = this.qcs.toFormGroup(questions, overrides);
+        const sub = this.form.valueChanges.subscribe((values) => {
+          if (this.form.valid) {
+            this.valuesChange.emit(values);
+          }
+        });
+        onCleanup(() => sub.unsubscribe());
       }
     });
   }

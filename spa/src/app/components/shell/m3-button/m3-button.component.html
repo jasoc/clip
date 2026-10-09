@@ -2,19 +2,27 @@
   class="m3-button"
   matRipple
   [matRippleColor]="'var(--clip-background-shader)'"
-  [ngClass]="{
-    thin: Type == 'thin',
-    fab: Type == 'fab',
-    'sidenav-left': Type == 'sidenav-left',
-  }"
+  [class.thin]="Type() === 'thin'"
+  [class.fab]="Type() === 'fab'"
+  [class.sidenav-left]="Type() === 'sidenav-left'"
 >
   <div class="m3-button__inner">
-    <div class="m3-icon" [@marginLeft]="HasText()" *ngIf="Icon != null">
-      <m3-icon [filled]="iconFilled" @ShowText [weight]="600">{{ Icon }}</m3-icon>
-    </div>
-    <div class="text" *ngIf="HasText()" @ShowText>
-      {{ Text }}
-    </div>
-    <span *ngIf="HasText()" style="width: 31px"></span>
+    @if (Icon() != null) {
+      <div
+        class="m3-icon m3-button-margin-animated"
+        [class.m3-button-margin-has-text]="hasText()"
+        [class.m3-button-margin-no-text]="!hasText()"
+      >
+        <m3-icon class="clip-fade-enter" [filled]="iconFilled()" [weight]="600">{{ Icon() }}</m3-icon>
+      </div>
+    }
+    @if (hasText()) {
+      <div class="text clip-fade-enter">
+        {{ Text() }}
+      </div>
+    }
+    @if (hasText()) {
+      <span style="width: 31px"></span>
+    }
   </div>
 </button>

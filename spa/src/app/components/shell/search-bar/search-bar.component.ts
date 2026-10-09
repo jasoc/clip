@@ -1,6 +1,4 @@
-import { animate, style, transition, trigger } from '@angular/animations';
-import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, model, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,61 +8,30 @@ import { MatIconModule } from '@angular/material/icon';
   standalone: true,
   templateUrl: './search-bar.component.html',
   styleUrls: ['./search-bar.component.scss'],
-  imports: [CommonModule, MatIconModule, MatRippleModule, FormsModule],
-  animations: [
-    trigger('contextMenuOpen', [
-      transition(':enter', [
-        style({
-          opacity: 0,
-          transform: 'translate(-50%, -50px)',
-        }),
-        animate(
-          '280ms cubic-bezier(0.18, 0.89, 0.32, 1)',
-          style({
-            opacity: 1,
-            transform: 'translate(-50%, 0px)',
-          })
-        ),
-      ]),
-      transition(':leave', [
-        animate(
-          '280ms cubic-bezier(0.18, 0.89, 0.32, 1)',
-          style({
-            opacity: 0,
-            transform: 'translate(-50%, -50px)',
-          })
-        ),
-      ]),
-    ]),
-  ],
+  imports: [MatIconModule, MatRippleModule, FormsModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchBarComponent {
-  @Input()
-  text: string = '';
+  readonly text = model('');
+  readonly colored = signal(false);
+  readonly contextMenuOpen = signal(false);
 
-  @Output()
-  textChange = new EventEmitter<string>();
-
-  public colored: boolean = false;
-  public contextMenuOpen: boolean = false;
-
-  constructor() {}
-
-  onFocus(event: Event) {
-    this.contextMenuOpen = true;
-    this.colored = true;
+  onFocus(_event: Event) {
+    this.contextMenuOpen.set(true);
+    this.colored.set(true);
   }
 
-  onFocusOut(event: Event) {
-    if (!this.text) {
-      this.contextMenuOpen = false;
-      this.colored = false;
+  onFocusOut(_event: Event) {
+    const t = this.text();
+    if (!t) {
+      this.contextMenuOpen.set(false);
+      this.colored.set(false);
       return;
     }
 
-    if (this.text.length > 0) {
-      this.contextMenuOpen = true;
-      this.colored = false;
+    if (t.length > 0) {
+      this.contextMenuOpen.set(true);
+      this.colored.set(false);
       return;
     }
   }

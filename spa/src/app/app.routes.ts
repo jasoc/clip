@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 
-import { DashboardResolver } from './modules/dashboards/dashboards.resolver';
+import { dashboardResolver } from './modules/dashboards/dashboards.resolver';
 import { PermissionsService } from './services/permissions.service';
 
 export const routes: Routes = [
@@ -60,7 +60,7 @@ export const routes: Routes = [
           {
             path: ':id',
             canActivate: [PermissionsService.isUserLoggedFn],
-            resolve: { dashboard: DashboardResolver },
+            resolve: { dashboard: dashboardResolver },
             loadComponent: () =>
               import('./modules/dashboards/pages/viewer/dashboards-viewer.component').then(
                 (m) => m.DashboardsViewerComponent
@@ -73,7 +73,7 @@ export const routes: Routes = [
               {
                 path: ':id',
                 canActivate: [PermissionsService.isUserLoggedFn],
-                resolve: { dashboard: DashboardResolver },
+                resolve: { dashboard: dashboardResolver },
                 loadComponent: () =>
                   import('./modules/dashboards/pages/composer/dashboards-composer.component').then(
                     (m) => m.DashboardsComposerComponent

@@ -1,16 +1,13 @@
-import { from, Observable } from 'rxjs';
+import { from } from 'rxjs';
 
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
+import { inject } from '@angular/core';
+import { ActivatedRouteSnapshot, ResolveFn } from '@angular/router';
 
-import { DashboardModel, DashboardService } from '../../services/dashboard.service';
+import { DashboardModel } from '../../domain';
+import { DashboardService } from '../../services/dashboard.service';
 
-@Injectable({ providedIn: 'root' })
-export class DashboardResolver implements Resolve<DashboardModel> {
-  constructor(private dashboardService: DashboardService) {}
-
-  resolve(route: ActivatedRouteSnapshot): Observable<DashboardModel> {
-    const id = route.paramMap.get('id')!;
-    return from(this.dashboardService.GetDashboard(id));
-  }
-}
+export const dashboardResolver: ResolveFn<DashboardModel> = (route: ActivatedRouteSnapshot) => {
+  const dashboardService = inject(DashboardService);
+  const id = route.paramMap.get('id')!;
+  return from(dashboardService.GetDashboard(id));
+};

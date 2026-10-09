@@ -1,18 +1,18 @@
-<div [formGroup]="form" class="dynamic-form density-minus-3">
-  <label [attr.for]="question.key">{{ question.label }}</label>
-  @switch (question.controlType) {
+<div [formGroup]="form()" class="dynamic-form density-minus-3">
+  <label [attr.for]="question().key">{{ question().label }}</label>
+  @switch (question().controlType) {
     @case ('textbox') {
       <mat-form-field>
-        <mat-label>{{ question.label }}</mat-label>
-        <input matInput [formControlName]="question.key" [id]="question.key" [type]="TextboxQuestion(question).type" />
-        @if (TextboxQuestion(question).icon) {
+        <mat-label>{{ question().label }}</mat-label>
+        <input matInput [formControlName]="question().key" [id]="question().key" [type]="TextboxQuestion(question()).type" />
+        @if (TextboxQuestion(question()).icon) {
           <mat-icon class="material-symbols-outlined" color="accent" matSuffix>{{
-            TextboxQuestion(question).icon
+            TextboxQuestion(question()).icon
           }}</mat-icon>
         }
-        @if (!isValid) {
+        @if (!isValid()) {
           <mat-error>
-            {{ question.label }}
+            {{ question().label }}
             is required
           </mat-error>
         }
@@ -20,15 +20,15 @@
     }
     @case ('dropdown') {
       <mat-form-field>
-        <mat-label>{{ question.label }}</mat-label>
-        <mat-select [formControlName]="question.key">
-          @for (opt of DropdownQuestion(question).options; track opt) {
+        <mat-label>{{ question().label }}</mat-label>
+        <mat-select [formControlName]="question().key">
+          @for (opt of DropdownQuestion(question()).options; track opt) {
             <mat-option [value]="opt.key">{{ opt.label }}</mat-option>
           }
         </mat-select>
-        @if (!isValid) {
+        @if (!isValid()) {
           <mat-error>
-            {{ question.label }}
+            {{ question().label }}
             is required
           </mat-error>
         }

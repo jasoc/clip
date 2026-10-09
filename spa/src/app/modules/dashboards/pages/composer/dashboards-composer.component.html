@@ -9,9 +9,9 @@
       <div empty-content>Add items here or reload the grid</div>
     </gridstack>
   </div>
-  <div id="dashboards-composer-sider" [@collapseSider]="siderCollapsed">
-    @if (!siderCollapsed) {
-      <m3-tabs @showSiderContent>
+  <div id="dashboards-composer-sider" class="sider-animated" [class.sider-collapsed]="siderCollapsed()">
+    @if (!siderCollapsed()) {
+      <m3-tabs class="sider-content-enter">
         <m3-tab icon="list" label="Widgets">
           <div class="widget-preview-title">
             <m3-icon>grid_on</m3-icon>
@@ -56,7 +56,7 @@
       </m3-tabs>
     }
     <div id="dashboards-composer-sider-handle" (click)="toggleSiderCollapse()">
-      <m3-icon>{{ siderCollapsed ? 'keyboard_arrow_left' : 'keyboard_arrow_right' }}</m3-icon>
+      <m3-icon>{{ siderCollapsed() ? 'keyboard_arrow_left' : 'keyboard_arrow_right' }}</m3-icon>
     </div>
   </div>
 </div>

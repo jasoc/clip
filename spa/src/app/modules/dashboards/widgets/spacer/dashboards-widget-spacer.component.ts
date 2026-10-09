@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { ClipWidget } from '../base-widget.decorator';
 import { BaseClipWidget } from '../BaseClipWidget';
@@ -17,6 +17,7 @@ const selector = 'clip-dashboards-widget-spacer';
   standalone: true,
   templateUrl: './dashboards-widget-spacer.component.html',
   styleUrls: ['./dashboards-widget-spacer.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardsWidgetSpacerComponent extends BaseClipWidget<any> {
   public override getSelector(): string {

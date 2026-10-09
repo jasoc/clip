@@ -2,26 +2,9 @@ import { BaseWidget, GridstackComponent } from 'gridstack/dist/angular';
 
 import { Injectable, reflectComponentType, Type } from '@angular/core';
 
-import { WidgetMetadata } from '../modules/dashboards/widgets/base-widget.decorator';
+import { ClipWidgetInfo, DashboardModel, DashboardUpdateModel, WidgetMetadata } from '../domain';
 import { BaseClipWidget } from '../modules/dashboards/widgets/BaseClipWidget';
 import { BackendService } from './backend.service';
-
-export type ClipWidgetInfo = {
-  widgetType: Type<BaseWidget>;
-  metadata: WidgetMetadata;
-};
-
-export interface DashboardModel {
-  id?: string;
-  name?: string;
-  json_grid?: string;
-  user_id?: string;
-}
-
-export interface DashboardUpdateModel {
-  name?: string;
-  json_grid?: string;
-}
 
 @Injectable({
   providedIn: 'root',

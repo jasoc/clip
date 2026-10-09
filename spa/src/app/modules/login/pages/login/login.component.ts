@@ -1,10 +1,9 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/material/form-field';
-import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -24,11 +23,10 @@ import { UserService } from '../../../../services/user.service';
       },
     },
   ],
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   imports: [
-    CommonModule,
     MatButtonModule,
     MatIconModule,
     MatFormFieldModule,
@@ -36,26 +34,18 @@ import { UserService } from '../../../../services/user.service';
     ReactiveFormsModule,
     MatCardModule,
     FormsModule,
-    MatIcon,
   ],
 })
 export class LoginComponent {
-  loginFormGroup = new FormGroup({
-    username: new FormControl<string>('', [Validators.required]),
-    password: new FormControl<string>('', [
-      Validators.required,
-      // TODO: workaround, for some reasons min() or minLength() just color
-      // the input component and doesen't emit the minLength error???
-      // (control) => (control.value.length == 0 || control.value.length > 8 ? null : { minLength: true }),
-    ]),
-  });
+  private readonly userService = inject(UserService);
+  private readonly router = inject(Router);
+  readonly themeService = inject(ThemeService);
+  private readonly snackBar = inject(MatSnackBar);
 
-  constructor(
-    private userService: UserService,
-    private router: Router,
-    public themeService: ThemeService,
-    private snackBar: MatSnackBar
-  ) {}
+  readonly loginFormGroup = new FormGroup({
+    username: new FormControl<string>('', [Validators.required]),
+    password: new FormControl<string>('', [Validators.required]),
+  });
 
   async login() {
     await this.userService

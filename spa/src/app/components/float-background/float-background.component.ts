@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
@@ -7,31 +6,11 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   templateUrl: './float-background.component.html',
   styleUrls: ['./float-background.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule],
 })
 export class FloatBackgroundComponent {
-  public emojis: Array<string> = [
-    '😀',
-    '🍕',
-    '😃',
-    '🤡',
-    '😅',
-    '👽',
-    '😇',
-    '😈',
-    '😉',
-    '🍉',
-    '😋',
-    '😌',
-    '😍',
-    '🤬',
-    '😏',
-    '🤾',
-    '🥝',
-    '😒',
-    '🥕',
-    '🌮',
-    '🎃',
-    '🔥',
+  readonly emojis: ReadonlyArray<string> = [
+    '😀', '🍕', '😃', '🤡', '😅', '👽', '😇', '😈', '😉', '🍉',
+    '😋', '😌', '😍', '🤬', '😏', '🤾', '🥝', '😒', '🥕', '🌮',
+    '🎃', '🔥',
   ];
 }

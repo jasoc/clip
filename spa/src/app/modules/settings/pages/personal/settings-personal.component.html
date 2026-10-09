@@ -27,14 +27,14 @@
 
   <div
     class="user-avatar"
-    [class.drag-over]="dragOver"
+    [class.drag-over]="dragOver()"
     (dragover)="onDragOver($event)"
     (dragleave)="onDragLeave($event)"
     (drop)="onDrop($event)"
   >
     <div class="avatar-wrapper" (click)="changeUserAvatar()">
-      <img [src]="userService.currentUserAvatarUrl || 'assets/placeholder-avatar.svg'" alt="avatar" />
-      @if (!uploading) {
+      <img [src]="userService.currentUserAvatarUrl() || 'assets/placeholder-avatar.svg'" alt="avatar" />
+      @if (!uploading()) {
         <div class="overlay">
           <mat-icon fontSet="material-symbols-outlined">upload</mat-icon>
           <span>Drop or Click</span>
@@ -46,13 +46,13 @@
         </div>
       }
     </div>
-    <button mat-fab extended (click)="fileInput.click()">
+    <button mat-fab extended (click)="changeUserAvatar()">
       <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
       Edit avatar
     </button>
     <input #fileInput type="file" accept="image/*" (change)="onFileSelected($event)" hidden />
   </div>
-  <button mat-fab extended (click)="fileInput.click()">
+  <button mat-fab extended (click)="save()">
     <mat-icon fontSet="material-symbols-outlined">save</mat-icon>
     Save
   </button>
